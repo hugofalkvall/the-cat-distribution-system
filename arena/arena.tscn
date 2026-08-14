@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cv5nrsenatt6u"]
+[gd_scene load_steps=8 format=3 uid="uid://cv5nrsenatt6u"]
 
 [ext_resource type="Texture2D" uid="uid://b7rrcfhlcwpgo" path="res://arena/Grid_background.png" id="1_dotur"]
 [ext_resource type="Texture2D" uid="uid://b3pdrilp0nnll" path="res://icon.svg" id="2_u13ga"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bj3vt0h6sl254" path="res://buildings/cat_house/cat_house.tscn" id="4_0gwdx"]
 [ext_resource type="Script" uid="uid://b2e74ruttocbq" path="res://arena/build_placement.gd" id="4_44uaw"]
 [ext_resource type="PackedScene" uid="uid://clx5mjjgkf3r6" path="res://units/cats/cat_normal/cat_normal.tscn" id="6_8d55x"]
+[ext_resource type="Script" uid="uid://m755ltbh66mg" path="res://arena/combat_spacial_index.gd" id="7_x52g8"]
 
 [node name="Arena" type="Node2D"]
 
@@ -44,3 +45,8 @@ visible = false
 position = Vector2(-58, 56)
 
 [node name="Enemies" type="Node2D" parent="."]
+
+[node name="CombatSpacialIndex" type="Node2D" parent="." node_paths=PackedStringArray("cats_parent", "enemies_parent")]
+script = ExtResource("7_x52g8")
+cats_parent = NodePath("../Cats")
+enemies_parent = NodePath("../Enemies")
