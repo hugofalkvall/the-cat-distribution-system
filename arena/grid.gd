@@ -5,9 +5,15 @@ const GRID_WIDTH := 24
 const GRID_HEIGHT := 20
 const GRID_ORIGIN := Vector2(128, 32)
 
+@export var idol: Sprite2D
+const IDOL_SIZE := Vector2i(2, 2)
+
 var occupied_cells: Dictionary = {}
 var hovered_cell := Vector2i(-1, -1)
 
+func _ready() -> void:
+	var idol_cell := world_to_grid(to_local(idol.global_position))
+	occupy_cells(idol_cell, IDOL_SIZE, idol)
 
 func _process(_delta: float) -> void:
 	var new_hovered_cell := world_to_grid(get_local_mouse_position())
@@ -29,7 +35,7 @@ func _draw() -> void:
 		draw_line(
 			Vector2(x_pos, GRID_ORIGIN.y),
 			Vector2(x_pos, GRID_ORIGIN.y + grid_size.y),
-			Color(1, 1, 1, 0.25)
+			Color.BLUE
 		)
 
 	# Horizontal lines
@@ -38,19 +44,29 @@ func _draw() -> void:
 		draw_line(
 			Vector2(GRID_ORIGIN.x, y_pos),
 			Vector2(GRID_ORIGIN.x + grid_size.x, y_pos),
-			Color(1, 1, 1, 0.25)
+			Color.BLUE
 		)
 
 	# Hovered cell
 	if is_in_bounds(hovered_cell):
-		draw_rect(
-			Rect2(
-				grid_to_world(hovered_cell),
-				Vector2(CELL_SIZE, CELL_SIZE)
-			),
-			Color(1, 1, 1, 0.2),
-			true
-		)
+		if(is_cell_free(hovered_cell)):
+			draw_rect(
+				Rect2(
+					grid_to_world(hovered_cell),
+					Vector2(CELL_SIZE, CELL_SIZE)
+				),
+				Color.GREEN,
+				true
+			)
+		else:
+			draw_rect(
+				Rect2(
+					grid_to_world(hovered_cell),
+					Vector2(CELL_SIZE, CELL_SIZE)
+				),
+				Color.RED,
+				true
+			)
 
 
 func grid_to_world(cell: Vector2i) -> Vector2:
@@ -79,9 +95,9 @@ func is_cell_free(cell: Vector2i) -> bool:
 	return is_in_bounds(cell) and not occupied_cells.has(cell)
 
 
-func can_place(cell: Vector2i, footprint: Vector2i) -> bool:
-	for y in range(footprint.y):
-		for x in range(footprint.x):
+func can_place(cell: Vector2i, size: Vector2i) -> bool:
+	for y in range(size.y):
+		for x in range(size.x):
 			var checked_cell := cell + Vector2i(x, y)
 
 			if not is_cell_free(checked_cell):
@@ -89,9 +105,16 @@ func can_place(cell: Vector2i, footprint: Vector2i) -> bool:
 
 	return true
 
+func occupy_cells(start_cell: Vector2i, size: Vector2i, occupant) -> bool:
+	if not can_place(start_cell, size):
+		return false
 
-func occupy_cell(cell: Vector2i, building) -> void:
-	occupied_cells[cell] = building
+	for y in range(size.y):
+		for x in range(size.x):
+			var cell := start_cell + Vector2i(x, y)
+			occupied_cells[cell] = occupant
+
+	return true
 
 
 func free_cell(cell: Vector2i) -> void:
