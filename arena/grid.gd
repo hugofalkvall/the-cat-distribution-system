@@ -1,3 +1,4 @@
+class_name ArenaGrid
 extends Node2D
 
 const CELL_SIZE := 16
@@ -5,68 +6,16 @@ const GRID_WIDTH := 24
 const GRID_HEIGHT := 20
 const GRID_ORIGIN := Vector2(128, 32)
 
-@export var idol: Sprite2D
 const IDOL_SIZE := Vector2i(2, 2)
 
+@export var idol: Sprite2D
+
 var occupied_cells: Dictionary = {}
-var hovered_cell := Vector2i(-1, -1)
+
 
 func _ready() -> void:
 	var idol_cell := world_to_grid(to_local(idol.global_position))
 	occupy_cells(idol_cell, IDOL_SIZE, idol)
-
-func _process(_delta: float) -> void:
-	var new_hovered_cell := world_to_grid(get_local_mouse_position())
-
-	if new_hovered_cell != hovered_cell:
-		hovered_cell = new_hovered_cell
-		queue_redraw()
-
-
-func _draw() -> void:
-	var grid_size := Vector2(
-		GRID_WIDTH * CELL_SIZE,
-		GRID_HEIGHT * CELL_SIZE
-	)
-
-	# Vertical lines
-	for x in range(GRID_WIDTH + 1):
-		var x_pos := GRID_ORIGIN.x + x * CELL_SIZE
-		draw_line(
-			Vector2(x_pos, GRID_ORIGIN.y),
-			Vector2(x_pos, GRID_ORIGIN.y + grid_size.y),
-			Color.BLUE
-		)
-
-	# Horizontal lines
-	for y in range(GRID_HEIGHT + 1):
-		var y_pos := GRID_ORIGIN.y + y * CELL_SIZE
-		draw_line(
-			Vector2(GRID_ORIGIN.x, y_pos),
-			Vector2(GRID_ORIGIN.x + grid_size.x, y_pos),
-			Color.BLUE
-		)
-
-	# Hovered cell
-	if is_in_bounds(hovered_cell):
-		if(is_cell_free(hovered_cell)):
-			draw_rect(
-				Rect2(
-					grid_to_world(hovered_cell),
-					Vector2(CELL_SIZE, CELL_SIZE)
-				),
-				Color.GREEN,
-				true
-			)
-		else:
-			draw_rect(
-				Rect2(
-					grid_to_world(hovered_cell),
-					Vector2(CELL_SIZE, CELL_SIZE)
-				),
-				Color.RED,
-				true
-			)
 
 
 func grid_to_world(cell: Vector2i) -> Vector2:
@@ -105,17 +54,31 @@ func can_place(cell: Vector2i, size: Vector2i) -> bool:
 
 	return true
 
-func occupy_cells(start_cell: Vector2i, size: Vector2i, occupant) -> bool:
+
+func occupy_cells(
+	start_cell: Vector2i,
+	size: Vector2i,
+	placed_object
+) -> bool:
 	if not can_place(start_cell, size):
 		return false
 
 	for y in range(size.y):
 		for x in range(size.x):
 			var cell := start_cell + Vector2i(x, y)
-			occupied_cells[cell] = occupant
+			occupied_cells[cell] = placed_object
 
 	return true
 
 
-func free_cell(cell: Vector2i) -> void:
-	occupied_cells.erase(cell)
+func free_cells(
+	start_cell: Vector2i,
+	size: Vector2i,
+	placed_object
+) -> void:
+	for y in range(size.y):
+		for x in range(size.x):
+			var cell := start_cell + Vector2i(x, y)
+
+			if occupied_cells.get(cell) == placed_object:
+				occupied_cells.erase(cell)
