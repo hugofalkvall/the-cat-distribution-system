@@ -1,9 +1,20 @@
-[gd_scene load_steps=3 format=3 uid="uid://c5vi6wivmiqmk"]
+[gd_scene load_steps=5 format=3 uid="uid://c5vi6wivmiqmk"]
 
 [ext_resource type="PackedScene" uid="uid://cv5nrsenatt6u" path="res://arena/arena.tscn" id="1_6y1hf"]
 [ext_resource type="Script" uid="uid://bl25dvl61h3m" path="res://run/run.gd" id="1_wkui6"]
+[ext_resource type="Script" uid="uid://c5uwbs5csqj88" path="res://run/enemy_spawner.gd" id="3_badgd"]
+[ext_resource type="PackedScene" uid="uid://cqe25xbtvor31" path="res://units/enemies/enemy_troll/enemy_troll.tscn" id="4_irdq8"]
 
 [node name="Run" type="Node2D"]
 script = ExtResource("1_wkui6")
 
 [node name="Arena" parent="." instance=ExtResource("1_6y1hf")]
+
+[node name="EnemySpawner" type="Node" parent="." node_paths=PackedStringArray("enemies", "idol", "grid")]
+script = ExtResource("3_badgd")
+enemy_scene = ExtResource("4_irdq8")
+enemies = NodePath("../Arena/Enemies")
+idol = NodePath("../Arena/Idol")
+grid = NodePath("../Arena/Grid")
+
+[node name="Timer" type="Timer" parent="EnemySpawner"]
