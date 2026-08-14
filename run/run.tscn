@@ -10,11 +10,12 @@ script = ExtResource("1_wkui6")
 
 [node name="Arena" parent="." instance=ExtResource("1_6y1hf")]
 
-[node name="EnemySpawner" type="Node" parent="." node_paths=PackedStringArray("enemies", "idol", "grid")]
+[node name="EnemySpawner" type="Node" parent="." node_paths=PackedStringArray("enemies", "idol", "grid", "spatial_index")]
 script = ExtResource("3_badgd")
 enemy_scene = ExtResource("4_irdq8")
 enemies = NodePath("../Arena/Enemies")
 idol = NodePath("../Arena/Idol")
 grid = NodePath("../Arena/Grid")
+spatial_index = NodePath("../Arena/CombatSpatialIndex")
 
 [node name="Timer" type="Timer" parent="EnemySpawner"]

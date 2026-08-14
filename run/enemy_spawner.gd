@@ -7,6 +7,7 @@ const SPAWN_MARGIN := 16.0
 @export var enemies: Node2D
 @export var idol: Node2D
 @export var grid: ArenaGrid
+@export var spatial_index: CombatSpatialIndex
 
 @onready var timer: Timer = $Timer
 
@@ -31,7 +32,7 @@ func spawn_enemy() -> void:
 
 	enemy.global_position = grid.to_global(spawn_position)
 
-	enemy.setup(idol)
+	enemy.setup(idol,spatial_index)
 
 
 func get_random_spawn_position() -> Vector2:

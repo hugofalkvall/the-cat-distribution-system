@@ -15,7 +15,12 @@ var target_position: Vector2
 var velocity := Vector2.ZERO
 
 
-func setup() -> void:
+var spatial_index: CombatSpatialIndex
+
+
+func setup(new_spatial_index: CombatSpatialIndex) -> void:
+	spatial_index = new_spatial_index
+
 	home_position = global_position
 	choose_new_target()
 

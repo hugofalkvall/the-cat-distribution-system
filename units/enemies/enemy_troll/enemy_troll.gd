@@ -13,8 +13,12 @@ var target: Node2D
 var velocity := Vector2.ZERO
 
 
-func setup(new_target: Node2D) -> void:
+var spatial_index: CombatSpatialIndex
+
+
+func setup(new_target: Node2D, new_spatial_index: CombatSpatialIndex) -> void:
 	target = new_target
+	spatial_index = new_spatial_index
 
 
 func _process(delta: float) -> void:
