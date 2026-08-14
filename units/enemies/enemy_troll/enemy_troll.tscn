@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://cqe25xbtvor31"]
+
+[ext_resource type="Script" uid="uid://t2xprv4a15ib" path="res://units/enemies/enemy_troll/enemy_troll.gd" id="1_6tgnk"]
+[ext_resource type="Texture2D" uid="uid://bukg52egcnb6c" path="res://units/enemies/enemy_troll/Enemy_troll.png" id="2_k1iu3"]
+
+[node name="EnemyTroll" type="Node2D"]
+script = ExtResource("1_6tgnk")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("2_k1iu3")
