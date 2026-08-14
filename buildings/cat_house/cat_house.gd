@@ -8,6 +8,8 @@ const BASIC_CAT_SCENE := preload(
 )
 
 var cats_parent: Node2D
+var cats_produced:= 0
+
 var production_timer := 0.0
 
 
@@ -28,10 +30,14 @@ func _process(delta: float) -> void:
 
 func produce_cat() -> void:
 	var cat := BASIC_CAT_SCENE.instantiate()
-
+	cats_produced += 1
+	print("cats produced: " + str(cats_produced))
+	
 	cats_parent.add_child(cat)
 
 	cat.global_position = global_position + Vector2(
 		SIZE.x * 16 / 2.0,
 		SIZE.y * 16 + 8
 	)
+
+	cat.setup()

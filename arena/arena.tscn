@@ -40,4 +40,5 @@ position = Vector2(-64, 80)
 [node name="Cats" type="Node2D" parent="."]
 
 [node name="CatNormal" parent="Cats" instance=ExtResource("6_8d55x")]
-position = Vector2(-48, 54)
+visible = false
+position = Vector2(-58, 56)
