@@ -1,11 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://cv5nrsenatt6u"]
+[gd_scene load_steps=7 format=3 uid="uid://cv5nrsenatt6u"]
 
 [ext_resource type="Texture2D" uid="uid://b7rrcfhlcwpgo" path="res://arena/Grid_background.png" id="1_dotur"]
 [ext_resource type="Texture2D" uid="uid://b3pdrilp0nnll" path="res://icon.svg" id="2_u13ga"]
 [ext_resource type="Script" uid="uid://bwi22tjws7ujj" path="res://arena/grid.gd" id="3_dotur"]
 [ext_resource type="PackedScene" uid="uid://bj3vt0h6sl254" path="res://buildings/cat_house/cat_house.tscn" id="4_0gwdx"]
 [ext_resource type="Script" uid="uid://b2e74ruttocbq" path="res://arena/build_placement.gd" id="4_44uaw"]
-[ext_resource type="PackedScene" uid="uid://clx5mjjgkf3r6" path="res://units/cats/cat_normal/cat_normal.tscn" id="6_8d55x"]
 [ext_resource type="Script" uid="uid://m755ltbh66mg" path="res://arena/combat_spatial_index.gd" id="7_x52g8"]
 
 [node name="Arena" type="Node2D"]
@@ -26,23 +25,17 @@ centered = false
 script = ExtResource("3_dotur")
 idol = NodePath("../Idol")
 
-[node name="BuildPlacement" type="Node2D" parent="." node_paths=PackedStringArray("grid", "buildings", "cats")]
+[node name="BuildPlacement" type="Node2D" parent="." node_paths=PackedStringArray("grid", "buildings", "cats", "spatial_index")]
 script = ExtResource("4_44uaw")
 grid = NodePath("../Grid")
 buildings = NodePath("../Buildings")
 cat_house_scene = ExtResource("4_0gwdx")
 cats = NodePath("../Cats")
+spatial_index = NodePath("../CombatSpatialIndex")
 
 [node name="Buildings" type="Node2D" parent="."]
 
-[node name="CatHouse" parent="Buildings" instance=ExtResource("4_0gwdx")]
-position = Vector2(-64, 80)
-
 [node name="Cats" type="Node2D" parent="."]
-
-[node name="CatNormal" parent="Cats" instance=ExtResource("6_8d55x")]
-visible = false
-position = Vector2(-58, 56)
 
 [node name="Enemies" type="Node2D" parent="."]
 

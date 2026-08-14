@@ -3,17 +3,16 @@ extends Node2D
 const SIZE := Vector2i(2, 2)
 const PRODUCTION_TIME := 2.0
 
-const BASIC_CAT_SCENE := preload(
-	"res://units/cats/cat_normal/cat_normal.tscn"
-)
+const BASIC_CAT_SCENE := preload("res://units/cats/cat_normal/cat_normal.tscn")
 
 var cats_parent: Node2D
-
+var spatial_index: CombatSpatialIndex
 var production_timer := 0.0
 
 
-func setup(new_cats_parent: Node2D) -> void:
+func setup(new_cats_parent: Node2D, new_spatial_index: CombatSpatialIndex) -> void:
 	cats_parent = new_cats_parent
+	spatial_index = new_spatial_index
 
 
 func _process(delta: float) -> void:
@@ -29,12 +28,9 @@ func _process(delta: float) -> void:
 
 func produce_cat() -> void:
 	var cat := BASIC_CAT_SCENE.instantiate()
-	
+
 	cats_parent.add_child(cat)
 
-	cat.global_position = global_position + Vector2(
-		SIZE.x * 16 / 2.0,
-		SIZE.y * 16 + 8
-	)
+	cat.global_position = global_position + Vector2(SIZE.x * 16 / 2.0, SIZE.y * 16 + 8)
 
-	cat.setup()
+	cat.setup(spatial_index)
