@@ -1,3 +1,18 @@
-[gd_scene format=3 uid="uid://cv5nrsenatt6u"]
+[gd_scene load_steps=3 format=3 uid="uid://cv5nrsenatt6u"]
 
-[node name="Node2D" type="Node2D"]
+[ext_resource type="Texture2D" uid="uid://v6i85a3q1gwh" path="res://arena/Concept art.png" id="1_dkqtx"]
+[ext_resource type="Texture2D" uid="uid://b3pdrilp0nnll" path="res://icon.svg" id="2_u13ga"]
+
+[node name="Arena" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("1_dkqtx")
+centered = false
+
+[node name="Idol" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(304, 176)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_u13ga")
+centered = false
