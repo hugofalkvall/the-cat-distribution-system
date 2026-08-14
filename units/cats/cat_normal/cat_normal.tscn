@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://clx5mjjgkf3r6"]
+
+[ext_resource type="Script" uid="uid://dntak67lhuwan" path="res://units/cats/cat_normal/cat_normal.gd" id="1_7rkw4"]
+[ext_resource type="Texture2D" uid="uid://cf7c1lhf7tatk" path="res://units/cats/cat_normal/Cat.png" id="2_un46o"]
+
+[node name="CatNormal" type="Node2D"]
+script = ExtResource("1_7rkw4")
+
+[node name="Texture" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("2_un46o")

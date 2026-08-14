@@ -3,6 +3,7 @@ extends Node2D
 @export var grid: ArenaGrid
 @export var buildings: Node2D
 @export var cat_house_scene: PackedScene
+@export var cats: Node2D
 
 const BUILDING_SIZE := Vector2i(2, 2)
 
@@ -90,8 +91,9 @@ func place_cat_house() -> void:
 	buildings.add_child(cat_house)
 
 	var grid_position: Vector2 = grid.grid_to_world(placement_cell)
-
 	cat_house.global_position = grid.to_global(grid_position)
+
+	cat_house.setup(cats)
 
 	grid.occupy_cells(
 		placement_cell,

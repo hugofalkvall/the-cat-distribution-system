@@ -1,13 +1,12 @@
 [gd_scene load_steps=3 format=3 uid="uid://bj3vt0h6sl254"]
 
 [ext_resource type="Script" uid="uid://s2emfqbnxblk" path="res://buildings/cat_house/cat_house.gd" id="1_dbsph"]
-[ext_resource type="Texture2D" uid="uid://b3pdrilp0nnll" path="res://icon.svg" id="2_lnmxf"]
+[ext_resource type="Texture2D" uid="uid://bshrpokgn6qb" path="res://buildings/cat_house/Building.png" id="2_dbsph"]
 
 [node name="CatHouse" type="Node2D"]
 script = ExtResource("1_dbsph")
 
 [node name="Texture" type="Sprite2D" parent="."]
 texture_filter = 1
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("2_lnmxf")
+texture = ExtResource("2_dbsph")
 centered = false

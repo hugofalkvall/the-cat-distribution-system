@@ -7,8 +7,8 @@ const GRID_HEIGHT := 20
 const GRID_ORIGIN := Vector2(128, 32)
 
 const IDOL_SIZE := Vector2i(2, 2)
-
 @export var idol: Sprite2D
+
 
 var occupied_cells: Dictionary = {}
 
