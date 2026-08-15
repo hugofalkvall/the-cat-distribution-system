@@ -70,7 +70,7 @@ func get_closest_unit(position: Vector2, search_range: float, buckets: Dictionar
 				continue
 
 			for unit in buckets[bucket]:
-				if not is_instance_valid(unit):
+				if not is_instance_valid(unit) or unit.is_queued_for_deletion():
 					continue
 
 				var distance_squared: float = position.distance_squared_to(unit.global_position)

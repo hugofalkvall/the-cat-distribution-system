@@ -1,11 +1,10 @@
 class_name EnemyTroll
-extends Node2D
+extends CombatUnit
 
 const MOVE_SPEED := 18.0
 const ACCELERATION := 60.0
 
 const IDOL_STOP_DISTANCE := 12.0
-const CAT_STOP_DISTANCE := 8.0
 
 const DETECTION_RANGE := 80.0
 const TARGET_UPDATE_INTERVAL := 0.2
@@ -13,17 +12,19 @@ const TARGET_UPDATE_INTERVAL := 0.2
 const IDOL_CENTER_OFFSET := Vector2(16, 16)
 
 var idol_target: Node2D
-var combat_target: Node2D = null
+var combat_target: CombatUnit = null
 
 var spatial_index: CombatSpatialIndex
+var combat_system: CombatSystem
 
 var velocity := Vector2.ZERO
 var target_update_timer := 0.0
 
 
-func setup(new_idol_target: Node2D, new_spatial_index: CombatSpatialIndex) -> void:
+func setup(new_idol_target: Node2D, new_spatial_index: CombatSpatialIndex, new_combat_system: CombatSystem) -> void:
 	idol_target = new_idol_target
 	spatial_index = new_spatial_index
+	combat_system = new_combat_system
 	target_update_timer = randf_range(0.0, TARGET_UPDATE_INTERVAL)
 
 
@@ -31,10 +32,14 @@ func _process(delta: float) -> void:
 	if not is_instance_valid(idol_target):
 		return
 
+	tick_combat(delta)
 	update_combat_target(delta)
 
-	if is_instance_valid(combat_target):
-		move_toward_position(combat_target.global_position, CAT_STOP_DISTANCE, delta)
+	if is_instance_valid(combat_target) and attack != null:
+		var in_attack_range := move_toward_position(combat_target.global_position, attack.range, delta)
+
+		if in_attack_range:
+			try_attack(combat_target, combat_system)
 	else:
 		move_toward_position(idol_target.global_position + IDOL_CENTER_OFFSET, IDOL_STOP_DISTANCE, delta)
 
@@ -49,10 +54,10 @@ func update_combat_target(delta: float) -> void:
 		return
 
 	target_update_timer = TARGET_UPDATE_INTERVAL
-	combat_target = spatial_index.get_closest_cat(global_position, DETECTION_RANGE)
+	combat_target = spatial_index.get_closest_cat(global_position, DETECTION_RANGE) as CombatUnit
 
 
-func move_toward_position(destination: Vector2, stop_distance: float, delta: float) -> void:
+func move_toward_position(destination: Vector2, stop_distance: float, delta: float) -> bool:
 	var distance := global_position.distance_to(destination)
 	var desired_velocity := Vector2.ZERO
 
@@ -62,3 +67,5 @@ func move_toward_position(destination: Vector2, stop_distance: float, delta: flo
 
 	velocity = velocity.move_toward(desired_velocity, ACCELERATION * delta)
 	global_position += velocity * delta
+
+	return distance <= stop_distance

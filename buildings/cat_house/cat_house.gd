@@ -7,12 +7,14 @@ const BASIC_CAT_SCENE := preload("res://units/cats/cat_normal/cat_normal.tscn")
 
 var cats_parent: Node2D
 var spatial_index: CombatSpatialIndex
+var combat_system: CombatSystem
 var production_timer := 0.0
 
 
-func setup(new_cats_parent: Node2D, new_spatial_index: CombatSpatialIndex) -> void:
+func setup(new_cats_parent: Node2D, new_spatial_index: CombatSpatialIndex, new_combat_system: CombatSystem) -> void:
 	cats_parent = new_cats_parent
 	spatial_index = new_spatial_index
+	combat_system = new_combat_system
 
 
 func _process(delta: float) -> void:
@@ -30,7 +32,5 @@ func produce_cat() -> void:
 	var cat := BASIC_CAT_SCENE.instantiate()
 
 	cats_parent.add_child(cat)
-
 	cat.global_position = global_position + Vector2(SIZE.x * 16 / 2.0, SIZE.y * 16 + 8)
-
-	cat.setup(spatial_index)
+	cat.setup(spatial_index, combat_system)

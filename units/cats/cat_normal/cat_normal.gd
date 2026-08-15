@@ -1,4 +1,4 @@
-extends Node2D
+extends CombatUnit
 
 const MOVE_SPEED := 25.0
 const ACCELERATION := 80.0
@@ -8,7 +8,6 @@ const MIN_TARGET_DISTANCE := 20.0
 const TARGET_REACHED_DISTANCE := 5.0
 
 const DETECTION_RANGE := 80.0
-const COMBAT_STOP_DISTANCE := 8.0
 const TARGET_UPDATE_INTERVAL := 0.2
 
 const ARENA_MIN := Vector2(128, 32)
@@ -19,22 +18,29 @@ var wander_target_position: Vector2
 var velocity := Vector2.ZERO
 
 var spatial_index: CombatSpatialIndex
-var combat_target: Node2D = null
+var combat_system: CombatSystem
+var combat_target: CombatUnit = null
+
 var target_update_timer := 0.0
 
 
-func setup(new_spatial_index: CombatSpatialIndex) -> void:
+func setup(new_spatial_index: CombatSpatialIndex, new_combat_system: CombatSystem) -> void:
 	spatial_index = new_spatial_index
+	combat_system = new_combat_system
 	home_position = global_position
 	target_update_timer = randf_range(0.0, TARGET_UPDATE_INTERVAL)
 	choose_new_wander_target()
 
 
 func _process(delta: float) -> void:
+	tick_combat(delta)
 	update_combat_target(delta)
 
-	if is_instance_valid(combat_target):
-		move_toward_position(combat_target.global_position, COMBAT_STOP_DISTANCE, delta)
+	if is_instance_valid(combat_target) and attack != null:
+		var in_attack_range := move_toward_position(combat_target.global_position, attack.range, delta)
+
+		if in_attack_range:
+			try_attack(combat_target, combat_system)
 	else:
 		wander(delta)
 
@@ -49,7 +55,7 @@ func update_combat_target(delta: float) -> void:
 		return
 
 	target_update_timer = TARGET_UPDATE_INTERVAL
-	combat_target = spatial_index.get_closest_enemy(global_position, DETECTION_RANGE)
+	combat_target = spatial_index.get_closest_enemy(global_position, DETECTION_RANGE) as CombatUnit
 
 
 func wander(delta: float) -> void:

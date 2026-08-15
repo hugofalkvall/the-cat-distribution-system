@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cdko20f16q2ie"
-path="res://.godot/imported/Cat_mage.png-855e7b201ed2d0a7d145a68ea549114b.ctex"
+path="res://.godot/imported/Cat_mage.png-1b0b60b9ad6ac53e3419ff3c6db3d34e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://units/cats/Cat_mage.png"
-dest_files=["res://.godot/imported/Cat_mage.png-855e7b201ed2d0a7d145a68ea549114b.ctex"]
+source_file="res://units/cats/cat_mage/Cat_mage.png"
+dest_files=["res://.godot/imported/Cat_mage.png-1b0b60b9ad6ac53e3419ff3c6db3d34e.ctex"]
 
 [params]
 

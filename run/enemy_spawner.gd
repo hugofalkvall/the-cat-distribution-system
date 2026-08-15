@@ -8,6 +8,7 @@ const SPAWN_MARGIN := 16.0
 @export var idol: Node2D
 @export var grid: ArenaGrid
 @export var spatial_index: CombatSpatialIndex
+@export var combat_system: CombatSystem
 
 @onready var timer: Timer = $Timer
 
@@ -19,57 +20,33 @@ func _ready() -> void:
 
 
 func spawn_enemy() -> void:
-	var enemy: EnemyTroll = (
-		enemy_scene.instantiate() as EnemyTroll
-	)
+	var enemy := enemy_scene.instantiate() as EnemyTroll
 
 	if enemy == null:
 		return
 
 	enemies.add_child(enemy)
 
-	var spawn_position: Vector2 = get_random_spawn_position()
+	var spawn_position := get_random_spawn_position()
 
 	enemy.global_position = grid.to_global(spawn_position)
-
-	enemy.setup(idol,spatial_index)
+	enemy.setup(idol, spatial_index, combat_system)
 
 
 func get_random_spawn_position() -> Vector2:
-	var left: float = grid.GRID_ORIGIN.x
+	var left := float(grid.GRID_ORIGIN.x)
+	var right := float(grid.GRID_ORIGIN.x + grid.GRID_WIDTH * grid.CELL_SIZE)
+	var top := float(grid.GRID_ORIGIN.y)
+	var bottom := float(grid.GRID_ORIGIN.y + grid.GRID_HEIGHT * grid.CELL_SIZE)
 
-	var right: float = (
-		grid.GRID_ORIGIN.x
-		+ grid.GRID_WIDTH * grid.CELL_SIZE
-	)
-
-	var top: float = grid.GRID_ORIGIN.y
-
-	var bottom: float = (
-		grid.GRID_ORIGIN.y
-		+ grid.GRID_HEIGHT * grid.CELL_SIZE
-	)
-
-	var side: int = randi_range(0, 2)
+	var side := randi_range(0, 2)
 
 	match side:
 		0:
-			# North
-			return Vector2(
-				randf_range(left, right),
-				top - SPAWN_MARGIN
-			)
+			return Vector2(randf_range(left, right), top - SPAWN_MARGIN)
 
 		1:
-			# East
-			return Vector2(
-				right + SPAWN_MARGIN,
-				randf_range(top, bottom)
-			)
+			return Vector2(right + SPAWN_MARGIN, randf_range(top, bottom))
 
 		_:
-			# West
-			return Vector2(
-				left - SPAWN_MARGIN,
-				randf_range(top, bottom)
-			)
+			return Vector2(left - SPAWN_MARGIN, randf_range(top, bottom))

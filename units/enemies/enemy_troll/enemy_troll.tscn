@@ -1,10 +1,21 @@
-[gd_scene load_steps=3 format=3 uid="uid://cqe25xbtvor31"]
+[gd_scene load_steps=5 format=3 uid="uid://cqe25xbtvor31"]
 
 [ext_resource type="Script" uid="uid://t2xprv4a15ib" path="res://units/enemies/enemy_troll/enemy_troll.gd" id="1_6tgnk"]
+[ext_resource type="Script" uid="uid://bu6mktrtul01f" path="res://combat/attack_definition.gd" id="2_7il5b"]
 [ext_resource type="Texture2D" uid="uid://bukg52egcnb6c" path="res://units/enemies/enemy_troll/Enemy_troll.png" id="2_k1iu3"]
+
+[sub_resource type="Resource" id="Resource_xemo8"]
+script = ExtResource("2_7il5b")
+attack_type = 0
+damage = 1.0
+range = 8.0
+cooldown = 1.0
+metadata/_custom_type_script = "uid://bu6mktrtul01f"
 
 [node name="EnemyTroll" type="Node2D"]
 script = ExtResource("1_6tgnk")
+max_health = 20.0
+attack = SubResource("Resource_xemo8")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1

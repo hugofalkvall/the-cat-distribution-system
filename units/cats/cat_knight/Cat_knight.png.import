@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://v6i85a3q1gwh"
-path="res://.godot/imported/Concept art.png-2fa3acc0ddf6a62405f00af18596f304.ctex"
+uid="uid://8rlhdeworew4"
+path="res://.godot/imported/Cat_knight.png-7f860ba2c85bb34ca548e2658a55ade8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://arena/Concept art.png"
-dest_files=["res://.godot/imported/Concept art.png-2fa3acc0ddf6a62405f00af18596f304.ctex"]
+source_file="res://units/cats/cat_knight/Cat_knight.png"
+dest_files=["res://.godot/imported/Cat_knight.png-7f860ba2c85bb34ca548e2658a55ade8.ctex"]
 
 [params]
 
