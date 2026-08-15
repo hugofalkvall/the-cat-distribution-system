@@ -43,7 +43,7 @@ func perform_attack(attacker: CombatUnit, target: CombatUnit, attack_state: Atta
 	return true
 
 
-func resolve_attack(attacker: CombatUnit, target: CombatUnit, attack_state: AttackState, impact_position: Vector2) -> void:
+func resolve_attack(attacker, target, attack_state: AttackState, impact_position: Vector2) -> void:
 	if attack_state == null or attack_state.definition == null:
 		return
 

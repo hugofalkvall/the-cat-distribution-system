@@ -4,8 +4,11 @@ extends AttackEffectDefinition
 @export var damage := 1.0
 
 
-func apply(attacker: CombatUnit, target: CombatUnit, attack_state: AttackState, combat_system: CombatSystem, impact_position: Vector2) -> void:
+func apply(attacker, target, attack_state: AttackState, combat_system: CombatSystem, impact_position: Vector2) -> void:
 	if not is_instance_valid(target):
+		return
+
+	if not target is CombatUnit:
 		return
 
 	if target.is_dead:

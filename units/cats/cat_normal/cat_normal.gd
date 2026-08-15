@@ -1,9 +1,9 @@
 extends CombatUnit
 
-const MOVE_SPEED := 25.0
+const MOVE_SPEED := 20.0
 const ACCELERATION := 80.0
 
-const WANDER_RADIUS := 48.0
+const WANDER_RADIUS := 80.0
 const MIN_TARGET_DISTANCE := 20.0
 const TARGET_REACHED_DISTANCE := 5.0
 

@@ -1,6 +1,6 @@
 extends Node
 
-const SPAWN_TIME := 3.0
+const SPAWN_TIME := 10.0
 const SPAWN_MARGIN := 16.0
 
 @export var enemy_scene: PackedScene
