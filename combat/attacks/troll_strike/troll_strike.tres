@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="AttackDefinition" load_steps=5 format=3 uid="uid://bt6lhhmsqbfb3"]
+
+[ext_resource type="Script" uid="uid://dftfkylqm4682" path="res://combat/effects/attack_effect_definition.gd" id="1_ygeml"]
+[ext_resource type="Script" uid="uid://cqg2g7p68pwvl" path="res://combat/effects/direct_damage_effect.gd" id="2_7i8tx"]
+[ext_resource type="Script" uid="uid://bu6mktrtul01f" path="res://combat/attack_definition.gd" id="3_q83kd"]
+
+[sub_resource type="Resource" id="Resource_srvv0"]
+script = ExtResource("2_7i8tx")
+damage = 10.0
+metadata/_custom_type_script = "uid://cqg2g7p68pwvl"
+
+[resource]
+script = ExtResource("3_q83kd")
+attack_name = &"troll_strike"
+range = 8.0
+cooldown = 1.0
+effects = Array[ExtResource("1_ygeml")]([SubResource("Resource_srvv0")])
+metadata/_custom_type_script = "uid://bu6mktrtul01f"

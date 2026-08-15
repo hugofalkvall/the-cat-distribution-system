@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="AttackDefinition" load_steps=6 format=3 uid="uid://b262utk84j2b"]
+
+[ext_resource type="PackedScene" uid="uid://d3gvlyd5r8jy7" path="res://combat/attacks/claw_swipe/claw_swipe.tscn" id="1_nnmjw"]
+[ext_resource type="Script" uid="uid://dftfkylqm4682" path="res://combat/effects/attack_effect_definition.gd" id="2_wlnph"]
+[ext_resource type="Script" uid="uid://cqg2g7p68pwvl" path="res://combat/effects/direct_damage_effect.gd" id="3_g7rn8"]
+[ext_resource type="Script" uid="uid://bu6mktrtul01f" path="res://combat/attack_definition.gd" id="4_0ec5n"]
+
+[sub_resource type="Resource" id="Resource_wa1b0"]
+script = ExtResource("3_g7rn8")
+damage = 1.0
+metadata/_custom_type_script = "uid://cqg2g7p68pwvl"
+
+[resource]
+script = ExtResource("4_0ec5n")
+attack_name = &"claw_swipe"
+range = 8.0
+cooldown = 1.0
+behavior_scene = ExtResource("1_nnmjw")
+effects = Array[ExtResource("2_wlnph")]([SubResource("Resource_wa1b0")])
+metadata/_custom_type_script = "uid://bu6mktrtul01f"
