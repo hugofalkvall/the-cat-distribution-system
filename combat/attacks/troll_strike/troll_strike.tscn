@@ -1,0 +1,57 @@
+[gd_scene load_steps=9 format=3 uid="uid://cxive20qsqwly"]
+
+[ext_resource type="Script" uid="uid://bw15obf0mrr1w" path="res://combat/attacks/troll_strike/troll_strike.gd" id="1_irnnh"]
+[ext_resource type="Texture2D" uid="uid://b3asudf0ccc0j" path="res://combat/attacks/troll_strike/Troll_strike-Sheet.png" id="2_2cjf4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6xxfj"]
+atlas = ExtResource("2_2cjf4")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_68rk7"]
+atlas = ExtResource("2_2cjf4")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ru52t"]
+atlas = ExtResource("2_2cjf4")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oha5c"]
+atlas = ExtResource("2_2cjf4")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_taagc"]
+atlas = ExtResource("2_2cjf4")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jmtm4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6xxfj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_68rk7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ru52t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oha5c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_taagc")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 16.0
+}]
+
+[node name="TrollStrike" type="Node2D"]
+texture_filter = 1
+script = ExtResource("1_irnnh")
+visual_offset = Vector2(5, 0)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(1.5, 1.5)
+sprite_frames = SubResource("SpriteFrames_jmtm4")
+animation = &"attack"
