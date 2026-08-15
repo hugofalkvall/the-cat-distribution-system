@@ -1,0 +1,57 @@
+[gd_scene load_steps=9 format=3 uid="uid://d3gvlyd5r8jy7"]
+
+[ext_resource type="Script" uid="uid://cli4x2weplcsr" path="res://combat/attacks/claw_swipe/claw_swipe.gd" id="1_k4djg"]
+[ext_resource type="Texture2D" uid="uid://c8fkyg3akmpyl" path="res://combat/attacks/claw_swipe/Claw_attack-Sheet.png" id="2_c54ms"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u62ft"]
+atlas = ExtResource("2_c54ms")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vkose"]
+atlas = ExtResource("2_c54ms")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_id355"]
+atlas = ExtResource("2_c54ms")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ri1r2"]
+atlas = ExtResource("2_c54ms")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5kwqp"]
+atlas = ExtResource("2_c54ms")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3anvx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u62ft")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vkose")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_id355")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ri1r2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5kwqp")
+}],
+"loop": false,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="ClawSwipe" type="Node2D"]
+script = ExtResource("1_k4djg")
+impact_frame = 3
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_3anvx")
+frame = 4
+frame_progress = 1.0

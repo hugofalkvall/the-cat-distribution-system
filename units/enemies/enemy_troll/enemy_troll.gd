@@ -32,11 +32,11 @@ func _process(delta: float) -> void:
 	if not is_instance_valid(idol_target):
 		return
 
-	tick_combat(delta)
 	update_combat_target(delta)
 
-	if is_instance_valid(combat_target) and attack != null:
-		var in_attack_range := move_toward_position(combat_target.global_position, attack.range, delta)
+	if is_instance_valid(combat_target) and has_attacks():
+		var approach_range := get_approach_range()
+		var in_attack_range := move_toward_position(combat_target.global_position, approach_range, delta)
 
 		if in_attack_range:
 			try_attack(combat_target, combat_system)
