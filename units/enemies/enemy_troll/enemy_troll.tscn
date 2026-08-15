@@ -7,7 +7,7 @@
 [sub_resource type="Resource" id="Resource_xemo8"]
 script = ExtResource("2_7il5b")
 attack_type = 0
-damage = 1.0
+damage = 10.0
 range = 8.0
 cooldown = 1.0
 metadata/_custom_type_script = "uid://bu6mktrtul01f"
