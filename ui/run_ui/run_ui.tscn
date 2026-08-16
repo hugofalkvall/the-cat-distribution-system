@@ -1,0 +1,36 @@
+[gd_scene load_steps=2 format=3 uid="uid://g3n0lmmg6hrw"]
+
+[ext_resource type="Script" uid="uid://c375tl0dp1bv4" path="res://ui/run_ui/run_ui.gd" id="1_nfmek"]
+
+[node name="RunUi" type="CanvasLayer"]
+script = ExtResource("1_nfmek")
+
+[node name="HUD" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="IdolHealthLabel" type="Label" parent="HUD"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Idol health"
+
+[node name="CatCount" type="Label" parent="HUD"]
+layout_mode = 0
+offset_top = 62.0
+offset_right = 142.0
+offset_bottom = 93.0
+
+[node name="IdolHealthProgressBar" type="ProgressBar" parent="HUD"]
+texture_filter = 1
+layout_mode = 0
+offset_top = 28.0
+offset_right = 129.0
+offset_bottom = 55.0
+
+[node name="Overlays" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
