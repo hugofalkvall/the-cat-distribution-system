@@ -2,6 +2,7 @@ extends CombatUnit
 
 const MOVE_SPEED := 20.0
 const ACCELERATION := 80.0
+const COLLISION_RADIUS := 4.0
 
 const WANDER_RADIUS := 80.0
 const MIN_TARGET_DISTANCE := 20.0
@@ -17,6 +18,7 @@ var home_position: Vector2
 var wander_target_position: Vector2
 var velocity := Vector2.ZERO
 
+var arena_grid: ArenaGrid
 var spatial_index: CombatSpatialIndex
 var combat_system: CombatSystem
 var combat_target: CombatUnit = null
@@ -24,9 +26,10 @@ var combat_target: CombatUnit = null
 var target_update_timer := 0.0
 
 
-func setup(new_spatial_index: CombatSpatialIndex, new_combat_system: CombatSystem) -> void:
+func setup(new_spatial_index: CombatSpatialIndex, new_combat_system: CombatSystem, new_arena_grid: ArenaGrid) -> void:
 	spatial_index = new_spatial_index
 	combat_system = new_combat_system
+	arena_grid = new_arena_grid
 	home_position = global_position
 	target_update_timer = randf_range(0.0, TARGET_UPDATE_INTERVAL)
 	choose_new_wander_target()
@@ -74,7 +77,23 @@ func move_toward_position(destination: Vector2, stop_distance: float, delta: flo
 		desired_velocity = direction * MOVE_SPEED
 
 	velocity = velocity.move_toward(desired_velocity, ACCELERATION * delta)
-	global_position += velocity * delta
+
+	var motion := velocity * delta
+
+	if arena_grid != null:
+		var old_position := global_position
+		var new_position := arena_grid.move_unit(global_position, motion, COLLISION_RADIUS)
+		var actual_motion := new_position - old_position
+
+		if not is_equal_approx(actual_motion.x, motion.x):
+			velocity.x = 0.0
+
+		if not is_equal_approx(actual_motion.y, motion.y):
+			velocity.y = 0.0
+
+		global_position = new_position
+	else:
+		global_position += motion
 
 	return distance <= stop_distance
 

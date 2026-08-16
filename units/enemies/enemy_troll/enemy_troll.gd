@@ -3,6 +3,7 @@ extends CombatUnit
 
 const MOVE_SPEED := 18.0
 const ACCELERATION := 60.0
+const COLLISION_RADIUS := 4.0
 
 const IDOL_STOP_DISTANCE := 12.0
 
@@ -14,6 +15,7 @@ const IDOL_CENTER_OFFSET := Vector2(16, 16)
 var idol_target: Node2D
 var combat_target: CombatUnit = null
 
+var arena_grid: ArenaGrid
 var spatial_index: CombatSpatialIndex
 var combat_system: CombatSystem
 
@@ -21,10 +23,11 @@ var velocity := Vector2.ZERO
 var target_update_timer := 0.0
 
 
-func setup(new_idol_target: Node2D, new_spatial_index: CombatSpatialIndex, new_combat_system: CombatSystem) -> void:
+func setup(new_idol_target: Node2D, new_spatial_index: CombatSpatialIndex, new_combat_system: CombatSystem, new_arena_grid: ArenaGrid) -> void:
 	idol_target = new_idol_target
 	spatial_index = new_spatial_index
 	combat_system = new_combat_system
+	arena_grid = new_arena_grid
 	target_update_timer = randf_range(0.0, TARGET_UPDATE_INTERVAL)
 
 
@@ -66,6 +69,22 @@ func move_toward_position(destination: Vector2, stop_distance: float, delta: flo
 		desired_velocity = direction * MOVE_SPEED
 
 	velocity = velocity.move_toward(desired_velocity, ACCELERATION * delta)
-	global_position += velocity * delta
+
+	var motion := velocity * delta
+
+	if arena_grid != null:
+		var old_position := global_position
+		var new_position := arena_grid.move_unit(global_position, motion, COLLISION_RADIUS)
+		var actual_motion := new_position - old_position
+
+		if not is_equal_approx(actual_motion.x, motion.x):
+			velocity.x = 0.0
+
+		if not is_equal_approx(actual_motion.y, motion.y):
+			velocity.y = 0.0
+
+		global_position = new_position
+	else:
+		global_position += motion
 
 	return distance <= stop_distance

@@ -30,7 +30,7 @@ func spawn_enemy() -> void:
 	var spawn_position := get_random_spawn_position()
 
 	enemy.global_position = grid.to_global(spawn_position)
-	enemy.setup(idol, spatial_index, combat_system)
+	enemy.setup(idol, spatial_index, combat_system, grid)
 
 
 func get_random_spawn_position() -> Vector2:

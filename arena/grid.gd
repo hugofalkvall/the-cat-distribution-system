@@ -7,8 +7,8 @@ const GRID_HEIGHT := 20
 const GRID_ORIGIN := Vector2(128, 32)
 
 const IDOL_SIZE := Vector2i(2, 2)
-@export var idol: Sprite2D
 
+@export var idol: Sprite2D
 
 var occupied_cells: Dictionary = {}
 
@@ -24,20 +24,11 @@ func grid_to_world(cell: Vector2i) -> Vector2:
 
 func world_to_grid(position: Vector2) -> Vector2i:
 	var local_position := position - GRID_ORIGIN
-
-	return Vector2i(
-		floor(local_position.x / CELL_SIZE),
-		floor(local_position.y / CELL_SIZE)
-	)
+	return Vector2i(floor(local_position.x / CELL_SIZE), floor(local_position.y / CELL_SIZE))
 
 
 func is_in_bounds(cell: Vector2i) -> bool:
-	return (
-		cell.x >= 0
-		and cell.x < GRID_WIDTH
-		and cell.y >= 0
-		and cell.y < GRID_HEIGHT
-	)
+	return cell.x >= 0 and cell.x < GRID_WIDTH and cell.y >= 0 and cell.y < GRID_HEIGHT
 
 
 func is_cell_free(cell: Vector2i) -> bool:
@@ -55,11 +46,7 @@ func can_place(cell: Vector2i, size: Vector2i) -> bool:
 	return true
 
 
-func occupy_cells(
-	start_cell: Vector2i,
-	size: Vector2i,
-	placed_object
-) -> bool:
+func occupy_cells(start_cell: Vector2i, size: Vector2i, placed_object) -> bool:
 	if not can_place(start_cell, size):
 		return false
 
@@ -71,14 +58,46 @@ func occupy_cells(
 	return true
 
 
-func free_cells(
-	start_cell: Vector2i,
-	size: Vector2i,
-	placed_object
-) -> void:
+func free_cells(start_cell: Vector2i, size: Vector2i, placed_object) -> void:
 	for y in range(size.y):
 		for x in range(size.x):
 			var cell := start_cell + Vector2i(x, y)
 
 			if occupied_cells.get(cell) == placed_object:
 				occupied_cells.erase(cell)
+
+
+func is_global_position_walkable(global_position: Vector2, radius: float) -> bool:
+	var local_position := to_local(global_position)
+	var radius_vector := Vector2(radius, radius)
+
+	var min_cell := world_to_grid(local_position - radius_vector)
+	var max_cell := world_to_grid(local_position + radius_vector)
+
+	for y in range(min_cell.y, max_cell.y + 1):
+		for x in range(min_cell.x, max_cell.x + 1):
+			var cell := Vector2i(x, y)
+
+			if not is_in_bounds(cell):
+				continue
+
+			if occupied_cells.has(cell):
+				return false
+
+	return true
+
+
+func move_unit(current_global_position: Vector2, motion: Vector2, radius: float) -> Vector2:
+	var result := current_global_position
+
+	var x_candidate := result + Vector2(motion.x, 0.0)
+
+	if is_global_position_walkable(x_candidate, radius):
+		result.x = x_candidate.x
+
+	var y_candidate := result + Vector2(0.0, motion.y)
+
+	if is_global_position_walkable(y_candidate, radius):
+		result.y = y_candidate.y
+
+	return result

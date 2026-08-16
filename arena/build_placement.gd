@@ -62,7 +62,7 @@ func place_cat_house() -> void:
 	var grid_position: Vector2 = grid.grid_to_world(placement_cell)
 	cat_house.global_position = grid.to_global(grid_position)
 
-	cat_house.setup(cats, spatial_index, combat_system)
+	cat_house.setup(cats, spatial_index, combat_system, grid)
 
 	grid.occupy_cells(placement_cell, BUILDING_SIZE, cat_house)
 
