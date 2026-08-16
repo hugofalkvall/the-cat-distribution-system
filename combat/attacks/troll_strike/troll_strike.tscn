@@ -49,7 +49,7 @@ animations = [{
 [node name="TrollStrike" type="Node2D"]
 texture_filter = 1
 script = ExtResource("1_irnnh")
-visual_offset = Vector2(5, 0)
+visual_offset = Vector2(10, 0)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(1.5, 1.5)

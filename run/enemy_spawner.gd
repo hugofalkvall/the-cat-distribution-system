@@ -5,7 +5,7 @@ const SPAWN_MARGIN := 16.0
 
 @export var enemy_scene: PackedScene
 @export var enemies: Node2D
-@export var idol: Node2D
+@export var idol: Damageable
 @export var grid: ArenaGrid
 @export var spatial_index: CombatSpatialIndex
 @export var combat_system: CombatSystem

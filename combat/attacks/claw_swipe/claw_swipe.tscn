@@ -43,12 +43,13 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack",
-"speed": 10.0
+"speed": 16.0
 }]
 
 [node name="ClawSwipe" type="Node2D"]
 script = ExtResource("1_k4djg")
 impact_frame = 3
+visual_offset = Vector2(10, 0)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1

@@ -1,10 +1,6 @@
 class_name CombatUnit
-extends Node2D
+extends Damageable
 
-signal health_changed(unit: CombatUnit, current_health: float, max_health: float)
-signal died(unit: CombatUnit)
-
-@export var max_health := 10.0
 @export var starting_attacks: Array[AttackDefinition] = []
 
 @export_group("Health Bar")
@@ -13,14 +9,11 @@ signal died(unit: CombatUnit)
 @export var health_bar_offset_y := -10.0
 @export var health_bar_always_visible := true
 
-var current_health := 0.0
-var is_dead := false
-
 var attacks: Array[AttackState] = []
 
 
 func _ready() -> void:
-	current_health = max_health
+	super._ready()
 
 	for attack_definition in starting_attacks:
 		add_attack(attack_definition)
@@ -54,17 +47,17 @@ func has_attacks() -> bool:
 	return not attacks.is_empty()
 
 
-func get_ready_attack_in_range(target: CombatUnit) -> AttackState:
+func get_ready_attack_in_range(target: Damageable) -> AttackState:
 	if not is_instance_valid(target):
 		return null
 
-	var distance_squared := global_position.distance_squared_to(target.global_position)
+	var distance_squared := global_position.distance_squared_to(target.get_combat_position())
 
 	for attack_state in attacks:
 		if not attack_state.is_ready():
 			continue
 
-		var attack_range := attack_state.get_range()
+		var attack_range := attack_state.get_range() + target.combat_radius
 
 		if distance_squared <= attack_range * attack_range:
 			return attack_state
@@ -72,12 +65,12 @@ func get_ready_attack_in_range(target: CombatUnit) -> AttackState:
 	return null
 
 
-func get_approach_range() -> float:
+func get_approach_range(target: Damageable) -> float:
 	var largest_ready_range := 0.0
 	var largest_range := 0.0
 
 	for attack_state in attacks:
-		var attack_range := attack_state.get_range()
+		var attack_range := attack_state.get_range() + target.combat_radius
 		largest_range = maxf(largest_range, attack_range)
 
 		if attack_state.is_ready():
@@ -89,7 +82,7 @@ func get_approach_range() -> float:
 	return largest_range
 
 
-func try_attack(target: CombatUnit, combat_system: CombatSystem) -> bool:
+func try_attack(target: Damageable, combat_system: CombatSystem) -> bool:
 	if is_dead:
 		return false
 
@@ -115,28 +108,7 @@ func try_attack(target: CombatUnit, combat_system: CombatSystem) -> bool:
 	return true
 
 
-func take_damage(amount: float) -> void:
-	if is_dead:
-		return
-
-	if amount <= 0.0:
-		return
-
-	current_health = maxf(current_health - amount, 0.0)
-
-	health_changed.emit(self, current_health, max_health)
-	queue_redraw()
-
-	if current_health <= 0.0:
-		die()
-
-
-func die() -> void:
-	if is_dead:
-		return
-
-	is_dead = true
-	died.emit(self)
+func on_death() -> void:
 	queue_free()
 
 

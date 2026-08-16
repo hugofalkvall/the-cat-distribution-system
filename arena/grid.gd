@@ -8,6 +8,9 @@ const GRID_ORIGIN := Vector2(128, 32)
 
 const IDOL_SIZE := Vector2i(2, 2)
 
+const STEERING_ANGLE_STEP := PI / 12.0
+const STEERING_STEPS := 6
+
 @export var idol: Sprite2D
 
 var occupied_cells: Dictionary = {}
@@ -81,23 +84,45 @@ func is_global_position_walkable(global_position: Vector2, radius: float) -> boo
 			if not is_in_bounds(cell):
 				continue
 
-			if occupied_cells.has(cell):
+			if not occupied_cells.has(cell):
+				continue
+
+			var cell_position := grid_to_world(cell)
+			var cell_rect := Rect2(cell_position, Vector2(CELL_SIZE, CELL_SIZE))
+
+			var closest_point := Vector2(
+				clamp(local_position.x, cell_rect.position.x, cell_rect.end.x),
+				clamp(local_position.y, cell_rect.position.y, cell_rect.end.y)
+			)
+
+			if local_position.distance_squared_to(closest_point) < radius * radius:
 				return false
 
 	return true
 
 
-func move_unit(current_global_position: Vector2, motion: Vector2, radius: float) -> Vector2:
-	var result := current_global_position
+func move_unit(current_global_position: Vector2, motion: Vector2, radius: float, preferred_side: float) -> Vector2:
+	if motion.is_zero_approx():
+		return current_global_position
 
-	var x_candidate := result + Vector2(motion.x, 0.0)
+	var direct_candidate := current_global_position + motion
 
-	if is_global_position_walkable(x_candidate, radius):
-		result.x = x_candidate.x
+	if is_global_position_walkable(direct_candidate, radius):
+		return direct_candidate
 
-	var y_candidate := result + Vector2(0.0, motion.y)
+	for step in range(1, STEERING_STEPS + 1):
+		var angle := STEERING_ANGLE_STEP * step
 
-	if is_global_position_walkable(y_candidate, radius):
-		result.y = y_candidate.y
+		var preferred_motion := motion.rotated(angle * preferred_side)
+		var preferred_candidate := current_global_position + preferred_motion
 
-	return result
+		if is_global_position_walkable(preferred_candidate, radius):
+			return preferred_candidate
+
+		var opposite_motion := motion.rotated(-angle * preferred_side)
+		var opposite_candidate := current_global_position + opposite_motion
+
+		if is_global_position_walkable(opposite_candidate, radius):
+			return opposite_candidate
+
+	return current_global_position

@@ -7,8 +7,8 @@
 
 [node name="EnemyTroll" type="Node2D"]
 script = ExtResource("1_6tgnk")
-max_health = 20.0
 starting_attacks = Array[ExtResource("2_7il5b")]([ExtResource("3_7il5b")])
+max_health = 20.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1

@@ -1,7 +1,7 @@
 extends Node2D
 
 const SIZE := Vector2i(2, 2)
-const PRODUCTION_TIME := 5.0
+const PRODUCTION_TIME := 10.0
 
 const BASIC_CAT_SCENE := preload("res://units/cats/cat_normal/cat_normal.tscn")
 

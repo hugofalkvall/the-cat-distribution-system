@@ -7,6 +7,7 @@ const COLLISION_RADIUS := 4.0
 const WANDER_RADIUS := 80.0
 const MIN_TARGET_DISTANCE := 20.0
 const TARGET_REACHED_DISTANCE := 5.0
+const MAX_WANDER_TARGET_ATTEMPTS := 12
 
 const DETECTION_RANGE := 80.0
 const TARGET_UPDATE_INTERVAL := 0.2
@@ -24,6 +25,7 @@ var combat_system: CombatSystem
 var combat_target: CombatUnit = null
 
 var target_update_timer := 0.0
+var avoidance_side := 1.0
 
 
 func setup(new_spatial_index: CombatSpatialIndex, new_combat_system: CombatSystem, new_arena_grid: ArenaGrid) -> void:
@@ -31,6 +33,7 @@ func setup(new_spatial_index: CombatSpatialIndex, new_combat_system: CombatSyste
 	combat_system = new_combat_system
 	arena_grid = new_arena_grid
 	home_position = global_position
+	avoidance_side = -1.0 if randf() < 0.5 else 1.0
 	target_update_timer = randf_range(0.0, TARGET_UPDATE_INTERVAL)
 	choose_new_wander_target()
 
@@ -39,8 +42,8 @@ func _process(delta: float) -> void:
 	update_combat_target(delta)
 
 	if is_instance_valid(combat_target) and has_attacks():
-		var approach_range := get_approach_range()
-		var in_attack_range := move_toward_position(combat_target.global_position, approach_range, delta)
+		var approach_range := get_approach_range(combat_target)
+		var in_attack_range := move_toward_position(combat_target.get_combat_position(), approach_range, delta)
 
 		if in_attack_range:
 			try_attack(combat_target, combat_system)
@@ -82,16 +85,15 @@ func move_toward_position(destination: Vector2, stop_distance: float, delta: flo
 
 	if arena_grid != null:
 		var old_position := global_position
-		var new_position := arena_grid.move_unit(global_position, motion, COLLISION_RADIUS)
+		var new_position := arena_grid.move_unit(global_position, motion, COLLISION_RADIUS, avoidance_side)
 		var actual_motion := new_position - old_position
 
-		if not is_equal_approx(actual_motion.x, motion.x):
-			velocity.x = 0.0
-
-		if not is_equal_approx(actual_motion.y, motion.y):
-			velocity.y = 0.0
-
 		global_position = new_position
+
+		if delta > 0.0 and not actual_motion.is_zero_approx():
+			velocity = actual_motion / delta
+		elif actual_motion.is_zero_approx():
+			velocity = Vector2.ZERO
 	else:
 		global_position += motion
 
@@ -99,15 +101,16 @@ func move_toward_position(destination: Vector2, stop_distance: float, delta: flo
 
 
 func choose_new_wander_target() -> void:
-	var new_target := home_position
-
-	while new_target.distance_to(home_position) < MIN_TARGET_DISTANCE:
+	for attempt in range(MAX_WANDER_TARGET_ATTEMPTS):
 		var angle := randf_range(0.0, TAU)
 		var distance := randf_range(MIN_TARGET_DISTANCE, WANDER_RADIUS)
+		var new_target := home_position + Vector2(cos(angle), sin(angle)) * distance
 
-		new_target = home_position + Vector2(cos(angle), sin(angle)) * distance
+		new_target.x = clamp(new_target.x, ARENA_MIN.x, ARENA_MAX.x)
+		new_target.y = clamp(new_target.y, ARENA_MIN.y, ARENA_MAX.y)
 
-	new_target.x = clamp(new_target.x, ARENA_MIN.x, ARENA_MAX.x)
-	new_target.y = clamp(new_target.y, ARENA_MIN.y, ARENA_MAX.y)
+		if arena_grid == null or arena_grid.is_global_position_walkable(new_target, COLLISION_RADIUS):
+			wander_target_position = new_target
+			return
 
-	wander_target_position = new_target
+	wander_target_position = global_position

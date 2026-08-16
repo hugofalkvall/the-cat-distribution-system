@@ -8,7 +8,7 @@ func apply(attacker, target, attack_state: AttackState, combat_system: CombatSys
 	if not is_instance_valid(target):
 		return
 
-	if not target is CombatUnit:
+	if not target is Damageable:
 		return
 
 	if target.is_dead:

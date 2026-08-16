@@ -5,7 +5,7 @@ extends Node
 @export var attack_behaviors_parent: Node2D
 
 
-func perform_attack(attacker: CombatUnit, target: CombatUnit, attack_state: AttackState) -> bool:
+func perform_attack(attacker: CombatUnit, target: Damageable, attack_state: AttackState) -> bool:
 	if not is_instance_valid(attacker):
 		return false
 
@@ -22,7 +22,7 @@ func perform_attack(attacker: CombatUnit, target: CombatUnit, attack_state: Atta
 
 	if attack_definition.behavior_scene != null:
 		if attack_behaviors_parent == null:
-			resolve_attack(attacker, target, attack_state, target.global_position)
+			resolve_attack(attacker, target, attack_state, target.get_combat_position())
 			return true
 
 		var instance := attack_definition.behavior_scene.instantiate()
@@ -30,7 +30,7 @@ func perform_attack(attacker: CombatUnit, target: CombatUnit, attack_state: Atta
 
 		if behavior == null:
 			instance.queue_free()
-			resolve_attack(attacker, target, attack_state, target.global_position)
+			resolve_attack(attacker, target, attack_state, target.get_combat_position())
 			return true
 
 		attack_behaviors_parent.add_child(behavior)
@@ -38,7 +38,7 @@ func perform_attack(attacker: CombatUnit, target: CombatUnit, attack_state: Atta
 
 		return true
 
-	resolve_attack(attacker, target, attack_state, target.global_position)
+	resolve_attack(attacker, target, attack_state, target.get_combat_position())
 
 	return true
 
