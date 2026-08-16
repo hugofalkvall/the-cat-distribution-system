@@ -7,6 +7,7 @@
 
 [node name="EnemyTroll" type="Node2D"]
 script = ExtResource("1_6tgnk")
+currency_reward = 5
 starting_attacks = Array[ExtResource("2_7il5b")]([ExtResource("3_7il5b")])
 max_health = 20.0
 

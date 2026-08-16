@@ -1,5 +1,5 @@
 class_name EnemyTroll
-extends CombatUnit
+extends EnemyUnit
 
 const MOVE_SPEED := 18.0
 const ACCELERATION := 60.0
