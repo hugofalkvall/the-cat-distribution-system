@@ -2,6 +2,7 @@ class_name Run
 extends Node2D
 
 signal game_over
+signal cat_count_changed(total_cats: int)
 
 var total_cats_produced := 0
 var is_game_over := false
@@ -22,6 +23,7 @@ func _on_idol_damaged(_damageable: Damageable, current_health: float, _max_healt
 
 func _on_cat_produced(cat: Node) -> void:
 	total_cats_produced += 1
+	cat_count_changed.emit(total_cats_produced)
 
 
 func _on_idol_died(_idol: Damageable) -> void:

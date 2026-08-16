@@ -22,4 +22,4 @@ combat_system = NodePath("../Arena/CombatSystem")
 
 [node name="Timer" type="Timer" parent="EnemySpawner"]
 
-[node name="RunUi" parent="." instance=ExtResource("5_io1fk")]
+[node name="RunUI" parent="." instance=ExtResource("5_io1fk")]
