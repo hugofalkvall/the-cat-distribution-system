@@ -1,13 +1,16 @@
-[gd_scene load_steps=6 format=3 uid="uid://c5vi6wivmiqmk"]
+[gd_scene load_steps=8 format=3 uid="uid://c5vi6wivmiqmk"]
 
 [ext_resource type="PackedScene" uid="uid://cv5nrsenatt6u" path="res://arena/arena.tscn" id="1_6y1hf"]
 [ext_resource type="Script" uid="uid://bl25dvl61h3m" path="res://run/run.gd" id="1_wkui6"]
+[ext_resource type="Script" uid="uid://blpx6i5c8vjai" path="res://buildings/building_definition.gd" id="2_w508l"]
 [ext_resource type="Script" uid="uid://c5uwbs5csqj88" path="res://run/enemy_spawner.gd" id="3_badgd"]
+[ext_resource type="Resource" uid="uid://dhcly3u3o7yw2" path="res://buildings/cat_house/cat_house.tres" id="3_k8enk"]
 [ext_resource type="PackedScene" uid="uid://cqe25xbtvor31" path="res://units/enemies/enemy_troll/enemy_troll.tscn" id="4_irdq8"]
 [ext_resource type="PackedScene" uid="uid://g3n0lmmg6hrw" path="res://ui/run_ui/run_ui.tscn" id="5_io1fk"]
 
 [node name="Run" type="Node2D"]
 script = ExtResource("1_wkui6")
+available_buildings = Array[ExtResource("2_w508l")]([ExtResource("3_k8enk")])
 
 [node name="Arena" parent="." instance=ExtResource("1_6y1hf")]
 

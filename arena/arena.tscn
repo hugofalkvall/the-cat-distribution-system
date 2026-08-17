@@ -1,11 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://cv5nrsenatt6u"]
+[gd_scene load_steps=8 format=3 uid="uid://cv5nrsenatt6u"]
 
 [ext_resource type="Texture2D" uid="uid://b7rrcfhlcwpgo" path="res://arena/Grid_background.png" id="1_dotur"]
 [ext_resource type="Texture2D" uid="uid://byoarx8cwd72v" path="res://gods/bsh_heiress/BSH_heiress_statue_alt.png" id="2_8m4co"]
 [ext_resource type="Script" uid="uid://bx27fi40pi3og" path="res://arena/idol.gd" id="3_8m4co"]
 [ext_resource type="Script" uid="uid://bwi22tjws7ujj" path="res://arena/grid.gd" id="3_dotur"]
-[ext_resource type="PackedScene" uid="uid://bj3vt0h6sl254" path="res://buildings/cat_house/cat_house.tscn" id="4_0gwdx"]
-[ext_resource type="Script" uid="uid://b2e74ruttocbq" path="res://arena/build_placement.gd" id="4_44uaw"]
+[ext_resource type="Script" uid="uid://b2e74ruttocbq" path="res://buildings/build_placement.gd" id="4_44uaw"]
 [ext_resource type="Script" uid="uid://bhj2igwphgmqq" path="res://combat/combat_system.gd" id="7_8m4co"]
 [ext_resource type="Script" uid="uid://m755ltbh66mg" path="res://combat/combat_spatial_index.gd" id="7_x52g8"]
 
@@ -34,7 +33,6 @@ idol = NodePath("../Idol")
 script = ExtResource("4_44uaw")
 grid = NodePath("../Grid")
 buildings = NodePath("../Buildings")
-cat_house_scene = ExtResource("4_0gwdx")
 cats = NodePath("../Cats")
 spatial_index = NodePath("../CombatSpatialIndex")
 combat_system = NodePath("../CombatSystem")

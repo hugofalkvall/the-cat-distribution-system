@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="BuildingDefinition" load_steps=4 format=3 uid="uid://dhcly3u3o7yw2"]
+
+[ext_resource type="Texture2D" uid="uid://bshrpokgn6qb" path="res://buildings/cat_house/Building.png" id="1_i3g51"]
+[ext_resource type="PackedScene" uid="uid://bj3vt0h6sl254" path="res://buildings/cat_house/cat_house.tscn" id="2_66a0d"]
+[ext_resource type="Script" uid="uid://blpx6i5c8vjai" path="res://buildings/building_definition.gd" id="3_828hw"]
+
+[resource]
+script = ExtResource("3_828hw")
+building_id = &"CH1"
+display_name = "Cat House"
+icon = ExtResource("1_i3g51")
+scene = ExtResource("2_66a0d")
+size = Vector2i(2, 2)
+base_cost = 15
+metadata/_custom_type_script = "uid://blpx6i5c8vjai"

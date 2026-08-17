@@ -1,7 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://g3n0lmmg6hrw"]
+[gd_scene load_steps=4 format=3 uid="uid://g3n0lmmg6hrw"]
 
 [ext_resource type="Script" uid="uid://c375tl0dp1bv4" path="res://ui/run_ui/run_ui.gd" id="1_nfmek"]
-[ext_resource type="Texture2D" uid="uid://bshrpokgn6qb" path="res://buildings/cat_house/Building.png" id="2_4j1ni"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_nfmek"]
 
@@ -48,15 +47,9 @@ text = "Currency"
 
 [node name="BuildingContainer" type="VBoxContainer" parent="HUD"]
 layout_mode = 0
-offset_left = 561.0
-offset_top = 32.0
+offset_left = 537.0
 offset_right = 640.0
 offset_bottom = 171.0
-
-[node name="CatHouseIcon" type="TextureRect" parent="HUD/BuildingContainer"]
-layout_mode = 2
-texture = ExtResource("2_4j1ni")
-stretch_mode = 2
 
 [node name="Overlays" type="Control" parent="."]
 layout_mode = 3
@@ -67,9 +60,9 @@ offset_bottom = 22.0
 [node name="GameOverLabel" type="Label" parent="Overlays"]
 texture_filter = 1
 layout_mode = 1
-offset_left = 230.0
-offset_top = 160.0
-offset_right = 317.0
-offset_bottom = 183.0
+offset_left = 222.0
+offset_top = 154.0
+offset_right = 417.0
+offset_bottom = 204.0
 text = "Game Over"
 label_settings = SubResource("LabelSettings_4j1ni")
