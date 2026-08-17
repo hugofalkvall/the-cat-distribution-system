@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://t2xprv4a15ib" path="res://units/enemies/enemy_troll/enemy_troll.gd" id="1_6tgnk"]
 [ext_resource type="Script" uid="uid://bu6mktrtul01f" path="res://combat/attack_definition.gd" id="2_7il5b"]
-[ext_resource type="Texture2D" uid="uid://bukg52egcnb6c" path="res://units/enemies/enemy_troll/Enemy_troll.png" id="2_k1iu3"]
 [ext_resource type="Resource" uid="uid://bt6lhhmsqbfb3" path="res://combat/attacks/troll_strike/troll_strike.tres" id="3_7il5b"]
+[ext_resource type="Texture2D" uid="uid://cnpf6r3mvksft" path="res://units/enemies/enemy_troll/Enemy_troll-export.png" id="4_7il5b"]
 
 [node name="EnemyTroll" type="Node2D"]
 script = ExtResource("1_6tgnk")
@@ -13,4 +13,4 @@ max_health = 20.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
-texture = ExtResource("2_k1iu3")
+texture = ExtResource("4_7il5b")

@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://g3n0lmmg6hrw"]
+[gd_scene load_steps=5 format=3 uid="uid://g3n0lmmg6hrw"]
 
 [ext_resource type="Script" uid="uid://c375tl0dp1bv4" path="res://ui/run_ui/run_ui.gd" id="1_nfmek"]
+[ext_resource type="Texture2D" uid="uid://bshrpokgn6qb" path="res://buildings/cat_house/Building.png" id="2_4j1ni"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_nfmek"]
 
@@ -17,53 +18,51 @@ script = ExtResource("1_nfmek")
 layout_mode = 3
 anchors_preset = 0
 
-[node name="IdolHealthLabel" type="Label" parent="HUD"]
-texture_filter = 1
+[node name="StatContainer" type="VBoxContainer" parent="HUD"]
 layout_mode = 0
-offset_right = 90.0
-offset_bottom = 23.0
+offset_right = 40.0
+offset_bottom = 40.0
 scale = Vector2(0.5, 0.5)
-text = "Idol health"
+
+[node name="IdolHealthLabel" type="Label" parent="HUD/StatContainer"]
+texture_filter = 1
+layout_mode = 2
+text = "HP"
 label_settings = SubResource("LabelSettings_nfmek")
 
-[node name="CatCountTotalLabel" type="Label" parent="HUD"]
-layout_mode = 0
-offset_top = 28.0
-offset_right = 75.0
-offset_bottom = 51.0
-scale = Vector2(0.5, 0.5)
-text = "Cat count"
-
-[node name="CatCountLabel" type="Label" parent="HUD"]
-layout_mode = 0
-offset_top = 28.0
-offset_right = 75.0
-offset_bottom = 51.0
-scale = Vector2(0.5, 0.5)
-text = "Cat count"
-
-[node name="IdolHealthProgressBar" type="ProgressBar" parent="HUD"]
+[node name="IdolHealthProgressBar" type="ProgressBar" parent="HUD/StatContainer"]
 texture_filter = 1
-layout_mode = 0
-offset_top = 12.0
-offset_right = 200.0
-offset_bottom = 39.0
-scale = Vector2(0.5, 0.5)
+layout_mode = 2
 
-[node name="Currency" type="Label" parent="HUD"]
-layout_mode = 0
-offset_top = 42.0
-offset_right = 70.0
-offset_bottom = 65.0
-scale = Vector2(0.5, 0.5)
+[node name="CatCountTotalLabel" type="Label" parent="HUD/StatContainer"]
+layout_mode = 2
+text = "Cat total count"
+
+[node name="CatCountLabel" type="Label" parent="HUD/StatContainer"]
+layout_mode = 2
+text = "Cat count"
+
+[node name="Currency" type="Label" parent="HUD/StatContainer"]
+layout_mode = 2
 text = "Currency"
+
+[node name="BuildingContainer" type="VBoxContainer" parent="HUD"]
+layout_mode = 0
+offset_left = 561.0
+offset_top = 32.0
+offset_right = 640.0
+offset_bottom = 171.0
+
+[node name="CatHouseIcon" type="TextureRect" parent="HUD/BuildingContainer"]
+layout_mode = 2
+texture = ExtResource("2_4j1ni")
+stretch_mode = 2
 
 [node name="Overlays" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_top = 5.0
-offset_right = 40.0
-offset_bottom = 45.0
+offset_right = 35.0
+offset_bottom = 22.0
 
 [node name="GameOverLabel" type="Label" parent="Overlays"]
 texture_filter = 1

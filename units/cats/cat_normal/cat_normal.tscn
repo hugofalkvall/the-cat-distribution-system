@@ -8,6 +8,7 @@
 [node name="CatNormal" type="Node2D"]
 script = ExtResource("1_7rkw4")
 starting_attacks = Array[ExtResource("2_np077")]([ExtResource("3_np077")])
+health_bar_always_visible = false
 
 [node name="Texture" type="Sprite2D" parent="."]
 texture_filter = 1

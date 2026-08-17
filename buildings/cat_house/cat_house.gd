@@ -1,7 +1,7 @@
 extends Node2D
 
 const SIZE := Vector2i(2, 2)
-const PRODUCTION_TIME := 10.0
+const PRODUCTION_TIME := 5.0
 
 const BASIC_CAT_SCENE := preload("res://units/cats/cat_normal/cat_normal.tscn")
 
@@ -17,6 +17,7 @@ func setup(new_cats_parent: Node2D, new_spatial_index: CombatSpatialIndex, new_c
 	spatial_index = new_spatial_index
 	combat_system = new_combat_system
 	arena_grid = new_arena_grid
+	
 
 
 func _process(delta: float) -> void:
