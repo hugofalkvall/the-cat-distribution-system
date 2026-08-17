@@ -144,7 +144,7 @@ func place_building(definition: BuildingDefinition, cell: Vector2i) -> bool:
 		return false
 
 	queue_redraw()
-
+	selected_building = null
 	return true
 
 
