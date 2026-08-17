@@ -23,6 +23,32 @@ func _process(delta: float) -> void:
 		update_timer = 0.0
 		rebuild()
 
+func has_unit_in_rect(rect: Rect2) -> bool:
+	return has_unit_in_rect_from_buckets(rect, cats_by_bucket) or has_unit_in_rect_from_buckets(rect, enemies_by_bucket)
+
+
+func has_unit_in_rect_from_buckets(rect: Rect2, buckets: Dictionary) -> bool:
+	var min_bucket := position_to_bucket(rect.position)
+	var max_bucket := position_to_bucket(rect.end)
+
+	for y in range(min_bucket.y, max_bucket.y + 1):
+		for x in range(min_bucket.x, max_bucket.x + 1):
+			var bucket := Vector2i(x, y)
+
+			if not buckets.has(bucket):
+				continue
+
+			for unit in buckets[bucket]:
+				if not is_instance_valid(unit):
+					continue
+
+				if unit.is_queued_for_deletion():
+					continue
+
+				if rect.has_point(unit.global_position):
+					return true
+
+	return false
 
 func rebuild() -> void:
 	cats_by_bucket.clear()

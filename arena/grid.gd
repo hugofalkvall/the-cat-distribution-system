@@ -100,6 +100,12 @@ func is_global_position_walkable(global_position: Vector2, radius: float) -> boo
 
 	return true
 
+func get_global_cell_rect(start_cell: Vector2i, size: Vector2i = Vector2i.ONE) -> Rect2:
+	var local_position := grid_to_world(start_cell)
+	var global_position := to_global(local_position)
+	var pixel_size := Vector2(size.x * CELL_SIZE, size.y * CELL_SIZE)
+
+	return Rect2(global_position, pixel_size)
 
 func move_unit(current_global_position: Vector2, motion: Vector2, radius: float, preferred_side: float) -> Vector2:
 	if motion.is_zero_approx():

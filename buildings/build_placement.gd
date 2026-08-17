@@ -113,6 +113,11 @@ func can_place_building(definition: BuildingDefinition, cell: Vector2i) -> bool:
 
 	if definition.scene == null:
 		return false
+		
+	var placement_rect := grid.get_global_cell_rect(cell, definition.size)
+
+	if spatial_index.has_unit_in_rect(placement_rect):
+		return false
 
 	if definition.size.x <= 0 or definition.size.y <= 0:
 		return false
