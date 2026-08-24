@@ -6,7 +6,7 @@
 
 [resource]
 script = ExtResource("3_828hw")
-building_id = &"CH1"
+building_id = &"CB1"
 display_name = "Cat House"
 icon = ExtResource("1_i3g51")
 scene = ExtResource("2_66a0d")

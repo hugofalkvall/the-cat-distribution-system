@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://drdpviudrb1wc"]
+
+[ext_resource type="Script" uid="uid://dsu231cmh6h11" path="res://units/cats/cat_mage/cat_mage.gd" id="1_y1y44"]
+[ext_resource type="Texture2D" uid="uid://cdko20f16q2ie" path="res://units/cats/cat_mage/Cat_mage.png" id="2_1kho5"]
+
+[node name="CatMage" type="Node2D"]
+script = ExtResource("1_y1y44")
+health_bar_always_visible = false
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_1kho5")
