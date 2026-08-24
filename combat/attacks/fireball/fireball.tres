@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="AttackDefinition" load_steps=6 format=3 uid="uid://cl3etfksyhjxd"]
+
+[ext_resource type="Script" uid="uid://dftfkylqm4682" path="res://combat/effects/attack_effect_definition.gd" id="1_akapq"]
+[ext_resource type="PackedScene" uid="uid://67xw8un5ke8v" path="res://combat/attacks/fireball/fireball.tscn" id="1_d5toa"]
+[ext_resource type="Script" uid="uid://bu6mktrtul01f" path="res://combat/attack_definition.gd" id="2_h3sy6"]
+[ext_resource type="Script" uid="uid://cqg2g7p68pwvl" path="res://combat/effects/direct_damage_effect.gd" id="3_ju768"]
+
+[sub_resource type="Resource" id="Resource_3y5vo"]
+script = ExtResource("3_ju768")
+damage = 15.0
+metadata/_custom_type_script = "uid://cqg2g7p68pwvl"
+
+[resource]
+script = ExtResource("2_h3sy6")
+attack_name = &"fireball"
+range = 60.0
+cooldown = 1.5
+behavior_scene = ExtResource("1_d5toa")
+effects = Array[ExtResource("1_akapq")]([SubResource("Resource_3y5vo")])
+metadata/_custom_type_script = "uid://bu6mktrtul01f"

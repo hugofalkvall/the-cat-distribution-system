@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="BuildingDefinition" load_steps=4 format=3 uid="uid://cvl5l6savclu1"]
 
-[ext_resource type="Texture2D" uid="uid://cefbsjftouqbc" path="res://buildings/cat_building_mage/cat_building_mage.png" id="1_5xd0l"]
+[ext_resource type="Texture2D" uid="uid://cva6qpw0gftnd" path="res://placeholder/Placeholder_purple.png" id="1_5xd0l"]
 [ext_resource type="PackedScene" uid="uid://cyuequ8e3p48b" path="res://buildings/cat_building_mage/cat_building_mage.tscn" id="2_5eqo5"]
 [ext_resource type="Script" uid="uid://blpx6i5c8vjai" path="res://buildings/building_definition.gd" id="3_y8w2c"]
 
@@ -11,4 +11,4 @@ display_name = "Cat building mage"
 icon = ExtResource("1_5xd0l")
 scene = ExtResource("2_5eqo5")
 size = Vector2i(2, 2)
-base_cost = 30
+base_cost = 3

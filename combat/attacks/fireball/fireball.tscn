@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://67xw8un5ke8v"]
+
+[ext_resource type="Script" uid="uid://dx1c5gx2rprgi" path="res://combat/attacks/fireball/fireball.gd" id="1_2mhcc"]
+[ext_resource type="Texture2D" uid="uid://bncnwcfx00k6w" path="res://combat/attacks/fireball/Fireball.png" id="2_57i8w"]
+
+[node name="Fireball" type="Node2D"]
+script = ExtResource("1_2mhcc")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_57i8w")
