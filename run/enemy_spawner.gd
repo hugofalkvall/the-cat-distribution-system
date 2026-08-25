@@ -51,7 +51,7 @@ func get_random_spawn_position(spawn_sides: int) -> Vector2:
 	if available_sides.is_empty():
 		available_sides = [SPAWN_NORTH, SPAWN_EAST, SPAWN_WEST]
 
-	var side := available_sides.pick_random()
+	var side: int = available_sides.pick_random()
 
 	var left := float(grid.GRID_ORIGIN.x)
 	var right := float(grid.GRID_ORIGIN.x + grid.GRID_WIDTH * grid.CELL_SIZE)

@@ -16,8 +16,13 @@ available_buildings = Array[ExtResource("2_w508l")]([ExtResource("3_k8enk"), Ext
 
 [node name="Arena" parent="." instance=ExtResource("1_6y1hf")]
 
-[node name="EnemySpawner" type="Node" parent="."]
+[node name="EnemySpawner" type="Node" parent="." node_paths=PackedStringArray("enemies", "idol", "grid", "spatial_index", "combat_system")]
 script = ExtResource("3_badgd")
+enemies = NodePath("../Arena/Enemies")
+idol = NodePath("../Arena/Idol")
+grid = NodePath("../Arena/Grid")
+spatial_index = NodePath("../Arena/CombatSpatialIndex")
+combat_system = NodePath("../Arena/CombatSpatialIndex")
 
 [node name="RunUI" parent="." instance=ExtResource("5_io1fk")]
 

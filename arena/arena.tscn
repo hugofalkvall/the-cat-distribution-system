@@ -34,7 +34,7 @@ script = ExtResource("4_44uaw")
 grid = NodePath("../Grid")
 buildings = NodePath("../Buildings")
 cats = NodePath("../Cats")
-spatial_index = NodePath("../CombatSpatialIndex")
+spatial_index = NodePath("")
 combat_system = NodePath("../CombatSystem")
 
 [node name="Buildings" type="Node2D" parent="."]
@@ -43,14 +43,14 @@ combat_system = NodePath("../CombatSystem")
 
 [node name="Enemies" type="Node2D" parent="."]
 
-[node name="CombatSpatialIndex" type="Node2D" parent="." node_paths=PackedStringArray("cats_parent", "enemies_parent")]
+[node name="CombatSpatialIndex" type="Node" parent="." node_paths=PackedStringArray("cats_parent", "enemies_parent")]
 script = ExtResource("7_x52g8")
 cats_parent = NodePath("../Cats")
 enemies_parent = NodePath("../Enemies")
 
 [node name="CombatSystem" type="Node" parent="." node_paths=PackedStringArray("spatial_index", "attack_behaviors_parent")]
 script = ExtResource("7_8m4co")
-spatial_index = NodePath("../CombatSpatialIndex")
+spatial_index = NodePath("")
 attack_behaviors_parent = NodePath("../AttackBehaviours")
 
 [node name="AttackBehaviours" type="Node2D" parent="."]
