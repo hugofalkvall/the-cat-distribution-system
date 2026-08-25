@@ -1,6 +1,16 @@
 class_name Run
 extends Node2D
 
+enum Phase {
+	BUILD,
+	COMBAT,
+	GAME_OVER,
+	WAVEVICTORY,
+	VICTORY
+}
+
+var phase := Phase.BUILD
+
 signal game_over
 signal cat_count_changed(total_cats: int, current_cats: int)
 signal currency_changed(total_currency: int)
@@ -18,7 +28,7 @@ var is_game_over := false
 @onready var idol: Damageable = $Arena/Idol
 @onready var build_placement: BuildPlacement = $Arena/BuildPlacement
 @onready var run_ui: RunUI = $RunUI
-
+@onready var wave_director: WaveDirector = $WaveDirector
 
 func _ready() -> void:
 	currency = starting_currency
@@ -29,6 +39,11 @@ func _ready() -> void:
 
 	run_ui.building_selected.connect(_on_building_selected)
 	build_placement.placement_requested.connect(_on_building_placement_requested)
+
+	wave_director.intermission_started.connect(_on_intermission_started)
+	wave_director.wave_started.connect(_on_wave_started)
+	wave_director.wave_completed.connect(_on_wave_completed)
+	wave_director.all_waves_completed.connect(_on_all_waves_completed)
 
 	for enemy in enemies.get_children():
 		_register_enemy(enemy)
@@ -109,6 +124,11 @@ func get_building_cost(definition: BuildingDefinition) -> int:
 
 
 func _on_building_selected(definition: BuildingDefinition) -> void:
+	
+	if phase != Phase.BUILD:
+		print("Cannot build during a wave")
+		return
+	
 	if not available_buildings.has(definition):
 		return
 
@@ -144,3 +164,19 @@ func _on_idol_died(_idol: Damageable) -> void:
 	game_over.emit()
 
 	print("GAME OVER")
+
+func _on_intermission_started(wave_number: int, total_waves: int, duration: float) -> void:
+	print("Preparing wave ", wave_number, "/", total_waves, " - ", duration, " seconds")
+	phase = Phase.BUILD
+
+func _on_wave_started(wave_number: int, total_waves: int, definition: WaveDefinition) -> void:
+	print("Wave ", wave_number, "/", total_waves, ": ", definition.display_name)
+	phase = Phase.COMBAT
+	build_placement.cancel_placement()
+
+func _on_wave_completed(_wave_number: int, _total_waves: int, definition: WaveDefinition) -> void:
+	add_currency(definition.completion_reward)
+	phase = Phase.WAVEVICTORY
+
+func _on_all_waves_completed() -> void:
+	print("ALL WAVES COMPLETED")

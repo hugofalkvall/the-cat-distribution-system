@@ -1,0 +1,73 @@
+[gd_resource type="Resource" script_class="WaveSetDefinition" load_steps=12 format=3 uid="uid://bggl6qyp65wgq"]
+
+[ext_resource type="Script" uid="uid://c8kcpnp8mf7uh" path="res://run/waves/wave_set_definition.gd" id="1_ixakv"]
+[ext_resource type="Script" uid="uid://cu8u2cap0qfbp" path="res://run/waves/wave_definition.gd" id="2_lcy7b"]
+[ext_resource type="Script" uid="uid://civlog6ib774t" path="res://run/waves/wave_spawn_group_definition.gd" id="3_dh58w"]
+[ext_resource type="PackedScene" uid="uid://cqe25xbtvor31" path="res://units/enemies/enemy_troll/enemy_troll.tscn" id="4_85nel"]
+
+[sub_resource type="Resource" id="Resource_gmxwn"]
+script = ExtResource("3_dh58w")
+enemy_scene = ExtResource("4_85nel")
+count = 3
+start_delay = 0.0
+spawn_interval = 2.0
+spawn_sides = 1
+metadata/_custom_type_script = "uid://civlog6ib774t"
+
+[sub_resource type="Resource" id="Resource_7yccb"]
+script = ExtResource("2_lcy7b")
+display_name = "First wave"
+intermission_duration = -1.0
+completion_reward = 5
+spawn_groups = Array[ExtResource("3_dh58w")]([SubResource("Resource_gmxwn")])
+metadata/_custom_type_script = "uid://cu8u2cap0qfbp"
+
+[sub_resource type="Resource" id="Resource_cdbrp"]
+script = ExtResource("3_dh58w")
+enemy_scene = ExtResource("4_85nel")
+count = 3
+start_delay = 0.0
+spawn_interval = 2.0
+spawn_sides = 1
+metadata/_custom_type_script = "uid://civlog6ib774t"
+
+[sub_resource type="Resource" id="Resource_5afes"]
+script = ExtResource("3_dh58w")
+enemy_scene = ExtResource("4_85nel")
+count = 3
+start_delay = 0.0
+spawn_interval = 1.0
+spawn_sides = 7
+metadata/_custom_type_script = "uid://civlog6ib774t"
+
+[sub_resource type="Resource" id="Resource_nqrq0"]
+script = ExtResource("2_lcy7b")
+display_name = "Second wave"
+intermission_duration = -1.0
+completion_reward = 7
+spawn_groups = Array[ExtResource("3_dh58w")]([SubResource("Resource_cdbrp"), SubResource("Resource_5afes")])
+metadata/_custom_type_script = "uid://cu8u2cap0qfbp"
+
+[sub_resource type="Resource" id="Resource_155vk"]
+script = ExtResource("3_dh58w")
+enemy_scene = ExtResource("4_85nel")
+count = 10
+start_delay = 0.0
+spawn_interval = 10.0
+spawn_sides = 1
+metadata/_custom_type_script = "uid://civlog6ib774t"
+
+[sub_resource type="Resource" id="Resource_vdbhj"]
+script = ExtResource("2_lcy7b")
+display_name = "Third wave"
+intermission_duration = -1.0
+completion_reward = 50
+spawn_groups = Array[ExtResource("3_dh58w")]([SubResource("Resource_155vk")])
+metadata/_custom_type_script = "uid://cu8u2cap0qfbp"
+
+[resource]
+script = ExtResource("1_ixakv")
+initial_intermission_duration = 10.0
+default_intermission_duration = 5.0
+waves = Array[ExtResource("2_lcy7b")]([SubResource("Resource_7yccb"), SubResource("Resource_nqrq0"), SubResource("Resource_vdbhj")])
+metadata/_custom_type_script = "uid://c8kcpnp8mf7uh"

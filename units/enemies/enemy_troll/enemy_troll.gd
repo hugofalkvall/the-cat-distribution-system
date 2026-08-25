@@ -8,23 +8,14 @@ const COLLISION_RADIUS := 4.0
 const DETECTION_RANGE := 80.0
 const TARGET_UPDATE_INTERVAL := 0.2
 
-var idol_target: Damageable
 var combat_target: Damageable = null
-
-var arena_grid: ArenaGrid
-var spatial_index: CombatSpatialIndex
-var combat_system: CombatSystem
 
 var velocity := Vector2.ZERO
 var target_update_timer := 0.0
 var avoidance_side := 1.0
 
 
-func setup(new_idol_target: Damageable, new_spatial_index: CombatSpatialIndex, new_combat_system: CombatSystem, new_arena_grid: ArenaGrid) -> void:
-	idol_target = new_idol_target
-	spatial_index = new_spatial_index
-	combat_system = new_combat_system
-	arena_grid = new_arena_grid
+func on_enemy_setup() -> void:
 	avoidance_side = -1.0 if randf() < 0.5 else 1.0
 	target_update_timer = randf_range(0.0, TARGET_UPDATE_INTERVAL)
 
