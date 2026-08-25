@@ -1,15 +1,14 @@
-[gd_scene load_steps=11 format=3 uid="uid://c5vi6wivmiqmk"]
+[gd_scene load_steps=10 format=3 uid="uid://c5vi6wivmiqmk"]
 
 [ext_resource type="PackedScene" uid="uid://cv5nrsenatt6u" path="res://arena/arena.tscn" id="1_6y1hf"]
 [ext_resource type="Script" uid="uid://bl25dvl61h3m" path="res://run/run.gd" id="1_wkui6"]
 [ext_resource type="Script" uid="uid://blpx6i5c8vjai" path="res://buildings/building_definition.gd" id="2_w508l"]
 [ext_resource type="Script" uid="uid://c5uwbs5csqj88" path="res://run/enemy_spawner.gd" id="3_badgd"]
 [ext_resource type="Resource" uid="uid://dhcly3u3o7yw2" path="res://buildings/cat_house/cat_house.tres" id="3_k8enk"]
-[ext_resource type="PackedScene" uid="uid://cqe25xbtvor31" path="res://units/enemies/enemy_troll/enemy_troll.tscn" id="4_irdq8"]
 [ext_resource type="Resource" uid="uid://cvl5l6savclu1" path="res://buildings/cat_building_mage/cat_building_mage.tres" id="4_w508l"]
 [ext_resource type="PackedScene" uid="uid://g3n0lmmg6hrw" path="res://ui/run_ui/run_ui.tscn" id="5_io1fk"]
 [ext_resource type="Script" uid="uid://mjedjprgew68" path="res://run/waves/wave_director.gd" id="9_av6hb"]
-[ext_resource type="Resource" uid="uid://bggl6qyp65wgq" path="res://run/waves/defenitions/main_wave.tres" id="10_yw4up"]
+[ext_resource type="Resource" uid="uid://bggl6qyp65wgq" path="res://run/waves/definitions/main_wave.tres" id="10_yw4up"]
 
 [node name="Run" type="Node2D"]
 script = ExtResource("1_wkui6")
@@ -17,19 +16,13 @@ available_buildings = Array[ExtResource("2_w508l")]([ExtResource("3_k8enk"), Ext
 
 [node name="Arena" parent="." instance=ExtResource("1_6y1hf")]
 
-[node name="EnemySpawner" type="Node" parent="." node_paths=PackedStringArray("enemies", "idol", "grid", "spatial_index", "combat_system")]
+[node name="EnemySpawner" type="Node" parent="."]
 script = ExtResource("3_badgd")
-enemy_scene = ExtResource("4_irdq8")
-enemies = NodePath("../Arena/Enemies")
-idol = NodePath("../Arena/Idol")
-grid = NodePath("../Arena/Grid")
-spatial_index = NodePath("../Arena/CombatSpatialIndex")
-combat_system = NodePath("../Arena/CombatSystem")
 
 [node name="RunUI" parent="." instance=ExtResource("5_io1fk")]
 
-[node name="WaveDirector" type="Node2D" parent="." node_paths=PackedStringArray("enemy_spawner", "enemies")]
+[node name="WaveDirector" type="Node" parent="." node_paths=PackedStringArray("enemy_spawner", "enemies")]
 script = ExtResource("9_av6hb")
 wave_set = ExtResource("10_yw4up")
 enemy_spawner = NodePath("../EnemySpawner")
-enemies = NodePath("../Arena")
+enemies = NodePath("../Arena/Enemies")

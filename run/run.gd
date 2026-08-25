@@ -5,7 +5,6 @@ enum Phase {
 	BUILD,
 	COMBAT,
 	GAME_OVER,
-	WAVEVICTORY,
 	VICTORY
 }
 
@@ -49,6 +48,8 @@ func _ready() -> void:
 		_register_enemy(enemy)
 
 	run_ui.setup(self, idol)
+
+	wave_director.start()
 
 
 func _on_cat_produced(cat: Node) -> void:
@@ -139,6 +140,9 @@ func _on_building_placement_requested(definition: BuildingDefinition, cell: Vect
 	if is_game_over:
 		return
 
+	if phase != Phase.BUILD:
+		return
+		
 	if not available_buildings.has(definition):
 		return
 
@@ -158,6 +162,7 @@ func _on_idol_died(_idol: Damageable) -> void:
 		return
 
 	is_game_over = true
+	phase = Phase.GAME_OVER
 
 	build_placement.cancel_placement()
 
@@ -176,7 +181,10 @@ func _on_wave_started(wave_number: int, total_waves: int, definition: WaveDefini
 
 func _on_wave_completed(_wave_number: int, _total_waves: int, definition: WaveDefinition) -> void:
 	add_currency(definition.completion_reward)
-	phase = Phase.WAVEVICTORY
+	phase = Phase.VICTORY
 
 func _on_all_waves_completed() -> void:
+	phase = Phase.VICTORY
+	build_placement.cancel_placement()
+
 	print("ALL WAVES COMPLETED")

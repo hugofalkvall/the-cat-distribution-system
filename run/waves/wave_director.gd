@@ -74,7 +74,14 @@ func process_spawn_group(group_state: Dictionary, delta: float) -> void:
 	group_state["elapsed"] += delta
 
 	while group_state["spawned"] < definition.count and group_state["elapsed"] >= group_state["next_spawn_time"]:
-		enemy_spawner.spawn_enemy(definition.enemy_scene, definition.spawn_sides)
+		var enemy := enemy_spawner.spawn_enemy(
+			definition.enemy_scene,
+			definition.spawn_sides
+		)
+
+		if enemy == null:
+			push_error("WaveDirector failed to spawn enemy.")
+			return
 
 		group_state["spawned"] += 1
 		group_state["next_spawn_time"] += definition.spawn_interval
