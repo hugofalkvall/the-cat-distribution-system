@@ -18,6 +18,21 @@ var building_context: BuildingContext
 
 
 func _ready() -> void:
+	if grid == null:
+		push_error("BuildPlacement: grid is not assigned.")
+
+	if buildings == null:
+		push_error("BuildPlacement: buildings is not assigned.")
+
+	if cats == null:
+		push_error("BuildPlacement: cats is not assigned.")
+
+	if spatial_index == null:
+		push_error("BuildPlacement: spatial_index is not assigned.")
+
+	if combat_system == null:
+		push_error("BuildPlacement: combat_system is not assigned.")
+
 	building_context = BuildingContext.new()
 	building_context.grid = grid
 	building_context.cats_parent = cats
