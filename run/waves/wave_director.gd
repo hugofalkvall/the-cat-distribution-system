@@ -4,6 +4,7 @@ extends Node
 signal intermission_started(wave_number: int, total_waves: int, duration: float)
 signal wave_started(wave_number: int, total_waves: int, definition: WaveDefinition)
 signal wave_completed(wave_number: int, total_waves: int, definition: WaveDefinition)
+signal wave_progress_changed(defeated_enemies: int, total_enemies: int)
 signal all_waves_completed
 
 enum State {
@@ -20,6 +21,9 @@ enum State {
 var state := State.IDLE
 var current_wave_index := -1
 var intermission_remaining := 0.0
+
+var current_wave_total_enemies := 0
+var last_reported_defeated_enemies := -1
 
 var group_states: Array[Dictionary] = []
 
@@ -54,6 +58,8 @@ func finish_intermission() -> void:
 func process_wave(delta: float) -> void:
 	for group_state in group_states:
 		process_spawn_group(group_state, delta)
+
+	report_wave_progress()
 
 	if not all_groups_finished():
 		return
@@ -119,9 +125,14 @@ func start_current_wave() -> void:
 
 	group_states.clear()
 
+	current_wave_total_enemies = 0
+	last_reported_defeated_enemies = -1
+
 	for spawn_group in definition.spawn_groups:
 		if spawn_group == null:
 			continue
+
+		current_wave_total_enemies += spawn_group.count
 
 		group_states.append({
 			"definition": spawn_group,
@@ -138,6 +149,42 @@ func start_current_wave() -> void:
 		definition
 	)
 
+	report_wave_progress()
+
+func get_unspawned_enemy_count() -> int:
+	var unspawned := 0
+
+	for group_state in group_states:
+		var definition: WaveSpawnGroupDefinition = group_state["definition"]
+		var spawned: int = group_state["spawned"]
+
+		unspawned += definition.count - spawned
+
+	return unspawned
+
+
+func get_defeated_enemy_count() -> int:
+	var unspawned := get_unspawned_enemy_count()
+	var alive := enemies.get_child_count()
+
+	return maxi(current_wave_total_enemies - unspawned - alive, 0)
+
+
+func report_wave_progress() -> void:
+	if current_wave_total_enemies <= 0:
+		return
+
+	var defeated := get_defeated_enemy_count()
+
+	if defeated == last_reported_defeated_enemies:
+		return
+
+	last_reported_defeated_enemies = defeated
+
+	wave_progress_changed.emit(
+		defeated,
+		current_wave_total_enemies
+	)
 
 func all_groups_finished() -> bool:
 	for group_state in group_states:
@@ -151,6 +198,13 @@ func all_groups_finished() -> bool:
 
 func complete_current_wave() -> void:
 	var definition := wave_set.waves[current_wave_index]
+
+	last_reported_defeated_enemies = current_wave_total_enemies
+
+	wave_progress_changed.emit(
+		current_wave_total_enemies,
+		current_wave_total_enemies
+	)
 
 	wave_completed.emit(
 		current_wave_index + 1,

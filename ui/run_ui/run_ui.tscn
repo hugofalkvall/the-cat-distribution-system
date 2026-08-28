@@ -85,10 +85,11 @@ anchors_preset = 0
 z_index = 1
 texture_filter = 1
 layout_mode = 0
-offset_left = 253.0
+offset_left = 280.0
 offset_top = 5.0
-offset_right = 397.0
+offset_right = 424.0
 offset_bottom = 28.0
+scale = Vector2(0.5, 0.5)
 text = "Intermisson phase"
 
 [node name="GameOverPhaseLabel" type="Label" parent="Overlays"]
@@ -109,3 +110,20 @@ offset_right = 456.0
 offset_bottom = 204.0
 text = "Victory"
 label_settings = SubResource("LabelSettings_stpfy")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Overlays"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 240.0
+offset_top = 5.0
+offset_right = 558.0
+offset_bottom = 32.0
+scale = Vector2(0.5, 0.5)
+
+[node name="WaveProgressLabel" type="Label" parent="Overlays/HBoxContainer"]
+layout_mode = 2
+text = "Wave progress"
+
+[node name="WaverogressBar" type="ProgressBar" parent="Overlays/HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2

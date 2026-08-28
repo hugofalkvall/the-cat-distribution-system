@@ -15,6 +15,7 @@ signal victory
 signal wave_finnished
 signal cat_count_changed(total_cats: int, current_cats: int)
 signal currency_changed(total_currency: int)
+signal wave_progress_changed(defeated_enemies: int, total_enemies: int)
 
 @export var starting_currency := 20
 @export var available_buildings: Array[BuildingDefinition] = []
@@ -47,6 +48,7 @@ func _ready() -> void:
 	wave_director.wave_started.connect(_on_wave_started)
 	wave_director.wave_completed.connect(_on_wave_completed)
 	wave_director.all_waves_completed.connect(_on_all_waves_completed)
+	wave_director.wave_progress_changed.connect(_on_wave_progress_changed)
 
 	for enemy in enemies.get_children():
 		_register_enemy(enemy)
@@ -76,6 +78,8 @@ func _on_cat_died(_cat: Damageable) -> void:
 func _on_enemy_spawned(enemy: Node) -> void:
 	_register_enemy(enemy)
 
+func _on_wave_progress_changed(defeated_enemies: int, total_enemies: int) -> void:
+	wave_progress_changed.emit(defeated_enemies, total_enemies)
 
 func _register_enemy(enemy: Node) -> void:
 	if not enemy is EnemyUnit:

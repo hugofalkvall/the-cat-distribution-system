@@ -19,6 +19,10 @@ const BUILDING_BUTTON_SCENE := preload("res://ui/building_button/building_button
 @onready var victory_phase_label: Label = $Overlays/VictoryPhaseLabel
 @onready var intermission_phase_label: Label = $Overlays/IntermissionPhaseLabel
 
+@onready var wave_progress_container: HBoxContainer = $Overlays/HBoxContainer
+@onready var wave_progress_label: Label = $Overlays/HBoxContainer/WaveProgressLabel
+@onready var wave_progress_bar: ProgressBar = $Overlays/HBoxContainer/WaverogressBar
+
 @onready var start_wave_button: Button = $HUD/StartWaveButton
 
 var run_state: Run
@@ -34,6 +38,7 @@ func setup(new_run: Run, idol: Damageable) -> void:
 	run_state.wave_finnished.connect(_on_wave_finnished)
 	run_state.cat_count_changed.connect(_on_cat_count_changed)
 	run_state.currency_changed.connect(_on_currency_changed)
+	run_state.wave_progress_changed.connect(_on_wave_progress_changed)
 
 	start_wave_button.pressed.connect(_on_start_wave_button_pressed)
 	start_wave_button.visible = false
@@ -51,6 +56,10 @@ func setup(new_run: Run, idol: Damageable) -> void:
 	victory_phase_label.visible = false
 	intermission_phase_label.visible = true
 
+	wave_progress_container.visible = false
+	wave_progress_bar.min_value = 0
+	wave_progress_bar.max_value = 100
+	wave_progress_bar.value = 0
 
 func populate_building_buttons() -> void:
 	for child in building_container.get_children():
@@ -86,13 +95,31 @@ func _on_idol_health_changed(_idol: Damageable, current_health: float, max_healt
 	idol_health_bar.max_value = max_health
 	idol_health_bar.value = current_health
 	update_idol_health_label(current_health, max_health)
+
+func _on_wave_progress_changed(defeated_enemies: int, total_enemies: int) -> void:
+	if total_enemies <= 0:
+		wave_progress_bar.value = 0
+		return
+
+	var progress := float(defeated_enemies) / float(total_enemies)
+
+	wave_progress_bar.value = progress * 100.0
+
+func show_wave_progress() -> void:
+	wave_progress_container.visible = true
+	wave_progress_bar.value = 0
+
+func hide_wave_progress() -> void:
+	wave_progress_container.visible = false
 	
 func _on_start_wave_button_pressed() -> void:
 	intermission_phase_label.visible = false
+	show_wave_progress() 
 	start_wave_requested.emit()
 
 func _on_wave_finnished() -> void:
 	intermission_phase_label.visible = true
+	hide_wave_progress()
 
 func set_start_wave_button_visible(visible: bool) -> void:
 	start_wave_button.visible = visible
