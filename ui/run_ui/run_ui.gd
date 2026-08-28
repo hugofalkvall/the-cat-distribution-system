@@ -16,7 +16,7 @@ const BUILDING_BUTTON_SCENE := preload("res://ui/building_button/building_button
 @onready var building_container: VBoxContainer = $HUD/BuildingContainer
 
 @onready var game_over_label: Label = $Overlays/GameOverLabel
-
+@onready var victory_label: Label = $Overlays/VictoryLabel
 @onready var start_wave_button: Button = $HUD/StartWaveButton
 
 var run_state: Run
@@ -28,6 +28,7 @@ func setup(new_run: Run, idol: Damageable) -> void:
 
 	idol.health_changed.connect(_on_idol_health_changed)
 	run_state.game_over.connect(_on_game_over)
+	run_state.victory.connect(_on_victory)
 	run_state.cat_count_changed.connect(_on_cat_count_changed)
 	run_state.currency_changed.connect(_on_currency_changed)
 
@@ -44,6 +45,7 @@ func setup(new_run: Run, idol: Damageable) -> void:
 	populate_building_buttons()
 
 	game_over_label.visible = false
+	victory_label.visible = false
 
 
 func populate_building_buttons() -> void:
@@ -96,6 +98,12 @@ func update_idol_health_label(_current_health: float, _max_health: float) -> voi
 func _on_game_over() -> void:
 	game_over_label.visible = true
 
+	for button in building_buttons:
+		button.disabled = true
+
+func _on_victory() -> void:
+	victory_label.visible = true
+	
 	for button in building_buttons:
 		button.disabled = true
 

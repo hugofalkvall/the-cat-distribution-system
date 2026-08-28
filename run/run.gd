@@ -11,6 +11,7 @@ enum Phase {
 var phase := Phase.BUILD
 
 signal game_over
+signal victory
 signal cat_count_changed(total_cats: int, current_cats: int)
 signal currency_changed(total_currency: int)
 
@@ -216,5 +217,6 @@ func _on_all_waves_completed() -> void:
 	build_placement.set_production_enabled(false)
 	run_ui.set_start_wave_button_visible(false)
 	build_placement.cancel_placement()
+	victory.emit()
 
 	print("ALL WAVES COMPLETED")

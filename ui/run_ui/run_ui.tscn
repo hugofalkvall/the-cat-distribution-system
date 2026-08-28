@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://g3n0lmmg6hrw"]
+[gd_scene load_steps=5 format=3 uid="uid://g3n0lmmg6hrw"]
 
 [ext_resource type="Script" uid="uid://c375tl0dp1bv4" path="res://ui/run_ui/run_ui.gd" id="1_nfmek"]
 
@@ -6,9 +6,16 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_4j1ni"]
 font_size = 36
-font_color = Color(0.823529, 0, 0, 1)
+font_color = Color(1, 0.129412, 0, 1)
 shadow_size = 6
 shadow_color = Color(0, 0, 0, 0.266667)
+
+[sub_resource type="LabelSettings" id="LabelSettings_stpfy"]
+font_size = 37
+font_color = Color(0, 1, 0, 1)
+outline_color = Color(0.352461, 0.741958, 0, 1)
+shadow_size = 3
+shadow_color = Color(0, 0, 0, 1)
 
 [node name="RunUi" type="CanvasLayer"]
 script = ExtResource("1_nfmek")
@@ -75,3 +82,12 @@ offset_right = 417.0
 offset_bottom = 204.0
 text = "Game Over"
 label_settings = SubResource("LabelSettings_4j1ni")
+
+[node name="VictoryLabel" type="Label" parent="Overlays"]
+texture_filter = 1
+offset_left = 261.0
+offset_top = 154.0
+offset_right = 456.0
+offset_bottom = 204.0
+text = "Victory"
+label_settings = SubResource("LabelSettings_stpfy")
