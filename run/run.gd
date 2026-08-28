@@ -36,7 +36,9 @@ func _ready() -> void:
 	enemies.child_entered_tree.connect(_on_enemy_spawned)
 	idol.died.connect(_on_idol_died)
 
+	run_ui.start_wave_requested.connect(_on_start_wave_requested)	
 	run_ui.building_selected.connect(_on_building_selected)
+	
 	build_placement.placement_requested.connect(_on_building_placement_requested)
 
 	wave_director.intermission_started.connect(_on_intermission_started)
@@ -123,6 +125,14 @@ func get_building_cost(definition: BuildingDefinition) -> int:
 
 	return maxi(cost, 0)
 
+func _on_start_wave_requested() -> void:
+	if phase != Phase.BUILD:
+		return
+
+	if is_game_over:
+		return
+
+	wave_director.finish_intermission()
 
 func _on_building_selected(definition: BuildingDefinition) -> void:
 	
@@ -164,6 +174,7 @@ func _on_idol_died(_idol: Damageable) -> void:
 	is_game_over = true
 	phase = Phase.GAME_OVER
 
+	run_ui.set_start_wave_button_visible(false)
 	build_placement.cancel_placement()
 
 	game_over.emit()
@@ -172,19 +183,22 @@ func _on_idol_died(_idol: Damageable) -> void:
 
 func _on_intermission_started(wave_number: int, total_waves: int, duration: float) -> void:
 	print("Preparing wave ", wave_number, "/", total_waves, " - ", duration, " seconds")
+
 	phase = Phase.BUILD
+	run_ui.set_start_wave_button_visible(true)
 
 func _on_wave_started(wave_number: int, total_waves: int, definition: WaveDefinition) -> void:
 	print("Wave ", wave_number, "/", total_waves, ": ", definition.display_name)
 	phase = Phase.COMBAT
+	run_ui.set_start_wave_button_visible(false)
 	build_placement.cancel_placement()
 
 func _on_wave_completed(_wave_number: int, _total_waves: int, definition: WaveDefinition) -> void:
 	add_currency(definition.completion_reward)
-	phase = Phase.VICTORY
 
 func _on_all_waves_completed() -> void:
 	phase = Phase.VICTORY
+	run_ui.set_start_wave_button_visible(false)
 	build_placement.cancel_placement()
 
 	print("ALL WAVES COMPLETED")

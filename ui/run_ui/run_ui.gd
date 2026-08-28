@@ -2,6 +2,7 @@ class_name RunUI
 extends CanvasLayer
 
 signal building_selected(definition: BuildingDefinition)
+signal start_wave_requested
 
 const BUILDING_BUTTON_SCENE := preload("res://ui/building_button/building_button.tscn")
 
@@ -16,6 +17,8 @@ const BUILDING_BUTTON_SCENE := preload("res://ui/building_button/building_button
 
 @onready var game_over_label: Label = $Overlays/GameOverLabel
 
+@onready var start_wave_button: Button = $HUD/StartWaveButton
+
 var run_state: Run
 var building_buttons: Array[BuildingButton] = []
 
@@ -27,6 +30,9 @@ func setup(new_run: Run, idol: Damageable) -> void:
 	run_state.game_over.connect(_on_game_over)
 	run_state.cat_count_changed.connect(_on_cat_count_changed)
 	run_state.currency_changed.connect(_on_currency_changed)
+
+	start_wave_button.pressed.connect(_on_start_wave_button_pressed)
+	start_wave_button.visible = false
 
 	idol_health_bar.max_value = idol.max_health
 	idol_health_bar.value = idol.current_health
@@ -74,6 +80,13 @@ func _on_idol_health_changed(_idol: Damageable, current_health: float, max_healt
 	idol_health_bar.max_value = max_health
 	idol_health_bar.value = current_health
 	update_idol_health_label(current_health, max_health)
+	
+func _on_start_wave_button_pressed() -> void:
+	start_wave_requested.emit()
+
+
+func set_start_wave_button_visible(visible: bool) -> void:
+	start_wave_button.visible = visible
 
 
 func update_idol_health_label(_current_health: float, _max_health: float) -> void:

@@ -51,6 +51,15 @@ offset_left = 537.0
 offset_right = 640.0
 offset_bottom = 171.0
 
+[node name="StartWaveButton" type="Button" parent="HUD"]
+visible = false
+layout_mode = 1
+offset_left = 534.0
+offset_top = 309.0
+offset_right = 629.0
+offset_bottom = 340.0
+text = "Start wave "
+
 [node name="Overlays" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0

@@ -27,7 +27,7 @@ var group_states: Array[Dictionary] = []
 func _process(delta: float) -> void:
 	match state:
 		State.INTERMISSION:
-			process_intermission(delta)
+			pass
 
 		State.COMBAT:
 			process_wave(delta)
@@ -44,12 +44,11 @@ func start() -> void:
 
 	begin_intermission(0)
 
+func finish_intermission() -> void:
+	if state != State.INTERMISSION:
+		return
 
-func process_intermission(delta: float) -> void:
-	intermission_remaining -= delta
-
-	if intermission_remaining <= 0.0:
-		start_current_wave()
+	start_current_wave()
 
 
 func process_wave(delta: float) -> void:
