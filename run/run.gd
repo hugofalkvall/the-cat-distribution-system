@@ -2,16 +2,17 @@ class_name Run
 extends Node2D
 
 enum Phase {
-	BUILD,
+	INTERMISSION,
 	COMBAT,
 	GAME_OVER,
 	VICTORY
 }
 
-var phase := Phase.BUILD
+var phase := Phase.INTERMISSION
 
 signal game_over
 signal victory
+signal wave_finnished
 signal cat_count_changed(total_cats: int, current_cats: int)
 signal currency_changed(total_currency: int)
 
@@ -134,7 +135,7 @@ func despawn_all_cats() -> void:
 	cat_count_changed.emit(total_cats_produced, current_cat_count)
 
 func _on_start_wave_requested() -> void:
-	if phase != Phase.BUILD:
+	if phase != Phase.INTERMISSION:
 		return
 
 	if is_game_over:
@@ -144,7 +145,7 @@ func _on_start_wave_requested() -> void:
 
 func _on_building_selected(definition: BuildingDefinition) -> void:
 	
-	if phase != Phase.BUILD:
+	if phase != Phase.INTERMISSION:
 		print("Cannot build during a wave")
 		return
 	
@@ -158,7 +159,7 @@ func _on_building_placement_requested(definition: BuildingDefinition, cell: Vect
 	if is_game_over:
 		return
 
-	if phase != Phase.BUILD:
+	if phase != Phase.INTERMISSION:
 		return
 		
 	if not available_buildings.has(definition):
@@ -194,7 +195,7 @@ func _on_intermission_started(wave_number: int, total_waves: int, duration: floa
 	print("Preparing wave ", wave_number, "/", total_waves)
 	
 	build_placement.set_production_enabled(false)
-	phase = Phase.BUILD
+	phase = Phase.INTERMISSION
 	run_ui.set_start_wave_button_visible(true)
 
 func _on_wave_started(wave_number: int, total_waves: int, definition: WaveDefinition) -> void:
@@ -210,6 +211,7 @@ func _on_wave_completed(_wave_number: int, _total_waves: int, definition: WaveDe
 	build_placement.set_production_enabled(false)
 	add_currency(definition.completion_reward)
 	despawn_all_cats()
+	wave_finnished.emit()
 	print("Wave completed")
 
 func _on_all_waves_completed() -> void:

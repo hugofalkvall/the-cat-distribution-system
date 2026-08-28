@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://c375tl0dp1bv4" path="res://ui/run_ui/run_ui.gd" id="1_nfmek"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_nfmek"]
+font_size = 20
 
 [sub_resource type="LabelSettings" id="LabelSettings_4j1ni"]
 font_size = 36
@@ -26,18 +27,25 @@ anchors_preset = 0
 
 [node name="StatContainer" type="VBoxContainer" parent="HUD"]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 237.0
+offset_bottom = 114.0
 scale = Vector2(0.5, 0.5)
 
-[node name="IdolHealthLabel" type="Label" parent="HUD/StatContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/StatContainer"]
+layout_mode = 2
+
+[node name="IdolHealthLabel" type="Label" parent="HUD/StatContainer/HBoxContainer"]
 texture_filter = 1
 layout_mode = 2
 text = "HP"
 label_settings = SubResource("LabelSettings_nfmek")
 
-[node name="IdolHealthProgressBar" type="ProgressBar" parent="HUD/StatContainer"]
+[node name="IdolHealthProgressBar" type="ProgressBar" parent="HUD/StatContainer/HBoxContainer"]
 texture_filter = 1
+custom_minimum_size = Vector2(200, 0)
+layout_direction = 3
 layout_mode = 2
 
 [node name="CatCountTotalLabel" type="Label" parent="HUD/StatContainer"]
@@ -54,26 +62,36 @@ text = "Currency"
 
 [node name="BuildingContainer" type="VBoxContainer" parent="HUD"]
 layout_mode = 0
-offset_left = 537.0
-offset_right = 640.0
-offset_bottom = 171.0
+offset_left = 532.0
+offset_top = 5.0
+offset_right = 635.0
+offset_bottom = 176.0
 
 [node name="StartWaveButton" type="Button" parent="HUD"]
 visible = false
+texture_filter = 1
 layout_mode = 1
-offset_left = 534.0
+offset_left = 532.0
 offset_top = 309.0
-offset_right = 629.0
+offset_right = 627.0
 offset_bottom = 340.0
 text = "Start wave "
 
 [node name="Overlays" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 35.0
-offset_bottom = 22.0
 
-[node name="GameOverLabel" type="Label" parent="Overlays"]
+[node name="IntermissionPhaseLabel" type="Label" parent="Overlays"]
+z_index = 1
+texture_filter = 1
+layout_mode = 0
+offset_left = 253.0
+offset_top = 5.0
+offset_right = 397.0
+offset_bottom = 28.0
+text = "Intermisson phase"
+
+[node name="GameOverPhaseLabel" type="Label" parent="Overlays"]
 texture_filter = 1
 layout_mode = 1
 offset_left = 222.0
@@ -83,7 +101,7 @@ offset_bottom = 204.0
 text = "Game Over"
 label_settings = SubResource("LabelSettings_4j1ni")
 
-[node name="VictoryLabel" type="Label" parent="Overlays"]
+[node name="VictoryPhaseLabel" type="Label" parent="Overlays"]
 texture_filter = 1
 offset_left = 261.0
 offset_top = 154.0

@@ -6,8 +6,8 @@ signal start_wave_requested
 
 const BUILDING_BUTTON_SCENE := preload("res://ui/building_button/building_button.tscn")
 
-@onready var idol_health_label: Label = $HUD/StatContainer/IdolHealthLabel
-@onready var idol_health_bar: ProgressBar = $HUD/StatContainer/IdolHealthProgressBar
+@onready var idol_health_label: Label = $HUD/StatContainer/HBoxContainer/IdolHealthLabel
+@onready var idol_health_bar: ProgressBar = $HUD/StatContainer/HBoxContainer/IdolHealthProgressBar
 
 @onready var total_cat_count_label: Label = $HUD/StatContainer/CatCountTotalLabel
 @onready var current_cat_count_label: Label = $HUD/StatContainer/CatCountLabel
@@ -15,8 +15,10 @@ const BUILDING_BUTTON_SCENE := preload("res://ui/building_button/building_button
 @onready var currency_label: Label = $HUD/StatContainer/Currency
 @onready var building_container: VBoxContainer = $HUD/BuildingContainer
 
-@onready var game_over_label: Label = $Overlays/GameOverLabel
-@onready var victory_label: Label = $Overlays/VictoryLabel
+@onready var game_over_phase_label: Label = $Overlays/GameOverPhaseLabel
+@onready var victory_phase_label: Label = $Overlays/VictoryPhaseLabel
+@onready var intermission_phase_label: Label = $Overlays/IntermissionPhaseLabel
+
 @onready var start_wave_button: Button = $HUD/StartWaveButton
 
 var run_state: Run
@@ -29,6 +31,7 @@ func setup(new_run: Run, idol: Damageable) -> void:
 	idol.health_changed.connect(_on_idol_health_changed)
 	run_state.game_over.connect(_on_game_over)
 	run_state.victory.connect(_on_victory)
+	run_state.wave_finnished.connect(_on_wave_finnished)
 	run_state.cat_count_changed.connect(_on_cat_count_changed)
 	run_state.currency_changed.connect(_on_currency_changed)
 
@@ -44,8 +47,9 @@ func setup(new_run: Run, idol: Damageable) -> void:
 
 	populate_building_buttons()
 
-	game_over_label.visible = false
-	victory_label.visible = false
+	game_over_phase_label.visible = false
+	victory_phase_label.visible = false
+	intermission_phase_label.visible = true
 
 
 func populate_building_buttons() -> void:
@@ -84,8 +88,11 @@ func _on_idol_health_changed(_idol: Damageable, current_health: float, max_healt
 	update_idol_health_label(current_health, max_health)
 	
 func _on_start_wave_button_pressed() -> void:
+	intermission_phase_label.visible = false
 	start_wave_requested.emit()
 
+func _on_wave_finnished() -> void:
+	intermission_phase_label.visible = true
 
 func set_start_wave_button_visible(visible: bool) -> void:
 	start_wave_button.visible = visible
@@ -96,13 +103,15 @@ func update_idol_health_label(_current_health: float, _max_health: float) -> voi
 
 
 func _on_game_over() -> void:
-	game_over_label.visible = true
+	game_over_phase_label.visible = true
+	intermission_phase_label.visible = false
 
 	for button in building_buttons:
 		button.disabled = true
 
 func _on_victory() -> void:
-	victory_label.visible = true
+	victory_phase_label.visible = true
+	intermission_phase_label.visible = false
 	
 	for button in building_buttons:
 		button.disabled = true
