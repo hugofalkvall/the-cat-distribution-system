@@ -125,6 +125,13 @@ func get_building_cost(definition: BuildingDefinition) -> int:
 
 	return maxi(cost, 0)
 
+func despawn_all_cats() -> void:
+	for cat in cats.get_children():
+		cat.queue_free()
+
+	current_cat_count = 0
+	cat_count_changed.emit(total_cats_produced, current_cat_count)
+
 func _on_start_wave_requested() -> void:
 	if phase != Phase.BUILD:
 		return
@@ -174,6 +181,7 @@ func _on_idol_died(_idol: Damageable) -> void:
 	is_game_over = true
 	phase = Phase.GAME_OVER
 
+	build_placement.set_production_enabled(false)
 	run_ui.set_start_wave_button_visible(false)
 	build_placement.cancel_placement()
 
@@ -182,22 +190,30 @@ func _on_idol_died(_idol: Damageable) -> void:
 	print("GAME OVER")
 
 func _on_intermission_started(wave_number: int, total_waves: int, duration: float) -> void:
-	print("Preparing wave ", wave_number, "/", total_waves, " - ", duration, " seconds")
-
+	print("Preparing wave ", wave_number, "/", total_waves)
+	
+	build_placement.set_production_enabled(false)
 	phase = Phase.BUILD
 	run_ui.set_start_wave_button_visible(true)
 
 func _on_wave_started(wave_number: int, total_waves: int, definition: WaveDefinition) -> void:
 	print("Wave ", wave_number, "/", total_waves, ": ", definition.display_name)
+
 	phase = Phase.COMBAT
-	run_ui.set_start_wave_button_visible(false)
+
+	build_placement.set_production_enabled(true)
 	build_placement.cancel_placement()
+	run_ui.set_start_wave_button_visible(false)
 
 func _on_wave_completed(_wave_number: int, _total_waves: int, definition: WaveDefinition) -> void:
+	build_placement.set_production_enabled(false)
 	add_currency(definition.completion_reward)
+	despawn_all_cats()
+	print("Wave completed")
 
 func _on_all_waves_completed() -> void:
 	phase = Phase.VICTORY
+	build_placement.set_production_enabled(false)
 	run_ui.set_start_wave_button_visible(false)
 	build_placement.cancel_placement()
 

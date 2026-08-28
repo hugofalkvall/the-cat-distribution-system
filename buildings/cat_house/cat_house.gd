@@ -16,6 +16,10 @@ func _process(delta: float) -> void:
 	if definition == null:
 		return
 
+	if not context.production_enabled:
+		production_timer = 0.0
+		return
+
 	production_timer += delta
 
 	if production_timer >= PRODUCTION_TIME:

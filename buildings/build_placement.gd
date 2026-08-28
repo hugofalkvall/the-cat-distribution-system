@@ -189,3 +189,9 @@ func _draw() -> void:
 		preview_color = Color(1, 0, 0, 0.35)
 
 	draw_rect(Rect2(local_top_left, preview_size), preview_color, true)
+
+func set_production_enabled(enabled: bool) -> void:
+	if building_context == null:
+		return
+
+	building_context.production_enabled = enabled

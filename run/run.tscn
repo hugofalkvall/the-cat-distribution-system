@@ -22,7 +22,7 @@ enemies = NodePath("../Arena/Enemies")
 idol = NodePath("../Arena/Idol")
 grid = NodePath("../Arena/Grid")
 spatial_index = NodePath("../Arena/CombatSpatialIndex")
-combat_system = NodePath("../Arena/CombatSpatialIndex")
+combat_system = NodePath("../Arena/CombatSystem")
 
 [node name="RunUI" parent="." instance=ExtResource("5_io1fk")]
 
