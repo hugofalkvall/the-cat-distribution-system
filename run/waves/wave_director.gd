@@ -48,6 +48,11 @@ func start() -> void:
 
 	begin_intermission()
 
+func finish_intermission() -> void:
+	if state != State.INTERMISSION:
+		return
+
+	start_current_wave()
 
 func process_wave(delta: float) -> void:
 	for group_state in group_states:

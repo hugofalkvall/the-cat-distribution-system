@@ -127,9 +127,8 @@ func _on_wave_finnished() -> void:
 func set_start_wave_button_visible(visible: bool) -> void:
 	start_wave_button.visible = visible
 
-func update_current_wave(wave_number: int, total_waves: int) -> void:
-	print("Wave: " + str(wave_number))
-	if wave_number < 1:
+func update_next_wave(next_wave_number: int, _total_waves: int) -> void:
+	if next_wave_number == 1:
 		start_wave_button.text = "Start"
 	else:
 		start_wave_button.text = "Next wave"

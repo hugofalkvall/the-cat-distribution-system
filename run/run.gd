@@ -229,7 +229,7 @@ func _on_intermission_started(wave_number: int, total_waves: int, duration: floa
 	clear_placed_building_selection()
 	phase = Phase.INTERMISSION
 	run_ui.set_start_wave_button_visible(true)
-	run_ui.update_current_wave(wave_number, total_waves)
+	run_ui.update_next_wave(wave_number, total_waves)
 
 func _on_wave_started(wave_number: int, total_waves: int, definition: WaveDefinition) -> void:
 	print("Wave ", wave_number, "/", total_waves, ": ", definition.display_name)
