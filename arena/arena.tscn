@@ -26,9 +26,10 @@ max_health = 100.0
 combat_radius = 16.0
 combat_position_offset = Vector2(16, 16)
 
-[node name="Grid" type="Node2D" parent="." node_paths=PackedStringArray("idol")]
+[node name="Grid" type="Node2D" parent="." node_paths=PackedStringArray("idol", "pathfinder")]
 script = ExtResource("3_dotur")
 idol = NodePath("../Idol")
+pathfinder = NodePath("../Pathfinder")
 
 [node name="BuildPlacement" type="Node2D" parent="." node_paths=PackedStringArray("grid", "buildings", "cats", "spatial_index", "combat_system")]
 script = ExtResource("4_44uaw")

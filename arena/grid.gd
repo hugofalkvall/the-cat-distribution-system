@@ -12,7 +12,7 @@ const STEERING_ANGLE_STEP := PI / 12.0
 const STEERING_STEPS := 6
 
 @export var idol: Sprite2D
-
+@export var pathfinder: ArenaPathfinder
 var occupied_cells: Dictionary = {}
 
 signal navigation_changed
