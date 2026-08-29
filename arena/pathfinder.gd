@@ -33,9 +33,13 @@ var idol_flow_directions: Dictionary = {}
 func _ready() -> void:
 	if grid == null:
 		push_error("ArenaPathfinder: grid is not assigned.")
+		return
 
 	if idol == null:
 		push_error("ArenaPathfinder: idol is not assigned.")
+		return
+
+	grid.navigation_changed.connect(mark_dirty)
 
 
 func mark_dirty() -> void:

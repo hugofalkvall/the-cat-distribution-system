@@ -12,10 +12,10 @@ const STEERING_ANGLE_STEP := PI / 12.0
 const STEERING_STEPS := 6
 
 @export var idol: Sprite2D
-@export var pathfinder: ArenaPathfinder
 
 var occupied_cells: Dictionary = {}
 
+signal navigation_changed
 
 func _ready() -> void:
 	var idol_cell := world_to_grid(to_local(idol.global_position))
@@ -59,10 +59,10 @@ func occupy_cells(start_cell: Vector2i, size: Vector2i, placed_object) -> bool:
 			var cell := start_cell + Vector2i(x, y)
 			occupied_cells[cell] = placed_object
 
-	if pathfinder != null:
-		pathfinder.mark_dirty()
+	navigation_changed.emit()
 
 	return true
+
 	
 func get_occupied_object_at_global_position(global_position: Vector2):
 	var local_position := to_local(global_position)
@@ -84,8 +84,8 @@ func free_cells(start_cell: Vector2i, size: Vector2i, placed_object) -> void:
 				occupied_cells.erase(cell)
 				changed = true
 
-	if changed and pathfinder != null:
-		pathfinder.mark_dirty()
+	if changed:
+		navigation_changed.emit()
 
 
 func is_global_position_walkable(global_position: Vector2, radius: float) -> bool:
