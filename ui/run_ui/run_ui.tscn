@@ -1,8 +1,21 @@
-[gd_scene load_steps=5 format=3 uid="uid://g3n0lmmg6hrw"]
+[gd_scene load_steps=11 format=3 uid="uid://g3n0lmmg6hrw"]
 
 [ext_resource type="Script" uid="uid://c375tl0dp1bv4" path="res://ui/run_ui/run_ui.gd" id="1_nfmek"]
+[ext_resource type="Texture2D" uid="uid://ce8t5lt4ns1d1" path="res://placeholder/Grid_background_colorless.png" id="2_4j1ni"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_nfmek"]
+font_size = 20
+
+[sub_resource type="LabelSettings" id="LabelSettings_5g48r"]
+font_size = 20
+
+[sub_resource type="LabelSettings" id="LabelSettings_gdh3c"]
+font_size = 20
+
+[sub_resource type="LabelSettings" id="LabelSettings_81d40"]
+font_size = 20
+
+[sub_resource type="LabelSettings" id="LabelSettings_jbpe1"]
 font_size = 20
 
 [sub_resource type="LabelSettings" id="LabelSettings_4j1ni"]
@@ -18,6 +31,9 @@ outline_color = Color(0.352461, 0.741958, 0, 1)
 shadow_size = 3
 shadow_color = Color(0, 0, 0, 1)
 
+[sub_resource type="LabelSettings" id="LabelSettings_ithei"]
+font_size = 20
+
 [node name="RunUi" type="CanvasLayer"]
 script = ExtResource("1_nfmek")
 
@@ -25,40 +41,49 @@ script = ExtResource("1_nfmek")
 layout_mode = 3
 anchors_preset = 0
 
-[node name="StatContainer" type="VBoxContainer" parent="HUD"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD"]
+z_index = 1
 layout_mode = 0
-offset_left = 5.0
-offset_top = 5.0
-offset_right = 237.0
-offset_bottom = 114.0
+offset_right = 256.0
+offset_bottom = 64.0
 scale = Vector2(0.5, 0.5)
+metadata/_edit_lock_ = true
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HUD/StatContainer"]
-layout_mode = 2
-
-[node name="IdolHealthLabel" type="Label" parent="HUD/StatContainer/HBoxContainer"]
+[node name="IdolHealthLabel" type="Label" parent="HUD/HBoxContainer"]
 texture_filter = 1
 layout_mode = 2
-text = "HP"
+text = "Health"
 label_settings = SubResource("LabelSettings_nfmek")
 
-[node name="IdolHealthProgressBar" type="ProgressBar" parent="HUD/StatContainer/HBoxContainer"]
+[node name="IdolHealthProgressBar" type="ProgressBar" parent="HUD/HBoxContainer"]
 texture_filter = 1
-custom_minimum_size = Vector2(200, 0)
-layout_direction = 3
+custom_minimum_size = Vector2(150, 20)
 layout_mode = 2
+size_flags_vertical = 4
+show_percentage = false
+
+[node name="StatContainer" type="VBoxContainer" parent="HUD"]
+layout_mode = 0
+offset_top = 32.0
+offset_right = 256.0
+offset_bottom = 224.0
+scale = Vector2(0.5, 0.5)
+metadata/_edit_lock_ = true
 
 [node name="CatCountTotalLabel" type="Label" parent="HUD/StatContainer"]
 layout_mode = 2
 text = "Cat total count"
+label_settings = SubResource("LabelSettings_5g48r")
 
 [node name="CatCountLabel" type="Label" parent="HUD/StatContainer"]
 layout_mode = 2
 text = "Cat count"
+label_settings = SubResource("LabelSettings_gdh3c")
 
 [node name="Currency" type="Label" parent="HUD/StatContainer"]
 layout_mode = 2
 text = "Currency"
+label_settings = SubResource("LabelSettings_81d40")
 
 [node name="BuildingContainer" type="VBoxContainer" parent="HUD"]
 layout_mode = 0
@@ -68,13 +93,12 @@ offset_right = 635.0
 offset_bottom = 176.0
 
 [node name="StartWaveButton" type="Button" parent="HUD"]
-visible = false
 texture_filter = 1
 layout_mode = 1
-offset_left = 532.0
-offset_top = 309.0
-offset_right = 627.0
-offset_bottom = 340.0
+offset_left = 528.0
+offset_top = 304.0
+offset_right = 624.0
+offset_bottom = 335.0
 text = "Start wave "
 
 [node name="Overlays" type="Control" parent="."]
@@ -82,48 +106,67 @@ layout_mode = 3
 anchors_preset = 0
 
 [node name="IntermissionPhaseLabel" type="Label" parent="Overlays"]
+visible = false
 z_index = 1
 texture_filter = 1
 layout_mode = 0
-offset_left = 280.0
-offset_top = 5.0
-offset_right = 424.0
-offset_bottom = 28.0
+offset_left = 128.0
+offset_right = 896.0
+offset_bottom = 64.0
 scale = Vector2(0.5, 0.5)
 text = "Intermisson phase"
+label_settings = SubResource("LabelSettings_jbpe1")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_lock_ = true
 
 [node name="GameOverPhaseLabel" type="Label" parent="Overlays"]
+visible = false
 texture_filter = 1
 layout_mode = 1
-offset_left = 222.0
-offset_top = 154.0
-offset_right = 417.0
-offset_bottom = 204.0
+offset_right = 640.0
+offset_bottom = 360.0
 text = "Game Over"
 label_settings = SubResource("LabelSettings_4j1ni")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_lock_ = true
 
 [node name="VictoryPhaseLabel" type="Label" parent="Overlays"]
+visible = false
 texture_filter = 1
-offset_left = 261.0
-offset_top = 154.0
-offset_right = 456.0
-offset_bottom = 204.0
+layout_mode = 1
+offset_right = 640.0
+offset_bottom = 360.0
 text = "Victory"
 label_settings = SubResource("LabelSettings_stpfy")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_lock_ = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Overlays"]
 texture_filter = 1
 layout_mode = 0
-offset_left = 240.0
-offset_top = 5.0
-offset_right = 558.0
-offset_bottom = 32.0
+offset_left = 128.0
+offset_right = 896.0
+offset_bottom = 64.0
 scale = Vector2(0.5, 0.5)
+alignment = 1
+metadata/_edit_lock_ = true
 
 [node name="WaveProgressLabel" type="Label" parent="Overlays/HBoxContainer"]
 layout_mode = 2
 text = "Wave progress"
+label_settings = SubResource("LabelSettings_ithei")
 
 [node name="WaverogressBar" type="ProgressBar" parent="Overlays/HBoxContainer"]
-custom_minimum_size = Vector2(200, 0)
+custom_minimum_size = Vector2(200, 20)
 layout_mode = 2
+size_flags_vertical = 4
+show_percentage = false
+
+[node name="ArenaReference" type="Sprite2D" parent="."]
+z_index = -5
+texture = ExtResource("2_4j1ni")
+centered = false
+metadata/_edit_lock_ = true

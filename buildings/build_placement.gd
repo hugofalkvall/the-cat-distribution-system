@@ -2,6 +2,7 @@ class_name BuildPlacement
 extends Node2D
 
 signal placement_requested(definition: BuildingDefinition, cell: Vector2i)
+signal placed_building_selection_requested(building: Building)
 
 @export var grid: ArenaGrid
 @export var buildings: Node2D
@@ -98,7 +99,24 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 
 	if selected_building == null:
+		var placed_object = grid.get_occupied_object_at_global_position(get_global_mouse_position())
+		var building := placed_object as Building
+
+		placed_building_selection_requested.emit(building)
+
+		if building != null:
+			get_viewport().set_input_as_handled()
+
 		return
+
+	if placement_cell == INVALID_CELL:
+		return
+
+	if not can_place_building(selected_building, placement_cell):
+		return
+
+	placement_requested.emit(selected_building, placement_cell)
+	get_viewport().set_input_as_handled()
 
 	if placement_cell == INVALID_CELL:
 		return

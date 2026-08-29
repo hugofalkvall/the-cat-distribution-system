@@ -60,7 +60,15 @@ func occupy_cells(start_cell: Vector2i, size: Vector2i, placed_object) -> bool:
 
 	return true
 
+func get_occupied_object_at_global_position(global_position: Vector2):
+	var local_position := to_local(global_position)
+	var cell := world_to_grid(local_position)
 
+	if not is_in_bounds(cell):
+		return null
+
+	return occupied_cells.get(cell)
+	
 func free_cells(start_cell: Vector2i, size: Vector2i, placed_object) -> void:
 	for y in range(size.y):
 		for x in range(size.x):

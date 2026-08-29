@@ -6,8 +6,8 @@ signal start_wave_requested
 
 const BUILDING_BUTTON_SCENE := preload("res://ui/building_button/building_button.tscn")
 
-@onready var idol_health_label: Label = $HUD/StatContainer/HBoxContainer/IdolHealthLabel
-@onready var idol_health_bar: ProgressBar = $HUD/StatContainer/HBoxContainer/IdolHealthProgressBar
+@onready var idol_health_label: Label = $HUD/HBoxContainer/IdolHealthLabel
+@onready var idol_health_bar: ProgressBar = $HUD/HBoxContainer/IdolHealthProgressBar
 
 @onready var total_cat_count_label: Label = $HUD/StatContainer/CatCountTotalLabel
 @onready var current_cat_count_label: Label = $HUD/StatContainer/CatCountLabel
@@ -25,12 +25,15 @@ const BUILDING_BUTTON_SCENE := preload("res://ui/building_button/building_button
 
 @onready var start_wave_button: Button = $HUD/StartWaveButton
 
+@onready var arena_reference: Sprite2D = $ArenaReference
+
 var run_state: Run
 var building_buttons: Array[BuildingButton] = []
 
 
 func setup(new_run: Run, idol: Damageable) -> void:
 	run_state = new_run
+	arena_reference.visible = false
 
 	idol.health_changed.connect(_on_idol_health_changed)
 	run_state.game_over.connect(_on_game_over)
@@ -124,6 +127,12 @@ func _on_wave_finnished() -> void:
 func set_start_wave_button_visible(visible: bool) -> void:
 	start_wave_button.visible = visible
 
+func update_current_wave(wave_number: int, total_waves: int) -> void:
+	print("Wave: " + str(wave_number))
+	if wave_number < 1:
+		start_wave_button.text = "Start"
+	else:
+		start_wave_button.text = "Next wave"
 
 func update_idol_health_label(_current_health: float, _max_health: float) -> void:
 	idol_health_label.text = "Health"

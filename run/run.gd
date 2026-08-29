@@ -16,6 +16,7 @@ signal wave_finnished
 signal cat_count_changed(total_cats: int, current_cats: int)
 signal currency_changed(total_currency: int)
 signal wave_progress_changed(defeated_enemies: int, total_enemies: int)
+signal placed_building_selection_changed(building: Building)
 
 @export var starting_currency := 20
 @export var available_buildings: Array[BuildingDefinition] = []
@@ -24,6 +25,8 @@ var total_cats_produced := 0
 var current_cat_count := 0
 var currency := 0
 var is_game_over := false
+
+var selected_placed_building: Building
 
 @onready var cats: Node2D = $Arena/Cats
 @onready var enemies: Node2D = $Arena/Enemies
@@ -43,6 +46,7 @@ func _ready() -> void:
 	run_ui.building_selected.connect(_on_building_selected)
 	
 	build_placement.placement_requested.connect(_on_building_placement_requested)
+	build_placement.placed_building_selection_requested.connect(_on_placed_building_selection_requested)
 
 	wave_director.intermission_started.connect(_on_intermission_started)
 	wave_director.wave_started.connect(_on_wave_started)
@@ -73,7 +77,6 @@ func _on_cat_produced(cat: Node) -> void:
 func _on_cat_died(_cat: Damageable) -> void:
 	current_cat_count = maxi(current_cat_count - 1, 0)
 	cat_count_changed.emit(total_cats_produced, current_cat_count)
-
 
 func _on_enemy_spawned(enemy: Node) -> void:
 	_register_enemy(enemy)
@@ -147,6 +150,28 @@ func _on_start_wave_requested() -> void:
 
 	wave_director.finish_intermission()
 
+
+func _on_placed_building_selection_requested(building: Building) -> void:
+	if building == selected_placed_building:
+		return
+
+	if is_instance_valid(selected_placed_building):
+		selected_placed_building.set_selected(false)
+
+	selected_placed_building = building
+
+	if is_instance_valid(selected_placed_building):
+		selected_placed_building.set_selected(true)
+
+	placed_building_selection_changed.emit(selected_placed_building)
+
+func clear_placed_building_selection() -> void:
+	if is_instance_valid(selected_placed_building):
+		selected_placed_building.set_selected(false)
+
+	selected_placed_building = null
+	placed_building_selection_changed.emit(null)
+
 func _on_building_selected(definition: BuildingDefinition) -> void:
 	
 	if phase != Phase.INTERMISSION:
@@ -156,6 +181,7 @@ func _on_building_selected(definition: BuildingDefinition) -> void:
 	if not available_buildings.has(definition):
 		return
 
+	clear_placed_building_selection()
 	build_placement.select_building(definition)
 
 
@@ -188,6 +214,7 @@ func _on_idol_died(_idol: Damageable) -> void:
 	phase = Phase.GAME_OVER
 
 	build_placement.set_production_enabled(false)
+	clear_placed_building_selection()
 	run_ui.set_start_wave_button_visible(false)
 	build_placement.cancel_placement()
 
@@ -199,8 +226,10 @@ func _on_intermission_started(wave_number: int, total_waves: int, duration: floa
 	print("Preparing wave ", wave_number, "/", total_waves)
 	
 	build_placement.set_production_enabled(false)
+	clear_placed_building_selection()
 	phase = Phase.INTERMISSION
 	run_ui.set_start_wave_button_visible(true)
+	run_ui.update_current_wave(wave_number, total_waves)
 
 func _on_wave_started(wave_number: int, total_waves: int, definition: WaveDefinition) -> void:
 	print("Wave ", wave_number, "/", total_waves, ": ", definition.display_name)
@@ -214,12 +243,14 @@ func _on_wave_started(wave_number: int, total_waves: int, definition: WaveDefini
 func _on_wave_completed(_wave_number: int, _total_waves: int, definition: WaveDefinition) -> void:
 	build_placement.set_production_enabled(false)
 	add_currency(definition.completion_reward)
+	clear_placed_building_selection()
 	despawn_all_cats()
 	wave_finnished.emit()
 	print("Wave completed")
 
 func _on_all_waves_completed() -> void:
 	phase = Phase.VICTORY
+	clear_placed_building_selection()
 	build_placement.set_production_enabled(false)
 	run_ui.set_start_wave_button_visible(false)
 	build_placement.cancel_placement()
