@@ -76,16 +76,33 @@ func move_toward_position(destination: Vector2, stop_distance: float, delta: flo
 	var desired_velocity := Vector2.ZERO
 
 	if distance > stop_distance:
-		var direction := global_position.direction_to(destination)
+		var direction := get_navigation_direction(
+			arena_grid,
+			destination,
+			stop_distance,
+			COLLISION_RADIUS,
+			delta
+		)
+
 		desired_velocity = direction * MOVE_SPEED
 
-	velocity = velocity.move_toward(desired_velocity, ACCELERATION * delta)
+	velocity = velocity.move_toward(
+		desired_velocity,
+		ACCELERATION * delta
+	)
 
 	var motion := velocity * delta
 
 	if arena_grid != null:
 		var old_position := global_position
-		var new_position := arena_grid.move_unit(global_position, motion, COLLISION_RADIUS, avoidance_side)
+
+		var new_position := arena_grid.move_unit(
+			global_position,
+			motion,
+			COLLISION_RADIUS,
+			avoidance_side
+		)
+
 		var actual_motion := new_position - old_position
 
 		global_position = new_position

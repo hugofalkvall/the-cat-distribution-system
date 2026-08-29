@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cv5nrsenatt6u"]
+[gd_scene load_steps=9 format=3 uid="uid://cv5nrsenatt6u"]
 
 [ext_resource type="Texture2D" uid="uid://b7rrcfhlcwpgo" path="res://arena/Grid_background.png" id="1_dotur"]
 [ext_resource type="Texture2D" uid="uid://1j5vwvtdkeif" path="res://gods/bsh_heiress/BSH_heiress_statue_alt_shadowed.png" id="2_x52g8"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://b2e74ruttocbq" path="res://buildings/build_placement.gd" id="4_44uaw"]
 [ext_resource type="Script" uid="uid://bhj2igwphgmqq" path="res://combat/combat_system.gd" id="7_8m4co"]
 [ext_resource type="Script" uid="uid://m755ltbh66mg" path="res://combat/combat_spatial_index.gd" id="7_x52g8"]
+[ext_resource type="Script" uid="uid://dvwx7jiwqhskx" path="res://arena/pathfinder.gd" id="8_8m4co"]
 
 [node name="Arena" type="Node2D"]
 
@@ -54,3 +55,8 @@ spatial_index = NodePath("../CombatSpatialIndex")
 attack_behaviors_parent = NodePath("../AttackBehaviours")
 
 [node name="AttackBehaviours" type="Node2D" parent="."]
+
+[node name="Pathfinder" type="Node" parent="." node_paths=PackedStringArray("grid", "idol")]
+script = ExtResource("8_8m4co")
+grid = NodePath("../Grid")
+idol = NodePath("../Idol")

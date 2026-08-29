@@ -34,6 +34,7 @@ var selected_placed_building: Building
 @onready var build_placement: BuildPlacement = $Arena/BuildPlacement
 @onready var run_ui: RunUI = $RunUI
 @onready var wave_director: WaveDirector = $WaveDirector
+@onready var arena_pathfinder: ArenaPathfinder = $Arena/Pathfinding
 
 func _ready() -> void:
 	currency = starting_currency
@@ -232,7 +233,9 @@ func _on_intermission_started(wave_number: int, total_waves: int, duration: floa
 	run_ui.update_next_wave(wave_number, total_waves)
 
 func _on_wave_started(wave_number: int, total_waves: int, definition: WaveDefinition) -> void:
-	print("Wave ", wave_number, "/", total_waves, ": ", definition.display_name)
+	arena_pathfinder.rebuild_if_dirty()
+
+	print("Wave ",wave_number,"/",total_waves,": ",definition.display_name)
 
 	phase = Phase.COMBAT
 

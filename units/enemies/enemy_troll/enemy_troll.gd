@@ -37,7 +37,14 @@ func _process(delta: float) -> void:
 
 	var approach_range := get_approach_range(combat_target)
 	var target_position := combat_target.get_combat_position()
-	var in_attack_range := move_toward_position(target_position, approach_range, delta)
+	var use_idol_flow := combat_target == idol_target
+
+	var in_attack_range := move_toward_position(
+		target_position,
+		approach_range,
+		delta,
+		use_idol_flow
+	)
 
 	if in_attack_range:
 		try_attack(combat_target, combat_system)
@@ -62,21 +69,39 @@ func update_combat_target(delta: float) -> void:
 		combat_target = idol_target
 
 
-func move_toward_position(destination: Vector2, stop_distance: float, delta: float) -> bool:
+func move_toward_position(destination: Vector2, stop_distance: float, delta: float, use_idol_flow: bool = false) -> bool:
 	var distance := global_position.distance_to(destination)
 	var desired_velocity := Vector2.ZERO
 
 	if distance > stop_distance:
-		var direction := global_position.direction_to(destination)
+		var direction := get_navigation_direction(
+			arena_grid,
+			destination,
+			stop_distance,
+			COLLISION_RADIUS,
+			delta,
+			use_idol_flow
+		)
+
 		desired_velocity = direction * MOVE_SPEED
 
-	velocity = velocity.move_toward(desired_velocity, ACCELERATION * delta)
+	velocity = velocity.move_toward(
+		desired_velocity,
+		ACCELERATION * delta
+	)
 
 	var motion := velocity * delta
 
 	if arena_grid != null:
 		var old_position := global_position
-		var new_position := arena_grid.move_unit(global_position, motion, COLLISION_RADIUS, avoidance_side)
+
+		var new_position := arena_grid.move_unit(
+			global_position,
+			motion,
+			COLLISION_RADIUS,
+			avoidance_side
+		)
+
 		var actual_motion := new_position - old_position
 
 		global_position = new_position

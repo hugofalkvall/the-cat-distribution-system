@@ -11,6 +11,22 @@ extends Damageable
 
 var attacks: Array[AttackState] = []
 
+enum NavigationMode {
+	UNKNOWN,
+	DIRECT,
+	PATH
+}
+
+const NAVIGATION_REPATH_INTERVAL := 0.2
+const NAVIGATION_WAYPOINT_DISTANCE := 4.0
+const INVALID_NAVIGATION_CELL := Vector2i(-1000000, -1000000)
+
+var navigation_mode := NavigationMode.UNKNOWN
+var navigation_path := PackedVector2Array()
+var navigation_path_index := 0
+var navigation_goal_cell := INVALID_NAVIGATION_CELL
+var navigation_repath_remaining := 0.0
+
 
 func _ready() -> void:
 	super._ready()
@@ -106,6 +122,119 @@ func try_attack(target: Damageable, combat_system: CombatSystem) -> bool:
 	attack_state.start_cooldown()
 
 	return true
+
+func get_navigation_direction(arena_grid: ArenaGrid, destination: Vector2, stop_distance: float, unit_radius: float, delta: float, use_idol_flow: bool = false) -> Vector2:
+	if global_position.distance_to(destination) <= stop_distance:
+		reset_navigation_route()
+		return Vector2.ZERO
+
+	if arena_grid == null or arena_grid.pathfinder == null:
+		return global_position.direction_to(destination)
+
+	var pathfinder := arena_grid.pathfinder
+
+	if use_idol_flow:
+		reset_navigation_route()
+
+		return pathfinder.get_idol_flow_direction(
+			global_position
+		)
+
+	navigation_repath_remaining = maxf(
+		navigation_repath_remaining - delta,
+		0.0
+	)
+
+	var goal_cell := pathfinder.get_goal_cell(
+		global_position,
+		destination,
+		stop_distance
+	)
+
+	var route_finished := (
+		navigation_mode == NavigationMode.PATH
+		and navigation_path_index >= navigation_path.size()
+	)
+
+	var goal_changed := goal_cell != navigation_goal_cell
+
+	var should_recalculate := (
+		navigation_mode == NavigationMode.UNKNOWN
+		or route_finished
+		or (
+			goal_changed
+			and navigation_repath_remaining <= 0.0
+		)
+	)
+
+	if should_recalculate:
+		update_navigation_route(
+			pathfinder,
+			destination,
+			stop_distance,
+			unit_radius,
+			goal_cell
+		)
+
+	if navigation_mode == NavigationMode.PATH:
+		while (
+			navigation_path_index < navigation_path.size()
+			and global_position.distance_to(
+				navigation_path[navigation_path_index]
+			) <= NAVIGATION_WAYPOINT_DISTANCE
+		):
+			navigation_path_index += 1
+
+		if navigation_path_index < navigation_path.size():
+			return global_position.direction_to(
+				navigation_path[navigation_path_index]
+			)
+
+		navigation_mode = NavigationMode.UNKNOWN
+
+	return global_position.direction_to(destination)
+
+
+func update_navigation_route(pathfinder: ArenaPathfinder, destination: Vector2, stop_distance: float, unit_radius: float, goal_cell: Vector2i) -> void:
+	navigation_goal_cell = goal_cell
+
+	navigation_repath_remaining = (
+		NAVIGATION_REPATH_INTERVAL
+		+ randf_range(0.0, 0.05)
+	)
+
+	if pathfinder.has_clear_path(
+		global_position,
+		destination,
+		unit_radius,
+		stop_distance
+	):
+		navigation_mode = NavigationMode.DIRECT
+		navigation_path.clear()
+		navigation_path_index = 0
+		return
+
+	navigation_path = pathfinder.find_path(
+		global_position,
+		destination,
+		stop_distance,
+		unit_radius
+	)
+
+	navigation_path_index = 0
+
+	if navigation_path.is_empty():
+		navigation_mode = NavigationMode.DIRECT
+	else:
+		navigation_mode = NavigationMode.PATH
+
+
+func reset_navigation_route() -> void:
+	navigation_mode = NavigationMode.UNKNOWN
+	navigation_path.clear()
+	navigation_path_index = 0
+	navigation_goal_cell = INVALID_NAVIGATION_CELL
+	navigation_repath_remaining = 0.0
 
 
 func on_death() -> void:

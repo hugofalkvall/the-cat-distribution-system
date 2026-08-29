@@ -118,15 +118,6 @@ func _unhandled_input(event: InputEvent) -> void:
 	placement_requested.emit(selected_building, placement_cell)
 	get_viewport().set_input_as_handled()
 
-	if placement_cell == INVALID_CELL:
-		return
-
-	if not can_place_building(selected_building, placement_cell):
-		return
-
-	placement_requested.emit(selected_building, placement_cell)
-	get_viewport().set_input_as_handled()
-
 
 func select_building(definition: BuildingDefinition) -> void:
 	selected_building = definition
