@@ -46,13 +46,7 @@ func start() -> void:
 		push_error("WaveSet contains no waves.")
 		return
 
-	begin_intermission(0)
-
-func finish_intermission() -> void:
-	if state != State.INTERMISSION:
-		return
-
-	start_current_wave()
+	begin_intermission()
 
 
 func process_wave(delta: float) -> void:
@@ -95,14 +89,13 @@ func process_spawn_group(group_state: Dictionary, delta: float) -> void:
 			group_state["next_spawn_time"] = group_state["elapsed"]
 
 
-func begin_intermission(wave_index: int) -> void:
-	current_wave_index = wave_index
-
-	var definition := wave_set.waves[current_wave_index]
+func begin_intermission() -> void:
+	var next_wave_index := current_wave_index + 1
+	var definition := wave_set.waves[next_wave_index]
 	var duration := definition.intermission_duration
 
 	if duration < 0.0:
-		if current_wave_index == 0:
+		if next_wave_index == 0:
 			duration = wave_set.initial_intermission_duration
 		else:
 			duration = wave_set.default_intermission_duration
@@ -111,7 +104,7 @@ func begin_intermission(wave_index: int) -> void:
 	state = State.INTERMISSION
 
 	intermission_started.emit(
-		current_wave_index + 1,
+		next_wave_index + 1,
 		wave_set.waves.size(),
 		duration
 	)
@@ -121,6 +114,8 @@ func begin_intermission(wave_index: int) -> void:
 
 
 func start_current_wave() -> void:
+	current_wave_index += 1
+
 	var definition := wave_set.waves[current_wave_index]
 
 	group_states.clear()
@@ -212,11 +207,9 @@ func complete_current_wave() -> void:
 		definition
 	)
 
-	var next_wave_index := current_wave_index + 1
-
-	if next_wave_index >= wave_set.waves.size():
+	if current_wave_index + 1 >= wave_set.waves.size():
 		state = State.COMPLETE
 		all_waves_completed.emit()
 		return
 
-	begin_intermission(next_wave_index)
+	begin_intermission()
