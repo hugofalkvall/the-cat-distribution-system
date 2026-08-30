@@ -49,6 +49,26 @@ func can_place(cell: Vector2i, size: Vector2i) -> bool:
 
 	return true
 
+func can_place_with_clearance(cell: Vector2i, size: Vector2i, clearance: int = 1) -> bool:
+	if not can_place(cell, size):
+		return false
+
+	var min_x := cell.x - clearance
+	var max_x := cell.x + size.x - 1 + clearance
+	var min_y := cell.y - clearance
+	var max_y := cell.y + size.y - 1 + clearance
+
+	for y in range(min_y, max_y + 1):
+		for x in range(min_x, max_x + 1):
+			var checked_cell := Vector2i(x, y)
+
+			if not is_in_bounds(checked_cell):
+				continue
+
+			if occupied_cells.has(checked_cell):
+				return false
+
+	return true
 
 func occupy_cells(start_cell: Vector2i, size: Vector2i, placed_object) -> bool:
 	if not can_place(start_cell, size):

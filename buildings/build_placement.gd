@@ -137,16 +137,19 @@ func can_place_building(definition: BuildingDefinition, cell: Vector2i) -> bool:
 
 	if definition.scene == null:
 		return false
-		
+
+	if definition.size.x <= 0 or definition.size.y <= 0:
+		return false
+
+	if not grid.can_place_with_clearance(cell, definition.size, 1):
+		return false
+
 	var placement_rect := grid.get_global_cell_rect(cell, definition.size)
 
 	if spatial_index.has_unit_in_rect(placement_rect):
 		return false
 
-	if definition.size.x <= 0 or definition.size.y <= 0:
-		return false
-
-	return grid.can_place(cell, definition.size)
+	return true
 
 
 func place_building(definition: BuildingDefinition, cell: Vector2i) -> bool:
