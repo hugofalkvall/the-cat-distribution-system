@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cyuequ8e3p48b"]
 
 [ext_resource type="Script" uid="uid://ojv38sjpfh7l" path="res://buildings/cat_building_mage/cat_building_mage.gd" id="1_7lgyg"]
-[ext_resource type="Texture2D" uid="uid://cva6qpw0gftnd" path="res://placeholder/Placeholder_purple.png" id="2_7lgyg"]
+[ext_resource type="Texture2D" uid="uid://uow7vhnbaoen" path="res://buildings/cat_building_mage/Mage_tower.png" id="2_7lgyg"]
 
 [node name="CatBuildingMage" type="Node2D"]
 script = ExtResource("1_7lgyg")

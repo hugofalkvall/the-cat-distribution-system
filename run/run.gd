@@ -34,7 +34,7 @@ var selected_placed_building: Building
 @onready var build_placement: BuildPlacement = $Arena/BuildPlacement
 @onready var run_ui: RunUI = $RunUI
 @onready var wave_director: WaveDirector = $WaveDirector
-@onready var arena_pathfinder: ArenaPathfinder = $Arena/Pathfinding
+@onready var arena_pathfinder: ArenaPathfinder = $Arena/Pathfinder
 
 func _ready() -> void:
 	currency = starting_currency

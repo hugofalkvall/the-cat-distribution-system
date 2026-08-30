@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="BuildingDefinition" load_steps=4 format=3 uid="uid://cjvt2j1clbgwv"]
+
+[ext_resource type="Texture2D" uid="uid://b3on25nv042ll" path="res://buildings/cat_building_cat_small/Cardboardbox_small.png" id="1_0xkkj"]
+[ext_resource type="PackedScene" uid="uid://cl8yb8o856xkv" path="res://buildings/cat_building_cat_small/cat_building_cat_small.tscn" id="2_l1cwy"]
+[ext_resource type="Script" uid="uid://blpx6i5c8vjai" path="res://buildings/building_definition.gd" id="3_c4yee"]
+
+[resource]
+script = ExtResource("3_c4yee")
+building_id = &"CB3"
+display_name = "Cat building cat small"
+icon = ExtResource("1_0xkkj")
+scene = ExtResource("2_l1cwy")
+size = Vector2i(2, 2)
+base_cost = 5
+metadata/_custom_type_script = "uid://blpx6i5c8vjai"

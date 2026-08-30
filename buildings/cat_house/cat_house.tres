@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="BuildingDefinition" load_steps=4 format=3 uid="uid://dhcly3u3o7yw2"]
 
-[ext_resource type="Texture2D" uid="uid://ciwof47kcktei" path="res://placeholder/Placeholder_grey.png" id="1_i3g51"]
+[ext_resource type="Texture2D" uid="uid://cc687m5y71dht" path="res://buildings/cat_house/Cardboardbox.png" id="1_i3g51"]
 [ext_resource type="PackedScene" uid="uid://bj3vt0h6sl254" path="res://buildings/cat_house/cat_house.tscn" id="2_66a0d"]
 [ext_resource type="Script" uid="uid://blpx6i5c8vjai" path="res://buildings/building_definition.gd" id="3_828hw"]
 

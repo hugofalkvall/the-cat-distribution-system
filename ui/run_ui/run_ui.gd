@@ -86,7 +86,7 @@ func populate_building_buttons() -> void:
 		button.setup(definition, cost)
 		button.set_affordable(run_state.currency >= cost)
 		button.selected.connect(_on_building_button_selected)
-
+		
 		building_buttons.append(button)
 
 

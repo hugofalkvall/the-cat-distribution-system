@@ -1,0 +1,32 @@
+[gd_scene load_steps=9 format=3 uid="uid://dica2sd5ths2l"]
+
+[ext_resource type="Script" uid="uid://4uieu4xnsiki" path="res://units/cats/cat_small/cat_small.gd" id="1_ql252"]
+[ext_resource type="Script" uid="uid://bu6mktrtul01f" path="res://combat/attack_definition.gd" id="2_7ihb0"]
+[ext_resource type="Texture2D" uid="uid://b6klnkjvmyh0w" path="res://units/cats/cat_small/Cat_small.png" id="2_b5g0r"]
+[ext_resource type="PackedScene" uid="uid://d3gvlyd5r8jy7" path="res://combat/attacks/claw_swipe/claw_swipe.tscn" id="3_24ut3"]
+[ext_resource type="Script" uid="uid://dftfkylqm4682" path="res://combat/effects/attack_effect_definition.gd" id="4_ku34s"]
+[ext_resource type="Script" uid="uid://cqg2g7p68pwvl" path="res://combat/effects/direct_damage_effect.gd" id="5_cakxy"]
+
+[sub_resource type="Resource" id="Resource_2pb4y"]
+script = ExtResource("5_cakxy")
+damage = 1.0
+metadata/_custom_type_script = "uid://cqg2g7p68pwvl"
+
+[sub_resource type="Resource" id="Resource_itcbg"]
+script = ExtResource("2_7ihb0")
+attack_name = &"cat_small_swipe"
+range = 4.0
+cooldown = 0.5
+behavior_scene = ExtResource("3_24ut3")
+effects = Array[ExtResource("4_ku34s")]([SubResource("Resource_2pb4y")])
+metadata/_custom_type_script = "uid://bu6mktrtul01f"
+
+[node name="CatSmall" type="Node2D"]
+script = ExtResource("1_ql252")
+starting_attacks = Array[ExtResource("2_7ihb0")]([SubResource("Resource_itcbg")])
+health_bar_always_visible = false
+max_health = 2.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("2_b5g0r")

@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bj3vt0h6sl254"]
 
 [ext_resource type="Script" uid="uid://s2emfqbnxblk" path="res://buildings/cat_house/cat_house.gd" id="1_dbsph"]
-[ext_resource type="Texture2D" uid="uid://ciwof47kcktei" path="res://placeholder/Placeholder_grey.png" id="2_dbsph"]
+[ext_resource type="Texture2D" uid="uid://cc687m5y71dht" path="res://buildings/cat_house/Cardboardbox.png" id="2_dbsph"]
 
 [node name="CatHouse" type="Node2D"]
 script = ExtResource("1_dbsph")
