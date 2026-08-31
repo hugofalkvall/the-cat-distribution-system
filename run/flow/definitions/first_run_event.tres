@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="RunEventEntryDefinition" load_steps=3 format=3 uid="uid://btisco2xvrntn"]
+
+[ext_resource type="Resource" uid="uid://cfoncpo1c4fg5" path="res://run/rewards/events/choose_building.tres" id="1_ylvyf"]
+[ext_resource type="Script" uid="uid://c0ow7q3ly05et" path="res://run/flow/run_event_entry_definition.gd" id="2_o8c4i"]
+
+[resource]
+script = ExtResource("2_o8c4i")
+trigger = 0
+wave_number = 1
+choice_event = ExtResource("1_ylvyf")
+metadata/_custom_type_script = "uid://c0ow7q3ly05et"

@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="RunEventScheduleDefinition" load_steps=2 format=3 uid="uid://b1r6bxuev2g51"]
+
+[ext_resource type="Script" uid="uid://k6qi3sls64ev" path="res://run/flow/run_event_schedule_definition.gd" id="1_mhfmq"]
+
+[resource]
+script = ExtResource("1_mhfmq")
+metadata/_custom_type_script = "uid://k6qi3sls64ev"

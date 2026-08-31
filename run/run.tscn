@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c5vi6wivmiqmk"]
+[gd_scene load_steps=10 format=3 uid="uid://c5vi6wivmiqmk"]
 
 [ext_resource type="PackedScene" uid="uid://cv5nrsenatt6u" path="res://arena/arena.tscn" id="1_6y1hf"]
 [ext_resource type="Script" uid="uid://bl25dvl61h3m" path="res://run/run.gd" id="1_wkui6"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://bhe0l3750jkd8" path="res://run/rewards/choice_director.gd" id="7_w508l"]
 [ext_resource type="Script" uid="uid://d3a6g8se4d01q" path="res://run/flow/run_flow_director.gd" id="8_pkyel"]
 [ext_resource type="Script" uid="uid://mjedjprgew68" path="res://run/waves/wave_director.gd" id="9_av6hb"]
+[ext_resource type="Resource" uid="uid://b1r6bxuev2g51" path="res://run/flow/definitions/main_run_schedule.tres" id="9_pkyel"]
 [ext_resource type="Resource" uid="uid://bggl6qyp65wgq" path="res://run/waves/definitions/main_wave.tres" id="10_yw4up"]
 
 [node name="Run" type="Node2D"]
@@ -33,5 +34,8 @@ enemies = NodePath("../Arena/Enemies")
 [node name="ChoiceDirector" type="Node" parent="."]
 script = ExtResource("7_w508l")
 
-[node name="RunFlowDirector" type="Node" parent="."]
+[node name="RunFlowDirector" type="Node" parent="." node_paths=PackedStringArray("wave_director", "choice_director")]
 script = ExtResource("8_pkyel")
+wave_director = NodePath("../WaveDirector")
+choice_director = NodePath("../ChoiceDirector")
+event_schedule = ExtResource("9_pkyel")

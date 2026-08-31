@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://g3n0lmmg6hrw"]
+[gd_scene load_steps=12 format=3 uid="uid://g3n0lmmg6hrw"]
 
 [ext_resource type="Script" uid="uid://c375tl0dp1bv4" path="res://ui/run_ui/run_ui.gd" id="1_nfmek"]
 [ext_resource type="Texture2D" uid="uid://ce8t5lt4ns1d1" path="res://placeholder/Grid_background_colorless.png" id="2_4j1ni"]
+[ext_resource type="PackedScene" uid="uid://c8cx5ljg78vvj" path="res://ui/reward_choice/reward_choice_overlay.tscn" id="3_stpfy"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_nfmek"]
 font_size = 20
@@ -170,3 +171,5 @@ z_index = -5
 texture = ExtResource("2_4j1ni")
 centered = false
 metadata/_edit_lock_ = true
+
+[node name="RewardChoiceOverlay" parent="." instance=ExtResource("3_stpfy")]
