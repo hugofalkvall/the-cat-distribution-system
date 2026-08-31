@@ -1,6 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://c8cx5ljg78vvj"]
+[gd_scene load_steps=5 format=3 uid="uid://c8cx5ljg78vvj"]
 
 [ext_resource type="Script" uid="uid://b1ritr24f07ug" path="res://ui/reward_choice/reward_choice_overlay.gd" id="1_4n2gv"]
+[ext_resource type="Texture2D" uid="uid://d2jldm3lb6jep" path="res://ui/assets/Panel.png" id="2_odsmw"]
+[ext_resource type="Texture2D" uid="uid://dcxf34x07o3rj" path="res://ui/assets/Header_panel.png" id="3_mc3dh"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_mc3dh"]
+font_size = 26
+shadow_size = 2
+shadow_color = Color(0, 0, 0, 1)
 
 [node name="RewardChoiceOverlay" type="Control"]
 layout_mode = 3
@@ -28,20 +35,51 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="CenterContainer"]
+[node name="PanelContainer" type="TextureRect" parent="CenterContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
+texture = ExtResource("2_odsmw")
 
-[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/PanelContainer"]
-layout_mode = 2
+[node name="HeaderPanel" type="TextureRect" parent="CenterContainer/PanelContainer"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -192.0
+offset_top = 10.0
+offset_right = 192.0
+offset_bottom = 37.0
+grow_horizontal = 2
+texture = ExtResource("3_mc3dh")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer"]
-layout_mode = 2
-alignment = 1
-
-[node name="TitleLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
+[node name="TitleLabel" type="Label" parent="CenterContainer/PanelContainer/HeaderPanel"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Choose reward here"
+label_settings = SubResource("LabelSettings_mc3dh")
 horizontal_alignment = 1
 
-[node name="OptionsContainer" type="HBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/PanelContainer"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -263.5
+offset_top = -67.5
+offset_right = 263.5
+offset_bottom = 67.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="OptionsContainer" type="HBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer"]
 layout_mode = 2
 alignment = 1

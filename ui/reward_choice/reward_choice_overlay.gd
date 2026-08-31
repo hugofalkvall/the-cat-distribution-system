@@ -3,9 +3,9 @@ extends Control
 
 signal reward_selected(reward: RewardDefinition)
 
-@onready var title_label: Label = $CenterContainer/PanelContainer/MarginContainer/VBoxContainer/TitleLabel
-@onready var options_container: HBoxContainer = $CenterContainer/PanelContainer/MarginContainer/VBoxContainer/OptionsContainer
-
+@onready var title_label: Label = $CenterContainer/PanelContainer/HeaderPanel/TitleLabel
+@onready var options_container: HBoxContainer = $CenterContainer/PanelContainer/MarginContainer/OptionsContainer
+@onready var panel_container: TextureRect =$CenterContainer/PanelContainer
 
 func _ready() -> void:
 	visible = false
@@ -19,7 +19,7 @@ func show_choice(event: ChoiceEventDefinition, options: Array[RewardDefinition])
 	for reward in options:
 		var button := Button.new()
 
-		button.custom_minimum_size = Vector2(140, 96)
+		button.custom_minimum_size = Vector2(100, 96)
 		
 		button.text = (
 			reward.display_name
