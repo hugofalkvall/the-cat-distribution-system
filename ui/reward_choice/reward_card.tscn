@@ -1,0 +1,44 @@
+[gd_scene load_steps=3 format=3 uid="uid://xrxkyb65pt8k"]
+
+[ext_resource type="Texture2D" uid="uid://dl4mqayq62p67" path="res://ui/assets/Reward_card.png" id="1_4ovn0"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_wcyuq"]
+
+[node name="RewardCard" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="CardTexture" type="TextureRect" parent="."]
+texture_filter = 1
+layout_mode = 2
+offset_right = 104.0
+offset_bottom = 156.0
+texture = ExtResource("1_4ovn0")
+
+[node name="RewardTitle" type="Label" parent="."]
+texture_filter = 1
+layout_mode = 2
+offset_left = 5.0
+offset_top = 3.0
+offset_right = 99.0
+offset_bottom = 26.0
+text = "Name here"
+horizontal_alignment = 1
+
+[node name="Description" type="Label" parent="."]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 81.0
+offset_right = 99.0
+offset_bottom = 145.0
+text = "Description goes here"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Icon" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 26.0
+offset_right = 92.0
+offset_bottom = 78.0
+texture = SubResource("ViewportTexture_wcyuq")
