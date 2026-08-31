@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="RewardPoolDefinition" load_steps=6 format=3 uid="uid://b7n50c1y6gdt5"]
+
+[ext_resource type="Script" uid="uid://bmb3joo1fri13" path="res://run/rewards/reward_definition.gd" id="1_tt6ha"]
+[ext_resource type="Script" uid="uid://qt4a37hy0nv8" path="res://run/rewards/reward_pool_definition.gd" id="2_os7wg"]
+[ext_resource type="Resource" uid="uid://c0w3nxg87mysa" path="res://run/rewards/definitions/buildings/cat_building_cat_small.tres" id="2_tgm8a"]
+[ext_resource type="Resource" uid="uid://kjbeg7pwyeak" path="res://run/rewards/definitions/buildings/cat_building_mage.tres" id="3_ku4vf"]
+[ext_resource type="Resource" uid="uid://c7dbcgw68txck" path="res://run/rewards/definitions/buildings/cat_house_reward.tres" id="4_hdevs"]
+
+[resource]
+script = ExtResource("2_os7wg")
+rewards = Array[ExtResource("1_tt6ha")]([ExtResource("2_tgm8a"), ExtResource("3_ku4vf"), ExtResource("4_hdevs")])
+metadata/_custom_type_script = "uid://qt4a37hy0nv8"

@@ -3,6 +3,7 @@ extends CanvasLayer
 
 signal building_selected(definition: BuildingDefinition)
 signal start_wave_requested
+signal reward_selected(reward: RewardDefinition)
 
 const BUILDING_BUTTON_SCENE := preload("res://ui/building_button/building_button.tscn")
 
@@ -24,8 +25,9 @@ const BUILDING_BUTTON_SCENE := preload("res://ui/building_button/building_button
 @onready var wave_progress_bar: ProgressBar = $Overlays/HBoxContainer/WaverogressBar
 
 @onready var start_wave_button: Button = $HUD/StartWaveButton
-
 @onready var arena_reference: Sprite2D = $ArenaReference
+
+@onready var reward_choice_overlay: RewardChoiceOverlay = $RewardChoiceOverlay
 
 var run_state: Run
 var building_buttons: Array[BuildingButton] = []
@@ -42,7 +44,9 @@ func setup(new_run: Run, idol: Damageable) -> void:
 	run_state.cat_count_changed.connect(_on_cat_count_changed)
 	run_state.currency_changed.connect(_on_currency_changed)
 	run_state.wave_progress_changed.connect(_on_wave_progress_changed)
+	run_state.available_buildings_changed.connect(populate_building_buttons)
 
+	reward_choice_overlay.reward_selected.connect(_on_reward_selected)
 	start_wave_button.pressed.connect(_on_start_wave_button_pressed)
 	start_wave_button.visible = false
 
@@ -183,3 +187,14 @@ func update_building_button_affordability(total_currency: int) -> void:
 
 		button.update_cost(cost)
 		button.set_affordable(total_currency >= cost)
+		
+func show_reward_choice(event: ChoiceEventDefinition, options: Array[RewardDefinition]) -> void:
+	reward_choice_overlay.show_choice(event, options)
+
+
+func hide_reward_choice() -> void:
+	reward_choice_overlay.hide_choice()
+
+
+func _on_reward_selected(reward: RewardDefinition) -> void:
+	reward_selected.emit(reward)

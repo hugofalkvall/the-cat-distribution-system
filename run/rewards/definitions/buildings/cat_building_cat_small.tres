@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="BuildingRewardDefinition" load_steps=4 format=3 uid="uid://c0w3nxg87mysa"]
+
+[ext_resource type="Texture2D" uid="uid://b3on25nv042ll" path="res://buildings/cat_building_cat_small/Cardboardbox_small.png" id="1_7l0w5"]
+[ext_resource type="Resource" uid="uid://cjvt2j1clbgwv" path="res://buildings/cat_building_cat_small/cat_building_cat_small.tres" id="1_138nr"]
+[ext_resource type="Script" uid="uid://c34bcagdbqqa3" path="res://run/rewards/building_reward_definition.gd" id="2_138nr"]
+
+[resource]
+script = ExtResource("2_138nr")
+building = ExtResource("1_138nr")
+reward_id = &"cat_building_cat_small"
+display_name = "Small cardboard box"
+description = "Produces small cats "
+icon = ExtResource("1_7l0w5")
+weight = 1.0
+unique = true
+metadata/_custom_type_script = "uid://c34bcagdbqqa3"

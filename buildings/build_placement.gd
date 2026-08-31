@@ -10,7 +10,6 @@ signal placed_building_selection_requested(building: Building)
 @export var spatial_index: CombatSpatialIndex
 @export var combat_system: CombatSystem
 
-const SNAP_MARGIN := 2.0
 const INVALID_CELL := Vector2i(-1000000, -1000000)
 
 var selected_building: BuildingDefinition
@@ -46,36 +45,26 @@ func _process(_delta: float) -> void:
 		return
 
 	var building_size := selected_building.size
-	var mouse_on_grid: Vector2 = grid.to_local(get_global_mouse_position())
-	var mouse_cell: Vector2i = grid.world_to_grid(mouse_on_grid)
+	var mouse_on_grid := grid.to_local(get_global_mouse_position())
 
-	if placement_cell == INVALID_CELL:
-		placement_cell = mouse_cell - Vector2i(building_size.x / 2, building_size.y / 2)
-		queue_redraw()
+	var mouse_relative := mouse_on_grid - grid.GRID_ORIGIN
+	var footprint_half_size := Vector2(building_size) / 2.0
+
+	var top_left_grid_position := (
+		mouse_relative / float(grid.CELL_SIZE)
+		- footprint_half_size
+	)
+
+	var new_placement_cell := Vector2i(
+		roundi(top_left_grid_position.x),
+		roundi(top_left_grid_position.y)
+	)
+
+	if new_placement_cell == placement_cell:
 		return
 
-	var placement_top_left: Vector2 = grid.grid_to_world(placement_cell)
-	var placement_size_pixels := Vector2(building_size.x * grid.CELL_SIZE, building_size.y * grid.CELL_SIZE)
-	var snap_area := Rect2(placement_top_left, placement_size_pixels).grow(SNAP_MARGIN)
-
-	if snap_area.has_point(mouse_on_grid):
-		return
-
-	var new_placement_cell := placement_cell
-
-	if mouse_on_grid.x < snap_area.position.x:
-		new_placement_cell.x = mouse_cell.x
-	elif mouse_on_grid.x >= snap_area.end.x:
-		new_placement_cell.x = mouse_cell.x - building_size.x + 1
-
-	if mouse_on_grid.y < snap_area.position.y:
-		new_placement_cell.y = mouse_cell.y
-	elif mouse_on_grid.y >= snap_area.end.y:
-		new_placement_cell.y = mouse_cell.y - building_size.y + 1
-
-	if new_placement_cell != placement_cell:
-		placement_cell = new_placement_cell
-		queue_redraw()
+	placement_cell = new_placement_cell
+	queue_redraw()
 
 
 func _unhandled_input(event: InputEvent) -> void:

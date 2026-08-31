@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PassiveRewardDefinition" load_steps=3 format=3 uid="uid://b8k5imprp6bqr"]
+
+[ext_resource type="Texture2D" uid="uid://cf7c1lhf7tatk" path="res://units/cats/cat_normal/Cat.png" id="1_oi55s"]
+[ext_resource type="Script" uid="uid://realvevss4x2" path="res://run/rewards/passive_reward_definition.gd" id="1_qdv3v"]
+
+[resource]
+script = ExtResource("1_qdv3v")
+reward_id = &"swift_paws"
+display_name = "Swift paws"
+description = "Gives increase attack speed for claw swipes."
+icon = ExtResource("1_oi55s")
+weight = 1.0
+unique = false
+metadata/_custom_type_script = "uid://realvevss4x2"

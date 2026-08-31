@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="BuildingRewardDefinition" load_steps=4 format=3 uid="uid://kjbeg7pwyeak"]
+
+[ext_resource type="Resource" uid="uid://cvl5l6savclu1" path="res://buildings/cat_building_mage/cat_building_mage.tres" id="1_ho4ob"]
+[ext_resource type="Script" uid="uid://c34bcagdbqqa3" path="res://run/rewards/building_reward_definition.gd" id="1_jfoky"]
+[ext_resource type="Texture2D" uid="uid://uow7vhnbaoen" path="res://buildings/cat_building_mage/Mage_tower.png" id="2_82xnk"]
+
+[resource]
+script = ExtResource("1_jfoky")
+building = ExtResource("1_ho4ob")
+reward_id = &"cat_building_mage"
+display_name = "Mage tower "
+description = "Produces cat mages "
+icon = ExtResource("2_82xnk")
+weight = 1.0
+unique = true
+metadata/_custom_type_script = "uid://c34bcagdbqqa3"

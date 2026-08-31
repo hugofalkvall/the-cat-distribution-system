@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ChoiceEventDefinition" load_steps=3 format=3 uid="uid://cfoncpo1c4fg5"]
+
+[ext_resource type="Script" uid="uid://efsym1wx1dmv" path="res://run/rewards/choice_event_definition.gd" id="1_7rbye"]
+[ext_resource type="Resource" uid="uid://b7n50c1y6gdt5" path="res://run/rewards/pools/building_pool.tres" id="1_vxp0i"]
+
+[resource]
+script = ExtResource("1_7rbye")
+display_name = "Choose your first building"
+option_count = 3
+reward_pool = ExtResource("1_vxp0i")
+metadata/_custom_type_script = "uid://efsym1wx1dmv"

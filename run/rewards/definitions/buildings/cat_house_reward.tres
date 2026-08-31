@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="BuildingRewardDefinition" load_steps=4 format=3 uid="uid://c7dbcgw68txck"]
+
+[ext_resource type="Script" uid="uid://c34bcagdbqqa3" path="res://run/rewards/building_reward_definition.gd" id="1_8ofk8"]
+[ext_resource type="Resource" uid="uid://dhcly3u3o7yw2" path="res://buildings/cat_house/cat_house.tres" id="1_mmgcp"]
+[ext_resource type="Texture2D" uid="uid://cc687m5y71dht" path="res://buildings/cat_house/Cardboardbox.png" id="2_d5jje"]
+
+[resource]
+script = ExtResource("1_8ofk8")
+building = ExtResource("1_mmgcp")
+reward_id = &"building_cat_house"
+display_name = "Cardboard Box"
+description = "Produces normal cats."
+icon = ExtResource("2_d5jje")
+weight = 1.0
+unique = true
+metadata/_custom_type_script = "uid://c34bcagdbqqa3"

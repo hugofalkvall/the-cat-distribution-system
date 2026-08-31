@@ -37,17 +37,6 @@ func _process(delta: float) -> void:
 			process_wave(delta)
 
 
-func start() -> void:
-	if wave_set == null:
-		push_error("WaveDirector requires a WaveSetDefinition.")
-		return
-
-	if wave_set.waves.is_empty():
-		push_error("WaveSet contains no waves.")
-		return
-
-	begin_intermission()
-
 func finish_intermission() -> void:
 	if state != State.INTERMISSION:
 		return
@@ -96,6 +85,10 @@ func process_spawn_group(group_state: Dictionary, delta: float) -> void:
 
 func begin_intermission() -> void:
 	var next_wave_index := current_wave_index + 1
+
+	if next_wave_index >= wave_set.waves.size():
+		return
+
 	var definition := wave_set.waves[next_wave_index]
 	var duration := definition.intermission_duration
 
@@ -113,9 +106,6 @@ func begin_intermission() -> void:
 		wave_set.waves.size(),
 		duration
 	)
-
-	if duration <= 0.0:
-		start_current_wave()
 
 
 func start_current_wave() -> void:
@@ -198,6 +188,10 @@ func all_groups_finished() -> bool:
 
 func complete_current_wave() -> void:
 	var definition := wave_set.waves[current_wave_index]
+	var is_final_wave := (
+		current_wave_index + 1
+		>= wave_set.waves.size()
+	)
 
 	last_reported_defeated_enemies = current_wave_total_enemies
 
@@ -206,15 +200,16 @@ func complete_current_wave() -> void:
 		current_wave_total_enemies
 	)
 
+	if is_final_wave:
+		state = State.COMPLETE
+	else:
+		state = State.IDLE
+
 	wave_completed.emit(
 		current_wave_index + 1,
 		wave_set.waves.size(),
 		definition
 	)
 
-	if current_wave_index + 1 >= wave_set.waves.size():
-		state = State.COMPLETE
+	if is_final_wave:
 		all_waves_completed.emit()
-		return
-
-	begin_intermission()

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PassiveRewardDefinition" load_steps=3 format=3 uid="uid://dmnpjr5i040lm"]
+
+[ext_resource type="Texture2D" uid="uid://cf7c1lhf7tatk" path="res://units/cats/cat_normal/Cat.png" id="1_22t4t"]
+[ext_resource type="Script" uid="uid://realvevss4x2" path="res://run/rewards/passive_reward_definition.gd" id="1_ghski"]
+
+[resource]
+script = ExtResource("1_ghski")
+reward_id = &"efficient_distribution"
+display_name = "Efficient Distribution"
+description = "Increases distribution by 10%"
+icon = ExtResource("1_22t4t")
+weight = 1.0
+unique = true
+metadata/_custom_type_script = "uid://realvevss4x2"

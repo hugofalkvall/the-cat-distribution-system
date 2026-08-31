@@ -2,6 +2,7 @@ class_name Run
 extends Node2D
 
 enum Phase {
+	CHOICE,
 	INTERMISSION,
 	COMBAT,
 	GAME_OVER,
@@ -17,9 +18,14 @@ signal cat_count_changed(total_cats: int, current_cats: int)
 signal currency_changed(total_currency: int)
 signal wave_progress_changed(defeated_enemies: int, total_enemies: int)
 signal placed_building_selection_changed(building: Building)
+signal available_buildings_changed
+signal passives_changed
 
 @export var starting_currency := 20
-@export var available_buildings: Array[BuildingDefinition] = []
+
+var available_buildings: Array[BuildingDefinition] = []
+var active_passives: Array[PassiveDefinition] = []
+var claimed_reward_ids: Dictionary = {}
 
 var total_cats_produced := 0
 var current_cat_count := 0
@@ -35,6 +41,8 @@ var selected_placed_building: Building
 @onready var run_ui: RunUI = $RunUI
 @onready var wave_director: WaveDirector = $WaveDirector
 @onready var arena_pathfinder: ArenaPathfinder = $Arena/Pathfinder
+@onready var choice_director: ChoiceDirector = $ChoiceDirector
+@onready var run_flow_director: RunFlowDirector = $RunFlowDirector
 
 func _ready() -> void:
 	currency = starting_currency
@@ -59,8 +67,18 @@ func _ready() -> void:
 		_register_enemy(enemy)
 
 	run_ui.setup(self, idol)
+	
+	choice_director.setup(self)
+	run_flow_director.setup(self)
 
-	wave_director.start()
+	choice_director.choice_started.connect(_on_choice_started)
+	choice_director.choice_completed.connect(_on_choice_completed)
+
+	run_ui.reward_selected.connect(
+		choice_director.select_reward
+	)
+
+	run_flow_director.start_run()
 
 
 func _on_cat_produced(cat: Node) -> void:
@@ -149,7 +167,78 @@ func _on_start_wave_requested() -> void:
 	if is_game_over:
 		return
 
-	wave_director.finish_intermission()
+	run_flow_director.request_start_wave()
+	
+func _on_choice_started(event: ChoiceEventDefinition, options: Array[RewardDefinition]) -> void:
+	phase = Phase.CHOICE
+
+	build_placement.set_production_enabled(false)
+	build_placement.cancel_placement()
+	clear_placed_building_selection()
+
+	run_ui.set_start_wave_button_visible(false)
+	run_ui.show_reward_choice(event, options)
+
+func unlock_building(definition: BuildingDefinition) -> void:
+	if definition == null:
+		return
+
+	if has_building_unlocked(definition):
+		return
+
+	available_buildings.append(definition)
+	available_buildings_changed.emit()
+
+
+func has_building_unlocked(definition: BuildingDefinition) -> bool:
+	if definition == null:
+		return false
+
+	for building in available_buildings:
+		if building.building_id == definition.building_id:
+			return true
+
+	return false
+
+
+func add_passive(definition: PassiveDefinition) -> void:
+	if definition == null:
+		return
+
+	if has_passive(definition):
+		return
+
+	active_passives.append(definition)
+	passives_changed.emit()
+
+
+func has_passive(definition: PassiveDefinition) -> bool:
+	if definition == null:
+		return false
+
+	for passive in active_passives:
+		if passive.passive_id == definition.passive_id:
+			return true
+
+	return false
+
+
+func claim_reward(reward_id: StringName) -> void:
+	if reward_id == &"":
+		return
+
+	claimed_reward_ids[reward_id] = true
+
+
+func has_claimed_reward(reward_id: StringName) -> bool:
+	if reward_id == &"":
+		return false
+
+	return claimed_reward_ids.has(reward_id)
+
+
+func _on_choice_completed(_event: ChoiceEventDefinition, _selected_reward: RewardDefinition) -> void:
+	run_ui.hide_reward_choice()
 
 
 func _on_placed_building_selection_requested(building: Building) -> void:
