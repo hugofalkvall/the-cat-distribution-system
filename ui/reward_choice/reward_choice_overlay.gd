@@ -20,6 +20,7 @@ func show_choice(event: ChoiceEventDefinition, options: Array[RewardDefinition])
 		var button := Button.new()
 
 		button.custom_minimum_size = Vector2(140, 96)
+		
 		button.text = (
 			reward.display_name
 			+ "\n\n"

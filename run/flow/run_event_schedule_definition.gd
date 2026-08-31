@@ -4,10 +4,7 @@ extends Resource
 @export var entries: Array[RunEventEntryDefinition] = []
 
 
-func get_events(
-	trigger_type: int,
-	wave_number: int
-) -> Array[ChoiceEventDefinition]:
+func get_events(trigger_type: int, wave_number: int) -> Array[ChoiceEventDefinition]:
 	var result: Array[ChoiceEventDefinition] = []
 
 	for entry in entries:

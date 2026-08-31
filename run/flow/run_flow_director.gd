@@ -113,7 +113,7 @@ func start_next_event_or_continue() -> void:
 
 
 func _on_choice_completed(_event: ChoiceEventDefinition, _selected_reward: RewardDefinition) -> void:
-	start_next_event_or_continue()
+	start_next_event_or_continue.call_deferred()
 
 
 func continue_flow() -> void:
