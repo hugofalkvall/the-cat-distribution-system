@@ -9,7 +9,8 @@ script = ExtResource("1_8ofk8")
 building = ExtResource("1_mmgcp")
 reward_id = &"building_cat_house"
 display_name = "Cardboard Box"
-description = "Produces normal cats."
+description = "Distributes Normal Cats
+Production speed: 5s"
 icon = ExtResource("2_d5jje")
 weight = 1.0
 unique = true

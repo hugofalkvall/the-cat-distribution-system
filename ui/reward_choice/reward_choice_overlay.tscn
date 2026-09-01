@@ -5,9 +5,8 @@
 [ext_resource type="Texture2D" uid="uid://dcxf34x07o3rj" path="res://ui/assets/Header_panel.png" id="3_mc3dh"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_mc3dh"]
-font_size = 26
-shadow_size = 2
-shadow_color = Color(0, 0, 0, 1)
+font_size = 18
+shadow_size = 0
 
 [node name="RewardChoiceOverlay" type="Control"]
 layout_mode = 3
@@ -25,7 +24,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.454902, 0.454902, 0.454902, 0.647059)
+color = Color(0.454902, 0.454902, 0.454902, 0.509804)
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 1
@@ -60,6 +59,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = 9.0
+offset_bottom = 9.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Choose reward here"
@@ -71,9 +72,41 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = 80.0
+offset_bottom = -64.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="OptionsContainer" type="HBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer"]
 layout_mode = 2
+theme_override_constants/separation = 20
 alignment = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="CenterContainer/PanelContainer"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -62.0
+offset_top = -49.0
+offset_right = 62.0
+offset_bottom = -18.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="ButtonContainer" type="HBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="CloseButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer2/ButtonContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Close"
+
+[node name="RerollButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer2/ButtonContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Reroll"

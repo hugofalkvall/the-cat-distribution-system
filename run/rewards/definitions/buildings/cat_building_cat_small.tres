@@ -8,8 +8,9 @@
 script = ExtResource("2_138nr")
 building = ExtResource("1_138nr")
 reward_id = &"cat_building_cat_small"
-display_name = "Small cardboard box"
-description = "Produces small cats "
+display_name = "Tiny cardboard box"
+description = "Distributes Tiny Cats
+Production speed: 1s"
 icon = ExtResource("1_7l0w5")
 weight = 1.0
 unique = true

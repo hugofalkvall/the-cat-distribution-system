@@ -3,9 +3,11 @@ extends Control
 
 signal reward_selected(reward: RewardDefinition)
 
+const REWARD_CARD_SCENE := preload("res://ui/reward_choice/reward_card.tscn")
+
 @onready var title_label: Label = $CenterContainer/PanelContainer/HeaderPanel/TitleLabel
 @onready var options_container: HBoxContainer = $CenterContainer/PanelContainer/MarginContainer/OptionsContainer
-@onready var panel_container: TextureRect =$CenterContainer/PanelContainer
+
 
 func _ready() -> void:
 	visible = false
@@ -16,25 +18,16 @@ func show_choice(event: ChoiceEventDefinition, options: Array[RewardDefinition])
 
 	title_label.text = event.display_name
 
-	for reward in options:
-		var button := Button.new()
+	for reward: RewardDefinition in options:
+		var card := REWARD_CARD_SCENE.instantiate() as RewardCard
 
-		button.custom_minimum_size = Vector2(100, 96)
-		
-		button.text = (
-			reward.display_name
-			+ "\n\n"
-			+ reward.description
-		)
+		if card == null:
+			push_error("RewardChoiceOverlay: failed to instantiate RewardCard.")
+			continue
 
-		if reward.icon != null:
-			button.icon = reward.icon
-
-		button.pressed.connect(
-			_on_reward_pressed.bind(reward)
-		)
-
-		options_container.add_child(button)
+		options_container.add_child(card)
+		card.setup(reward)
+		card.selected.connect(_on_reward_selected)
 
 	visible = true
 
@@ -49,9 +42,11 @@ func clear_options() -> void:
 		child.queue_free()
 
 
-func _on_reward_pressed(reward: RewardDefinition) -> void:
+func _on_reward_selected(reward: RewardDefinition) -> void:
 	for child in options_container.get_children():
-		if child is Button:
-			child.disabled = true
+		var card := child as RewardCard
+
+		if card != null:
+			card.disabled = true
 
 	reward_selected.emit(reward)

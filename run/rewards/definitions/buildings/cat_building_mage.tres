@@ -9,7 +9,8 @@ script = ExtResource("1_jfoky")
 building = ExtResource("1_ho4ob")
 reward_id = &"cat_building_mage"
 display_name = "Mage tower "
-description = "Produces cat mages "
+description = "Distributes Mage cats
+Production speed: 8s"
 icon = ExtResource("2_82xnk")
 weight = 1.0
 unique = true

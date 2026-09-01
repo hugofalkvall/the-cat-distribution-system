@@ -61,7 +61,7 @@ func setup(new_run: Run, idol: Damageable) -> void:
 
 	game_over_phase_label.visible = false
 	victory_phase_label.visible = false
-	intermission_phase_label.visible = true
+	intermission_phase_label.visible = false
 
 	wave_progress_container.visible = false
 	wave_progress_bar.min_value = 0
@@ -194,6 +194,8 @@ func show_reward_choice(event: ChoiceEventDefinition, options: Array[RewardDefin
 
 func hide_reward_choice() -> void:
 	reward_choice_overlay.hide_choice()
+	intermission_phase_label.visible = true
+	
 
 
 func _on_reward_selected(reward: RewardDefinition) -> void:

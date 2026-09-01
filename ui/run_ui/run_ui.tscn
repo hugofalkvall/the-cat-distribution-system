@@ -173,3 +173,4 @@ centered = false
 metadata/_edit_lock_ = true
 
 [node name="RewardChoiceOverlay" parent="." instance=ExtResource("3_stpfy")]
+visible = false
