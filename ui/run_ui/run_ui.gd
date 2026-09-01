@@ -4,6 +4,8 @@ extends CanvasLayer
 signal building_selected(definition: BuildingDefinition)
 signal start_wave_requested
 signal reward_selected(reward: RewardDefinition)
+signal reward_reroll_requested
+signal reward_skip_requested
 
 const BUILDING_BUTTON_SCENE := preload("res://ui/building_button/building_button.tscn")
 
@@ -47,6 +49,8 @@ func setup(new_run: Run, idol: Damageable) -> void:
 	run_state.available_buildings_changed.connect(populate_building_buttons)
 
 	reward_choice_overlay.reward_selected.connect(_on_reward_selected)
+	reward_choice_overlay.reroll_requested.connect(_on_reward_reroll_requested)
+	reward_choice_overlay.skip_requested.connect(_on_reward_skip_requested)
 	start_wave_button.pressed.connect(_on_start_wave_button_pressed)
 	start_wave_button.visible = false
 
@@ -68,6 +72,14 @@ func setup(new_run: Run, idol: Damageable) -> void:
 	wave_progress_bar.max_value = 100
 	wave_progress_bar.value = 0
 
+func _on_reward_reroll_requested() -> void:
+	reward_reroll_requested.emit()
+
+
+func _on_reward_skip_requested() -> void:
+	reward_skip_requested.emit()
+	
+	
 func populate_building_buttons() -> void:
 	for child in building_container.get_children():
 		child.queue_free()

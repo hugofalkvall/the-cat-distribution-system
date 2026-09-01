@@ -73,10 +73,12 @@ func _ready() -> void:
 
 	choice_director.choice_started.connect(_on_choice_started)
 	choice_director.choice_completed.connect(_on_choice_completed)
+	choice_director.choice_options_changed.connect(_on_choice_options_changed)
 
-	run_ui.reward_selected.connect(
-		choice_director.select_reward
-	)
+
+	run_ui.reward_selected.connect(choice_director.select_reward)
+	run_ui.reward_reroll_requested.connect(choice_director.reroll_choice)
+	run_ui.reward_skip_requested.connect(choice_director.skip_choice)
 
 	run_flow_director.start_run()
 
@@ -177,6 +179,9 @@ func _on_choice_started(event: ChoiceEventDefinition, options: Array[RewardDefin
 	clear_placed_building_selection()
 
 	run_ui.set_start_wave_button_visible(false)
+	run_ui.show_reward_choice(event, options)
+	
+func _on_choice_options_changed(event: ChoiceEventDefinition, options: Array[RewardDefinition]) -> void:
 	run_ui.show_reward_choice(event, options)
 
 func unlock_building(definition: BuildingDefinition) -> void:

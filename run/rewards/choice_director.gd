@@ -3,6 +3,7 @@ extends Node
 
 signal choice_started(event: ChoiceEventDefinition, options: Array[RewardDefinition])
 signal choice_completed(event: ChoiceEventDefinition, selected_reward: RewardDefinition)
+signal choice_options_changed(event: ChoiceEventDefinition, options: Array[RewardDefinition])
 
 var run_state: Run
 
@@ -122,3 +123,56 @@ func pick_weighted_reward(rewards: Array[RewardDefinition]) -> RewardDefinition:
 			return reward
 
 	return rewards.back()
+
+func reroll_choice() -> void:
+	if active_event == null:
+		return
+
+	if not active_event.allow_reroll:
+		return
+
+	var candidates: Array[RewardDefinition] = active_event.reward_pool.get_available_rewards(run_state)
+
+	if candidates.size() <= active_options.size():
+		return
+
+	var new_options: Array[RewardDefinition] = []
+
+	for _attempt in range(10):
+		new_options = generate_options(candidates, active_event.option_count)
+
+		if not contains_same_rewards(active_options, new_options):
+			break
+
+	if contains_same_rewards(active_options, new_options):
+		return
+
+	active_options = new_options
+
+	choice_options_changed.emit(active_event, active_options)
+
+
+func skip_choice() -> void:
+	if active_event == null:
+		return
+
+	if not active_event.allow_skip:
+		return
+
+	var completed_event: ChoiceEventDefinition = active_event
+
+	active_event = null
+	active_options.clear()
+
+	choice_completed.emit(completed_event, null)
+
+
+func contains_same_rewards(first: Array[RewardDefinition], second: Array[RewardDefinition]) -> bool:
+	if first.size() != second.size():
+		return false
+
+	for reward: RewardDefinition in first:
+		if not second.has(reward):
+			return false
+
+	return true

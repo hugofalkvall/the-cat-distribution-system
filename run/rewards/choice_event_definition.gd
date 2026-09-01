@@ -4,3 +4,7 @@ extends Resource
 @export var display_name := ""
 @export_range(1, 10, 1) var option_count := 3
 @export var reward_pool: RewardPoolDefinition
+
+@export_group("Actions")
+@export var allow_reroll := false
+@export var allow_skip := false
