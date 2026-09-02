@@ -30,6 +30,7 @@ const BUILDING_BUTTON_SCENE := preload("res://ui/building_button/building_button
 @onready var arena_reference: Sprite2D = $ArenaReference
 
 @onready var reward_choice_overlay: RewardChoiceOverlay = $RewardChoiceOverlay
+@onready var HUD: Control = $HUD
 
 var run_state: Run
 var building_buttons: Array[BuildingButton] = []
@@ -201,12 +202,15 @@ func update_building_button_affordability(total_currency: int) -> void:
 		button.set_affordable(total_currency >= cost)
 		
 func show_reward_choice(event: ChoiceEventDefinition, options: Array[RewardDefinition]) -> void:
+	
+	HUD.hide()
 	reward_choice_overlay.show_choice(event, options)
 
 
 func hide_reward_choice() -> void:
 	reward_choice_overlay.hide_choice()
 	intermission_phase_label.visible = true
+	HUD.show()
 	
 
 

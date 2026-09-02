@@ -1,13 +1,18 @@
-[gd_scene load_steps=7 format=3 uid="uid://xrxkyb65pt8k"]
+[gd_scene load_steps=8 format=3 uid="uid://xrxkyb65pt8k"]
 
 [ext_resource type="Texture2D" uid="uid://dl4mqayq62p67" path="res://ui/assets/Reward_card.png" id="1_4ovn0"]
 [ext_resource type="Script" uid="uid://crrbycvb27xqb" path="res://ui/reward_choice/reward_card.gd" id="1_wcyuq"]
 [ext_resource type="Texture2D" uid="uid://caj7xg2hwejeu" path="res://ui/assets/Reward_card_clicked.png" id="2_hdycu"]
 [ext_resource type="Texture2D" uid="uid://bv1kn8ce8ys3s" path="res://ui/assets/Reward_card_hoover.png" id="3_unreg"]
+[ext_resource type="FontFile" uid="uid://url3acjadst6" path="res://ui/assets/GNF.ttf" id="5_01mdn"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_wcyuq"]
+font = ExtResource("5_01mdn")
+font_size = 8
 
 [sub_resource type="LabelSettings" id="LabelSettings_km8tc"]
+font = ExtResource("5_01mdn")
+font_size = 7
 
 [node name="RewardCard" type="TextureButton"]
 texture_normal = ExtResource("1_4ovn0")
@@ -18,20 +23,21 @@ script = ExtResource("1_wcyuq")
 [node name="RewardTitle" type="Label" parent="."]
 texture_filter = 1
 layout_mode = 2
-offset_left = 11.0
-offset_top = 9.0
-offset_right = 97.0
-offset_bottom = 32.0
+offset_left = 9.0
+offset_top = 12.0
+offset_right = 95.0
+offset_bottom = 22.0
 text = "Name here"
 label_settings = SubResource("LabelSettings_wcyuq")
 horizontal_alignment = 1
 
 [node name="Description" type="Label" parent="."]
+texture_filter = 1
 layout_mode = 0
-offset_left = 11.0
-offset_top = 82.0
-offset_right = 94.0
-offset_bottom = 140.0
+offset_left = 14.0
+offset_top = 86.0
+offset_right = 92.0
+offset_bottom = 137.0
 text = "Description goes here"
 label_settings = SubResource("LabelSettings_km8tc")
 autowrap_mode = 2

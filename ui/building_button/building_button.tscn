@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://jf78xw3h2xqn"]
+[gd_scene load_steps=3 format=3 uid="uid://jf78xw3h2xqn"]
 
+[ext_resource type="FontFile" uid="uid://url3acjadst6" path="res://ui/assets/GNF.ttf" id="1_5deju"]
 [ext_resource type="Script" uid="uid://d1o5b42o127ra" path="res://ui/building_button/building_button.gd" id="1_tq6v6"]
 
 [node name="BuildingButton" type="Button"]
+theme_override_fonts/font = ExtResource("1_5deju")
+theme_override_font_sizes/font_size = 16
 script = ExtResource("1_tq6v6")

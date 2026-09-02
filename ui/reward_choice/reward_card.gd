@@ -17,12 +17,12 @@ func setup(definition: RewardDefinition) -> void:
 		return
 
 	reward_title.text = reward.display_name
-	reward_title.label_settings.font_size = 8
-	reward_title.position = Vector2i (10,10)
+	#reward_title.label_settings.font_size = 8
+	#reward_title.position = Vector2i (10,10)
 
 	description_label.text = reward.description
-	description_label.label_settings.font_size = 7
-	description_label.position = Vector2i (12, 85)
+	#description_label.label_settings.font_size = 7
+	#description_label.position = Vector2i (12, 85)
 	
 	icon_rect.texture = reward.icon
 	icon_rect.size = Vector2i(32, 32)
