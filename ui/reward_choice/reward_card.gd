@@ -29,11 +29,41 @@ func setup(definition: RewardDefinition) -> void:
 
 
 func _ready() -> void:
+	pivot_offset = size / 2.0
 	pressed.connect(_on_pressed)
-
+	mouse_entered.connect(_on_mouse_entered)
+	mouse_exited.connect(_on_mouse_exited)
 
 func _on_pressed() -> void:
 	if reward == null:
 		return
 
 	selected.emit(reward)
+	
+func _on_mouse_entered() -> void:
+	animate_scale(Vector2(1.04, 1.04))
+
+func _on_mouse_exited() -> void:
+	animate_scale(Vector2(1, 1))
+
+func animate_scale(target_scale: Vector2) -> void:
+	var tween := create_tween()
+	tween.set_trans(Tween.TRANS_QUAD)
+	tween.set_ease(Tween.EASE_OUT)
+	tween.tween_property(self, "scale", target_scale, 0.08)
+	
+func play_enter_animation(delay: float = 0.0) -> void:
+	modulate.a = 0.0
+	scale = Vector2(0.85, 0.85)
+
+	await get_tree().process_frame
+
+	pivot_offset = size / 2.0
+
+	var tween := create_tween()
+	tween.set_parallel(true)
+	tween.set_trans(Tween.TRANS_BACK)
+	tween.set_ease(Tween.EASE_OUT)
+
+	tween.tween_property(self, "modulate:a", 1.0, 0.2).set_delay(delay)
+	tween.tween_property(self, "scale", Vector2.ONE, 0.25).set_delay(delay)

@@ -37,6 +37,8 @@ func show_choice(event: ChoiceEventDefinition, options: Array[RewardDefinition])
 	reroll_button.visible = event.allow_reroll
 	skip_button.visible = event.allow_skip
 
+	var index := 0
+	
 	for reward: RewardDefinition in options:
 		var card := REWARD_CARD_SCENE.instantiate() as RewardCard
 
@@ -47,6 +49,8 @@ func show_choice(event: ChoiceEventDefinition, options: Array[RewardDefinition])
 		options_container.add_child(card)
 		card.setup(reward)
 		card.selected.connect(_on_reward_selected)
+		#card.play_enter_animation(index * 0.12)
+		index += 1
 
 	visible = true
 
