@@ -34,10 +34,12 @@ const BUILDING_BUTTON_SCENE := preload("res://ui/building_button/building_button
 
 var run_state: Run
 var building_buttons: Array[BuildingButton] = []
+var intermission_phase_text := ""
 
 
 func setup(new_run: Run, idol: Damageable) -> void:
 	run_state = new_run
+	intermission_phase_text = intermission_phase_label.text
 	arena_reference.visible = false
 
 	idol.health_changed.connect(_on_idol_health_changed)
@@ -138,6 +140,7 @@ func _on_start_wave_button_pressed() -> void:
 	start_wave_requested.emit()
 
 func _on_wave_finnished() -> void:
+	intermission_phase_label.text = intermission_phase_text
 	intermission_phase_label.visible = true
 	hide_wave_progress()
 
@@ -202,13 +205,22 @@ func update_building_button_affordability(total_currency: int) -> void:
 		button.set_affordable(total_currency >= cost)
 		
 func show_reward_choice(event: ChoiceEventDefinition, options: Array[RewardDefinition]) -> void:
-	
+	intermission_phase_label.text = intermission_phase_text
+	intermission_phase_label.visible = false
 	HUD.hide()
 	reward_choice_overlay.show_choice(event, options)
 
 
+func show_building_reward_placement(definition: BuildingDefinition) -> void:
+	reward_choice_overlay.hide_choice()
+	HUD.show()
+	intermission_phase_label.text = "Place " + definition.display_name
+	intermission_phase_label.visible = true
+
+
 func hide_reward_choice() -> void:
 	reward_choice_overlay.hide_choice()
+	intermission_phase_label.text = intermission_phase_text
 	intermission_phase_label.visible = true
 	HUD.show()
 	
