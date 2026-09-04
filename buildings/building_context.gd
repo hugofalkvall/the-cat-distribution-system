@@ -7,3 +7,4 @@ var spatial_index: CombatSpatialIndex
 var combat_system: CombatSystem
 
 var production_enabled := false
+var distribution_rate_multiplier := 1.0

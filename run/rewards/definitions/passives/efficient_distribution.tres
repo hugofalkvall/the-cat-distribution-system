@@ -1,14 +1,25 @@
-[gd_resource type="Resource" script_class="PassiveRewardDefinition" load_steps=3 format=3 uid="uid://dmnpjr5i040lm"]
+[gd_resource type="Resource" script_class="PassiveRewardDefinition" load_steps=4 format=3 uid="uid://dmnpjr5i040lm"]
 
 [ext_resource type="Texture2D" uid="uid://cf7c1lhf7tatk" path="res://units/cats/cat_normal/Cat.png" id="1_22t4t"]
 [ext_resource type="Script" uid="uid://realvevss4x2" path="res://run/rewards/passive_reward_definition.gd" id="1_ghski"]
+[ext_resource type="Script" uid="uid://tn8ty64qis0q" path="res://run/passives/passive_definition.gd" id="2_passive"]
+
+[sub_resource type="Resource" id="Passive_efficient_distribution"]
+script = ExtResource("2_passive")
+passive_id = &"efficient_distribution"
+display_name = "Efficient Distribution"
+description = "All buildings distribute cats 10% faster."
+icon = ExtResource("1_22t4t")
+distribution_rate_multiplier = 1.1
+metadata/_custom_type_script = "uid://tn8ty64qis0q"
 
 [resource]
 script = ExtResource("1_ghski")
 reward_id = &"efficient_distribution"
 display_name = "Efficient Distribution"
-description = "Increases distribution by 10%"
+description = "All buildings distribute cats 10% faster."
 icon = ExtResource("1_22t4t")
 weight = 1.0
 unique = true
+passive = SubResource("Passive_efficient_distribution")
 metadata/_custom_type_script = "uid://realvevss4x2"

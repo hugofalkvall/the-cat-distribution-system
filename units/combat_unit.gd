@@ -30,6 +30,8 @@ var navigation_repath_remaining := 0.0
 const MOVEMENT_DIRECTION_THRESHOLD := 0.1
 
 var velocity := Vector2.ZERO
+var granted_extra_lives := 0
+var remaining_extra_lives := 0
 
 func _ready() -> void:
 	super._ready()
@@ -251,6 +253,28 @@ func reset_navigation_route() -> void:
 	navigation_path_index = 0
 	navigation_goal_cell = INVALID_NAVIGATION_CELL
 	navigation_repath_remaining = 0.0
+
+
+func set_extra_lives(total_extra_lives: int) -> void:
+	var clamped_total := maxi(total_extra_lives, 0)
+	var difference := clamped_total - granted_extra_lives
+
+	remaining_extra_lives = maxi(remaining_extra_lives + difference, 0)
+	granted_extra_lives = clamped_total
+
+
+func die() -> void:
+	if is_dead:
+		return
+
+	if remaining_extra_lives > 0:
+		remaining_extra_lives -= 1
+		current_health = max_health
+		health_changed.emit(self, current_health, max_health)
+		queue_redraw()
+		return
+
+	super.die()
 
 
 func on_death() -> void:

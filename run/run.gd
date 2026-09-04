@@ -1,6 +1,8 @@
 class_name Run
 extends Node2D
 
+const CLAW_SWIPE_BEHAVIOR := preload("res://combat/attacks/claw_swipe/claw_swipe.tscn")
+
 enum Phase {
 	CHOICE,
 	INTERMISSION,
@@ -26,6 +28,10 @@ signal passives_changed
 var available_buildings: Array[BuildingDefinition] = []
 var active_passives: Array[PassiveDefinition] = []
 var claimed_reward_ids: Dictionary = {}
+
+var passive_distribution_rate_multiplier := 1.0
+var passive_extra_cat_lives := 0
+var passive_claw_swipe_attack_speed_multiplier := 1.0
 
 var total_cats_produced := 0
 var current_cat_count := 0
@@ -85,8 +91,10 @@ func _ready() -> void:
 	run_flow_director.start_run()
 
 
-func _on_cat_produced(cat: Node) -> void:
-	if not cat is CombatUnit:
+func _on_cat_produced(node: Node) -> void:
+	var cat := node as CombatUnit
+
+	if cat == null:
 		return
 
 	total_cats_produced += 1
@@ -94,7 +102,19 @@ func _on_cat_produced(cat: Node) -> void:
 
 	cat.died.connect(_on_cat_died)
 
+	if cat.is_node_ready():
+		apply_passives_to_cat(cat)
+	else:
+		cat.ready.connect(_on_cat_ready.bind(cat), CONNECT_ONE_SHOT)
+
 	cat_count_changed.emit(total_cats_produced, current_cat_count)
+
+
+func _on_cat_ready(cat: CombatUnit) -> void:
+	if not is_instance_valid(cat):
+		return
+
+	apply_passives_to_cat(cat)
 
 
 func _on_cat_died(_cat: Damageable) -> void:
@@ -251,10 +271,8 @@ func add_passive(definition: PassiveDefinition) -> void:
 	if definition == null:
 		return
 
-	if has_passive(definition):
-		return
-
 	active_passives.append(definition)
+	recalculate_passive_modifiers()
 	passives_changed.emit()
 
 
@@ -267,6 +285,44 @@ func has_passive(definition: PassiveDefinition) -> bool:
 			return true
 
 	return false
+
+
+func recalculate_passive_modifiers() -> void:
+	passive_distribution_rate_multiplier = 1.0
+	passive_extra_cat_lives = 0
+	passive_claw_swipe_attack_speed_multiplier = 1.0
+
+	for passive in active_passives:
+		if passive == null:
+			continue
+
+		passive_distribution_rate_multiplier *= maxf(passive.distribution_rate_multiplier, 0.0)
+		passive_extra_cat_lives += maxi(passive.extra_cat_lives, 0)
+		passive_claw_swipe_attack_speed_multiplier *= maxf(passive.claw_swipe_attack_speed_multiplier, 0.01)
+
+	build_placement.set_distribution_rate_multiplier(passive_distribution_rate_multiplier)
+
+	for child in cats.get_children():
+		var cat := child as CombatUnit
+
+		if cat != null and cat.is_node_ready():
+			apply_passives_to_cat(cat)
+
+
+func apply_passives_to_cat(cat: CombatUnit) -> void:
+	if not is_instance_valid(cat):
+		return
+
+	cat.set_extra_lives(passive_extra_cat_lives)
+
+	var passive_cooldown_multiplier := 1.0 / maxf(passive_claw_swipe_attack_speed_multiplier, 0.01)
+
+	for attack_state in cat.attacks:
+		if attack_state == null or attack_state.definition == null:
+			continue
+
+		if attack_state.definition.behavior_scene == CLAW_SWIPE_BEHAVIOR:
+			attack_state.passive_cooldown_multiplier = passive_cooldown_multiplier
 
 
 func claim_reward(reward_id: StringName) -> void:

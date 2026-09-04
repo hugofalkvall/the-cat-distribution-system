@@ -211,3 +211,10 @@ func set_production_enabled(enabled: bool) -> void:
 		return
 
 	building_context.production_enabled = enabled
+
+
+func set_distribution_rate_multiplier(multiplier: float) -> void:
+	if building_context == null:
+		return
+
+	building_context.distribution_rate_multiplier = maxf(multiplier, 0.0)
