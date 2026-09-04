@@ -13,11 +13,27 @@ var combat_target: Damageable = null
 var target_update_timer := 0.0
 var avoidance_side := 1.0
 
+@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var animated_sprite_shader: AnimatedSprite2D = $ShaderSprite
 
 func on_enemy_setup() -> void:
 	avoidance_side = -1.0 if randf() < 0.5 else 1.0
 	target_update_timer = randf_range(0.0, TARGET_UPDATE_INTERVAL)
 
+func _ready() -> void:
+	super._ready()
+
+	animated_sprite_shader.pause()
+	animated_sprite.frame_changed.connect(sync_shadow_frame)
+
+	animated_sprite.set_frame_and_progress(0, 0.0)
+	sync_shadow_frame()
+	animated_sprite.play(&"default")
+
+
+func sync_shadow_frame() -> void:
+	animated_sprite_shader.animation = animated_sprite.animation
+	animated_sprite_shader.frame = animated_sprite.frame
 
 func _process(delta: float) -> void:
 	if not is_instance_valid(idol_target):
@@ -47,8 +63,14 @@ func _process(delta: float) -> void:
 
 	if in_attack_range:
 		try_attack(combat_target, combat_system)
+		
+	update_sprite_facing()
 
-
+func update_sprite_facing() -> void:
+	if is_moving_left():
+		animated_sprite.flip_h = true
+	elif is_moving_right():
+		animated_sprite.flip_h = false
 func update_combat_target(delta: float) -> void:
 	target_update_timer -= delta
 
