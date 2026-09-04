@@ -25,7 +25,11 @@ const BUILDING_BUTTON_SCENE := preload("res://ui/building_button/building_button
 @onready var arena_reference: Sprite2D = $ArenaReference
 @onready var reward_choice_overlay: RewardChoiceOverlay = $RewardChoiceOverlay
 @onready var HUD: Control = $HUD
-@onready var BuildingStats: VBoxContainer = $Overlays/BuildingStats
+@onready var building_stats: VBoxContainer = $Overlays/BuildingStats
+@onready var building_name_label: Label = $Overlays/BuildingStats/BuildingName
+@onready var building_type_label: Label = $Overlays/BuildingStats/BuildingType
+@onready var distribution_rate_label: Label = $Overlays/BuildingStats/CDSCount
+@onready var unit_information_label: Label = $Overlays/BuildingStats/UnitInformation
 
 var run_state: Run
 var building_buttons: Array[BuildingButton] = []
@@ -36,7 +40,7 @@ func setup(new_run: Run, idol: Damageable) -> void:
 	run_state = new_run
 	intermission_phase_text = intermission_phase_label.text
 	arena_reference.visible = false
-	BuildingStats.visible = false
+	building_stats.visible = false
 
 	idol.health_changed.connect(_on_idol_health_changed)
 	run_state.game_over.connect(_on_game_over)
@@ -46,6 +50,7 @@ func setup(new_run: Run, idol: Damageable) -> void:
 	run_state.currency_changed.connect(_on_currency_changed)
 	run_state.wave_progress_changed.connect(_on_wave_progress_changed)
 	run_state.available_buildings_changed.connect(populate_building_buttons)
+	run_state.placed_building_selection_changed.connect(_on_placed_building_selection_changed)
 
 	reward_choice_overlay.reward_selected.connect(_on_reward_selected)
 	reward_choice_overlay.reroll_requested.connect(_on_reward_reroll_requested)
@@ -108,6 +113,19 @@ func populate_building_buttons() -> void:
 func _on_building_button_selected(definition: BuildingDefinition) -> void:
 	building_selected.emit(definition)
 
+func _on_placed_building_selection_changed(building: Building) -> void:
+	if not is_instance_valid(building) or building.definition == null:
+		building_stats.visible = false
+		return
+
+	var definition := building.definition
+	var distribution_rate := snappedf(building.get_current_distribution_per_second(), 0.001)
+
+	building_name_label.text = definition.display_name
+	building_type_label.text = "Type: " + definition.get_building_type_name()
+	distribution_rate_label.text = "Distribution: " + str(distribution_rate) + " cats/s"
+	unit_information_label.text = "Distributes: " + definition.produced_unit_name 
+	building_stats.visible = true
 
 func _on_idol_health_changed(_idol: Damageable, current_health: float, max_health: float) -> void:
 	idol_health_bar.max_value = max_health

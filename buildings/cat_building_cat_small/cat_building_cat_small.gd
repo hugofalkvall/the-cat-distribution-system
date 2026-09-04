@@ -3,7 +3,7 @@ extends Building
 const PRODUCTION_TIME := 1.0
 const CAT_SMALL_SCENE := preload("res://units/cats/cat_small/cat_small.tscn")
 
-var production_timer := 0.0
+var production_progress := 0.0
 
 
 func _process(delta: float) -> void:
@@ -17,13 +17,13 @@ func _process(delta: float) -> void:
 		return
 
 	if not context.production_enabled:
-		production_timer = 0.0
+		production_progress = 0.0
 		return
 
-	production_timer += delta
+	production_progress += delta * get_current_distribution_per_second()
 
-	if production_timer >= PRODUCTION_TIME:
-		production_timer = 0.0
+	if production_progress >= 1.0:
+		production_progress -= 1.0
 		produce_cat()
 
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://g3n0lmmg6hrw"]
+[gd_scene load_steps=17 format=3 uid="uid://g3n0lmmg6hrw"]
 
 [ext_resource type="Script" uid="uid://c375tl0dp1bv4" path="res://ui/run_ui/run_ui.gd" id="1_nfmek"]
 [ext_resource type="Texture2D" uid="uid://ce8t5lt4ns1d1" path="res://placeholder/Grid_background_colorless.png" id="2_4j1ni"]
@@ -43,6 +43,10 @@ font_size = 24
 
 [sub_resource type="LabelSettings" id="LabelSettings_587qr"]
 font = ExtResource("3_5g48r")
+
+[sub_resource type="LabelSettings" id="LabelSettings_h5rnp"]
+font = ExtResource("3_5g48r")
+font_size = 8
 
 [sub_resource type="LabelSettings" id="LabelSettings_t0j0o"]
 font = ExtResource("3_5g48r")
@@ -201,6 +205,11 @@ offset_bottom = 192.0
 layout_mode = 2
 text = "Building name"
 label_settings = SubResource("LabelSettings_587qr")
+
+[node name="BuildingType" type="Label" parent="Overlays/BuildingStats"]
+layout_mode = 2
+text = "Building Type"
+label_settings = SubResource("LabelSettings_h5rnp")
 
 [node name="CDSCount" type="Label" parent="Overlays/BuildingStats"]
 layout_mode = 2

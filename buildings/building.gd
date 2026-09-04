@@ -25,6 +25,8 @@ var placement_tween: Tween
 var sprite_rest_position := Vector2.ZERO
 var sprite_rest_scale := Vector2.ONE
 
+var distribution_rate_multiplier := 1.0
+
 
 func setup(new_definition: BuildingDefinition, new_context: BuildingContext) -> void:
 	definition = new_definition
@@ -57,7 +59,12 @@ func setup_selected_indicator() -> void:
 	if texture_size.x > 0.0 and texture_size.y > 0.0:
 		selected_indicator.scale = footprint_size / texture_size
 
+func get_current_distribution_per_second() -> float:
+	if definition == null:
+		return 0.0
 
+	return maxf(definition.base_distribution_per_second * distribution_rate_multiplier, 0.0)
+	
 func setup_placement_animation() -> void:
 	placement_sprite = get_node_or_null("Sprite2D") as Sprite2D
 	sprite_rest_position = placement_sprite.position

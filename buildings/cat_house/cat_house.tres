@@ -7,9 +7,13 @@
 [resource]
 script = ExtResource("3_828hw")
 building_id = &"CB1"
-display_name = "Cat House"
+display_name = "Cardboard box"
 icon = ExtResource("1_i3g51")
 scene = ExtResource("2_66a0d")
+building_type = 0
 size = Vector2i(2, 2)
 base_cost = 15
+base_distribution_per_second = 4.0
+produced_unit_name = "Cats"
+produced_unit_type = 0
 metadata/_custom_type_script = "uid://blpx6i5c8vjai"
