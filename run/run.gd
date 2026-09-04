@@ -33,6 +33,7 @@ var currency := 0
 var is_game_over := false
 
 var selected_placed_building: Building
+var pending_building_reward: BuildingRewardDefinition
 
 @onready var cats: Node2D = $Arena/Cats
 @onready var enemies: Node2D = $Arena/Enemies
@@ -55,6 +56,7 @@ func _ready() -> void:
 	run_ui.building_selected.connect(_on_building_selected)
 	
 	build_placement.placement_requested.connect(_on_building_placement_requested)
+	build_placement.placement_cancelled.connect(_on_building_reward_placement_cancelled)
 	build_placement.placed_building_selection_requested.connect(_on_placed_building_selection_requested)
 
 	wave_director.intermission_started.connect(_on_intermission_started)
@@ -76,7 +78,7 @@ func _ready() -> void:
 	choice_director.choice_options_changed.connect(_on_choice_options_changed)
 
 
-	run_ui.reward_selected.connect(choice_director.select_reward)
+	run_ui.reward_selected.connect(_on_reward_selected)
 	run_ui.reward_reroll_requested.connect(choice_director.reroll_choice)
 	run_ui.reward_skip_requested.connect(choice_director.skip_choice)
 
@@ -175,6 +177,7 @@ func _on_choice_started(event: ChoiceEventDefinition, options: Array[RewardDefin
 	phase = Phase.CHOICE
 
 	build_placement.set_production_enabled(false)
+	pending_building_reward = null
 	build_placement.cancel_placement()
 	clear_placed_building_selection()
 
@@ -183,6 +186,44 @@ func _on_choice_started(event: ChoiceEventDefinition, options: Array[RewardDefin
 	
 func _on_choice_options_changed(event: ChoiceEventDefinition, options: Array[RewardDefinition]) -> void:
 	run_ui.show_reward_choice(event, options)
+
+
+func _on_reward_selected(reward: RewardDefinition) -> void:
+	if phase != Phase.CHOICE:
+		return
+
+	var building_reward := reward as BuildingRewardDefinition
+
+	if building_reward == null:
+		choice_director.select_reward(reward)
+		return
+
+	if building_reward.building == null:
+		return
+
+	pending_building_reward = building_reward
+	clear_placed_building_selection()
+	run_ui.show_building_reward_placement(building_reward.building)
+	build_placement.select_building(building_reward.building)
+
+
+func _on_building_reward_placement_cancelled(definition: BuildingDefinition) -> void:
+	if phase != Phase.CHOICE:
+		return
+
+	if pending_building_reward == null:
+		return
+
+	if pending_building_reward.building != definition:
+		return
+
+	pending_building_reward = null
+
+	if choice_director.active_event == null:
+		return
+
+	run_ui.show_reward_choice(choice_director.active_event, choice_director.active_options)
+
 
 func unlock_building(definition: BuildingDefinition) -> void:
 	if definition == null:
@@ -243,6 +284,7 @@ func has_claimed_reward(reward_id: StringName) -> bool:
 
 
 func _on_choice_completed(_event: ChoiceEventDefinition, _selected_reward: RewardDefinition) -> void:
+	pending_building_reward = null
 	run_ui.hide_reward_choice()
 
 
@@ -284,9 +326,13 @@ func _on_building_placement_requested(definition: BuildingDefinition, cell: Vect
 	if is_game_over:
 		return
 
+	if phase == Phase.CHOICE:
+		_place_pending_building_reward(definition, cell)
+		return
+
 	if phase != Phase.INTERMISSION:
 		return
-		
+
 	if not available_buildings.has(definition):
 		return
 
@@ -299,6 +345,22 @@ func _on_building_placement_requested(definition: BuildingDefinition, cell: Vect
 		return
 
 	spend_currency(cost)
+
+
+func _place_pending_building_reward(definition: BuildingDefinition, cell: Vector2i) -> void:
+	var reward := pending_building_reward
+
+	if reward == null:
+		return
+
+	if reward.building != definition:
+		return
+
+	if not build_placement.place_building(definition, cell):
+		return
+
+	pending_building_reward = null
+	choice_director.select_reward(reward)
 
 
 func _on_idol_died(_idol: Damageable) -> void:
