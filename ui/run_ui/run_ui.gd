@@ -11,26 +11,21 @@ const BUILDING_BUTTON_SCENE := preload("res://ui/building_button/building_button
 
 @onready var idol_health_label: Label = $HUD/HBoxContainer/IdolHealthLabel
 @onready var idol_health_bar: ProgressBar = $HUD/HBoxContainer/IdolHealthProgressBar
-
 @onready var total_cat_count_label: Label = $HUD/StatContainer/CatCountTotalLabel
 @onready var current_cat_count_label: Label = $HUD/StatContainer/CatCountLabel
-
 @onready var currency_label: Label = $HUD/StatContainer/Currency
 @onready var building_container: VBoxContainer = $HUD/BuildingContainer
-
 @onready var game_over_phase_label: Label = $Overlays/GameOverPhaseLabel
 @onready var victory_phase_label: Label = $Overlays/VictoryPhaseLabel
 @onready var intermission_phase_label: Label = $Overlays/IntermissionPhaseLabel
-
 @onready var wave_progress_container: HBoxContainer = $Overlays/HBoxContainer
 @onready var wave_progress_label: Label = $Overlays/HBoxContainer/WaveProgressLabel
 @onready var wave_progress_bar: ProgressBar = $Overlays/HBoxContainer/WaverogressBar
-
 @onready var start_wave_button: Button = $HUD/StartWaveButton
 @onready var arena_reference: Sprite2D = $ArenaReference
-
 @onready var reward_choice_overlay: RewardChoiceOverlay = $RewardChoiceOverlay
 @onready var HUD: Control = $HUD
+@onready var BuildingStats: VBoxContainer = $Overlays/BuildingStats
 
 var run_state: Run
 var building_buttons: Array[BuildingButton] = []
@@ -41,6 +36,7 @@ func setup(new_run: Run, idol: Damageable) -> void:
 	run_state = new_run
 	intermission_phase_text = intermission_phase_label.text
 	arena_reference.visible = false
+	BuildingStats.visible = false
 
 	idol.health_changed.connect(_on_idol_health_changed)
 	run_state.game_over.connect(_on_game_over)

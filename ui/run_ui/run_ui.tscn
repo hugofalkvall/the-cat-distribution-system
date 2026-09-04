@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://g3n0lmmg6hrw"]
+[gd_scene load_steps=16 format=3 uid="uid://g3n0lmmg6hrw"]
 
 [ext_resource type="Script" uid="uid://c375tl0dp1bv4" path="res://ui/run_ui/run_ui.gd" id="1_nfmek"]
 [ext_resource type="Texture2D" uid="uid://ce8t5lt4ns1d1" path="res://placeholder/Grid_background_colorless.png" id="2_4j1ni"]
@@ -41,6 +41,17 @@ shadow_color = Color(0, 0, 0, 1)
 font = ExtResource("3_5g48r")
 font_size = 24
 
+[sub_resource type="LabelSettings" id="LabelSettings_587qr"]
+font = ExtResource("3_5g48r")
+
+[sub_resource type="LabelSettings" id="LabelSettings_t0j0o"]
+font = ExtResource("3_5g48r")
+font_size = 8
+
+[sub_resource type="LabelSettings" id="LabelSettings_e66jf"]
+font = ExtResource("3_5g48r")
+font_size = 8
+
 [node name="RunUi" type="CanvasLayer"]
 script = ExtResource("1_nfmek")
 
@@ -52,8 +63,8 @@ anchors_preset = 0
 z_index = 1
 texture_filter = 1
 layout_mode = 0
-offset_left = 5.0
-offset_right = 251.0
+offset_left = 8.0
+offset_right = 271.0
 offset_bottom = 64.0
 scale = Vector2(0.5, 0.5)
 metadata/_edit_lock_ = true
@@ -68,16 +79,16 @@ vertical_alignment = 1
 
 [node name="IdolHealthProgressBar" type="ProgressBar" parent="HUD/HBoxContainer"]
 texture_filter = 1
-custom_minimum_size = Vector2(150, 20)
+custom_minimum_size = Vector2(120, 20)
 layout_mode = 2
 size_flags_vertical = 4
 show_percentage = false
 
 [node name="StatContainer" type="VBoxContainer" parent="HUD"]
 layout_mode = 0
-offset_left = 5.0
+offset_left = 8.0
 offset_top = 32.0
-offset_right = 251.0
+offset_right = 254.0
 offset_bottom = 224.0
 scale = Vector2(0.5, 0.5)
 metadata/_edit_lock_ = true
@@ -178,6 +189,28 @@ custom_minimum_size = Vector2(200, 20)
 layout_mode = 2
 size_flags_vertical = 4
 show_percentage = false
+
+[node name="BuildingStats" type="VBoxContainer" parent="Overlays"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 91.0
+offset_right = 120.0
+offset_bottom = 192.0
+
+[node name="BuildingName" type="Label" parent="Overlays/BuildingStats"]
+layout_mode = 2
+text = "Building name"
+label_settings = SubResource("LabelSettings_587qr")
+
+[node name="CDSCount" type="Label" parent="Overlays/BuildingStats"]
+layout_mode = 2
+text = "Distrubution per second"
+label_settings = SubResource("LabelSettings_t0j0o")
+
+[node name="UnitInformation" type="Label" parent="Overlays/BuildingStats"]
+layout_mode = 2
+text = "Distibutes mage cats "
+label_settings = SubResource("LabelSettings_e66jf")
 
 [node name="ArenaReference" type="Sprite2D" parent="."]
 z_index = -5
