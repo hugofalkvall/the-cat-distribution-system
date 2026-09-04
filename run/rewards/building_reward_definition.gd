@@ -14,11 +14,7 @@ func can_offer(run_state: Run) -> bool:
 	return not run_state.has_building_unlocked(building)
 
 
-func apply(run_state: Run) -> void:
-	if run_state == null:
-		return
-
-	if building == null:
-		return
-
-	run_state.unlock_building(building)
+func apply(_run_state: Run) -> void:
+	# Run places this building before ChoiceDirector completes the reward.
+	# Completing it must not unlock repeat purchases in the building shop.
+	pass
