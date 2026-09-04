@@ -2,6 +2,7 @@ class_name BuildPlacement
 extends Node2D
 
 signal placement_requested(definition: BuildingDefinition, cell: Vector2i)
+signal placement_cancelled(definition: BuildingDefinition)
 signal placed_building_selection_requested(building: Building)
 
 @export var grid: ArenaGrid
@@ -69,8 +70,8 @@ func _process(_delta: float) -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
-		cancel_placement()
-		get_viewport().set_input_as_handled()
+		if _cancel_placement_from_input():
+			get_viewport().set_input_as_handled()
 		return
 
 	if not event is InputEventMouseButton:
@@ -80,8 +81,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 
 	if event.button_index == MOUSE_BUTTON_RIGHT:
-		cancel_placement()
-		get_viewport().set_input_as_handled()
+		if _cancel_placement_from_input():
+			get_viewport().set_input_as_handled()
 		return
 
 	if event.button_index != MOUSE_BUTTON_LEFT:
@@ -118,6 +119,18 @@ func cancel_placement() -> void:
 	selected_building = null
 	placement_cell = INVALID_CELL
 	queue_redraw()
+
+
+func _cancel_placement_from_input() -> bool:
+	if selected_building == null:
+		return false
+
+	var cancelled_building := selected_building
+
+	cancel_placement()
+	placement_cancelled.emit(cancelled_building)
+
+	return true
 
 
 func can_place_building(definition: BuildingDefinition, cell: Vector2i) -> bool:
