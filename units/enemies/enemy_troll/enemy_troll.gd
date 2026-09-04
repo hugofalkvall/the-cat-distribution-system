@@ -5,7 +5,7 @@ const MOVE_SPEED := 18.0
 const ACCELERATION := 60.0
 const COLLISION_RADIUS := 4.0
 
-const DETECTION_RANGE := 80.0
+const DETECTION_RANGE := 160.0
 const TARGET_UPDATE_INTERVAL := 0.2
 
 var combat_target: Damageable = null

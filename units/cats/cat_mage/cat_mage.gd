@@ -26,6 +26,8 @@ var combat_target: CombatUnit = null
 var target_update_timer := 0.0
 var avoidance_side := 1.0
 
+@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var animated_sprite_shader: AnimatedSprite2D = $ShaderSprite
 
 func setup(new_spatial_index: CombatSpatialIndex, new_combat_system: CombatSystem, new_arena_grid: ArenaGrid) -> void:
 	spatial_index = new_spatial_index
@@ -48,7 +50,29 @@ func _process(delta: float) -> void:
 			try_attack(combat_target, combat_system)
 	else:
 		wander(delta)
+		
+	update_sprite_facing()
 
+func update_sprite_facing() -> void:
+	if is_moving_left():
+		animated_sprite.flip_h = true
+	elif is_moving_right():
+		animated_sprite.flip_h = false
+
+func _ready() -> void:
+	super._ready()
+
+	animated_sprite_shader.pause()
+	animated_sprite.frame_changed.connect(sync_shadow_frame)
+
+	animated_sprite.set_frame_and_progress(0, 0.0)
+	sync_shadow_frame()
+	animated_sprite.play(&"default")
+
+
+func sync_shadow_frame() -> void:
+	animated_sprite_shader.animation = animated_sprite.animation
+	animated_sprite_shader.frame = animated_sprite.frame
 
 func update_combat_target(delta: float) -> void:
 	if spatial_index == null:

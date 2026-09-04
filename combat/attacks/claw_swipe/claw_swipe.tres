@@ -13,7 +13,7 @@ metadata/_custom_type_script = "uid://cqg2g7p68pwvl"
 [resource]
 script = ExtResource("4_0ec5n")
 attack_name = &"claw_swipe"
-range = 10.0
+range = 16.0
 cooldown = 1.0
 behavior_scene = ExtResource("1_nnmjw")
 effects = Array[ExtResource("2_wlnph")]([SubResource("Resource_wa1b0")])

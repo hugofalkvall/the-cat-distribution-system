@@ -15,8 +15,8 @@ const OVERLAY_EXIT_DURATION := 0.16
 @onready var panel: TextureRect = $CenterContainer/PanelContainer
 @onready var title_label: Label = $CenterContainer/PanelContainer/TitleLabel
 @onready var options_container: HBoxContainer = $CenterContainer/PanelContainer/MarginContainer/OptionsContainer
-@onready var reroll_button: Button = $CenterContainer/PanelContainer/MarginContainer2/ButtonContainer/RerollButton
-@onready var skip_button: Button = $CenterContainer/PanelContainer/MarginContainer2/ButtonContainer/SkipButton
+@onready var reroll_button: TextureButton = $RerollButton
+@onready var skip_button: TextureButton = $SkipButton
 @onready var action_container: Control = $CenterContainer/PanelContainer/MarginContainer2
 
 var _overlay_tween: Tween
@@ -57,7 +57,6 @@ func show_choice(event: ChoiceEventDefinition, options: Array[RewardDefinition])
 	_kill_overlay_tween()
 	clear_options()
 
-	action_container.visible = show_actions
 	title_label.text = event.display_name
 	reroll_button.visible = event.allow_reroll
 	reroll_button.disabled = false

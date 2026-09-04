@@ -7,44 +7,44 @@
 [ext_resource type="Texture2D" uid="uid://bcfdnpmrrimcp" path="res://units/cats/cat_normal/Cat-Sheet-shader.png" id="4_fwv8x"]
 [ext_resource type="Texture2D" uid="uid://sgq3nt4jicfl" path="res://units/cats/cat_normal/Cat-Sheet.png" id="5_1vvhn"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_fwv8x"]
+atlas = ExtResource("4_fwv8x")
+region = Rect2(0, 0, 16, 16)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_wa1b0"]
 atlas = ExtResource("4_fwv8x")
-region = Rect2(0, 0, 16, 16)
+region = Rect2(32, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_dyefe"]
-atlas = ExtResource("4_fwv8x")
-region = Rect2(16, 0, 16, 16)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_kacq6"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_wa1b0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_dyefe")
-}],
-"loop": true,
-"name": &"default",
-"speed": 2.0
-}]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_fwv8x"]
-atlas = ExtResource("5_1vvhn")
-region = Rect2(0, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_588d6"]
-atlas = ExtResource("5_1vvhn")
-region = Rect2(16, 0, 16, 16)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_wa1b0"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_dyefe"]
 animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_fwv8x")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_588d6")
+"texture": SubResource("AtlasTexture_wa1b0")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kacq6"]
+atlas = ExtResource("5_1vvhn")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6cdww"]
+atlas = ExtResource("5_1vvhn")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ix8a1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kacq6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6cdww")
 }],
 "loop": true,
 "name": &"default",
@@ -52,19 +52,19 @@ animations = [{
 }]
 
 [node name="CatNormal" type="Node2D"]
+z_index = 1
 script = ExtResource("1_7rkw4")
 starting_attacks = Array[ExtResource("2_np077")]([ExtResource("3_np077")])
 health_bar_always_visible = false
 max_health = 15.0
 
 [node name="ShaderSprite" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_kacq6")
-frame_progress = 0.983414
+sprite_frames = SubResource("SpriteFrames_dyefe")
+frame_progress = 0.479419
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
-sprite_frames = SubResource("SpriteFrames_wa1b0")
-frame_progress = 0.771528
+sprite_frames = SubResource("SpriteFrames_ix8a1")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 visible = false

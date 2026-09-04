@@ -43,7 +43,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack",
-"speed": 16.0
+"speed": 18.0
 }]
 
 [node name="ClawSwipe" type="Node2D"]
@@ -55,3 +55,5 @@ visual_offset = Vector2(10, 0)
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_3anvx")
 animation = &"attack"
+frame = 4
+frame_progress = 1.0
