@@ -154,7 +154,6 @@ func place_building(definition: BuildingDefinition, cell: Vector2i) -> bool:
 		return false
 
 	building.setup(definition, building_context)
-
 	buildings.add_child(building)
 
 	var grid_position := grid.grid_to_world(cell)
@@ -164,8 +163,11 @@ func place_building(definition: BuildingDefinition, cell: Vector2i) -> bool:
 		building.queue_free()
 		return false
 
+	building.play_placement_animation()
+
 	queue_redraw()
 	selected_building = null
+
 	return true
 
 

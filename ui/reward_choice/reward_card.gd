@@ -115,10 +115,10 @@ func play_selected_animation() -> void:
 		texture_normal = texture_pressed
 
 	_animation_tween = create_tween()
-	_animation_tween.tween_property(self, "scale", SELECTED_SCALE, 0.12).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	_animation_tween.parallel().tween_property(self, "modulate", SELECTED_TINT, 0.12)
-	_animation_tween.tween_property(self, "scale", Vector2(0.98, 0.98), 0.10).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
-	_animation_tween.parallel().tween_property(self, "modulate", Color.WHITE, 0.10)
+	_animation_tween.tween_property(self, "scale", SELECTED_SCALE, 0.06).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	_animation_tween.parallel().tween_property(self, "modulate", SELECTED_TINT, 0.06)
+	_animation_tween.tween_property(self, "scale", Vector2(0.98, 0.98), 0.06).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	_animation_tween.parallel().tween_property(self, "modulate", Color.WHITE, 0.06)
 	_animation_tween.tween_property(self, "scale", Vector2.ONE, 0.12).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 	await _animation_tween.finished
