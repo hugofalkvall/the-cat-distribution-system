@@ -11,7 +11,10 @@ func can_offer(run_state: Run) -> bool:
 	if passive == null:
 		return false
 
-	return not run_state.has_passive(passive)
+	if unique and run_state.has_passive(passive):
+		return false
+
+	return true
 
 
 func apply(run_state: Run) -> void:

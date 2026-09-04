@@ -71,7 +71,12 @@ func get_current_distribution_per_second() -> float:
 	if definition == null:
 		return 0.0
 
-	return maxf(definition.base_distribution_per_second * distribution_rate_multiplier, 0.0)
+	var global_multiplier := 1.0
+
+	if context != null:
+		global_multiplier = context.distribution_rate_multiplier
+
+	return maxf(definition.base_distribution_per_second * distribution_rate_multiplier * global_multiplier, 0.0)
 	
 func setup_placement_animation() -> void:
 	placement_sprite = get_node_or_null("Sprite2D") as Sprite2D
