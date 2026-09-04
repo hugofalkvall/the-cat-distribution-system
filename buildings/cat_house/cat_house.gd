@@ -32,10 +32,7 @@ func produce_cat() -> void:
 	context.cats_parent.add_child(cat)
 
 	var building_size := definition.size
-	var spawn_offset := Vector2(
-		building_size.x * context.grid.CELL_SIZE / 2.0,
-		building_size.y * context.grid.CELL_SIZE + 8
-	)
+	var spawn_offset := Vector2(building_size.x * context.grid.CELL_SIZE / 2.0, -8.0)
 
 	cat.global_position = global_position + spawn_offset
 	cat.setup(context.spatial_index, context.combat_system, context.grid)
