@@ -91,8 +91,10 @@ func _ready() -> void:
 	run_flow_director.start_run()
 
 
-func _on_cat_produced(cat: Node) -> void:
-	if not cat is CombatUnit:
+func _on_cat_produced(node: Node) -> void:
+	var cat := node as CombatUnit
+
+	if cat == null:
 		return
 
 	total_cats_produced += 1
