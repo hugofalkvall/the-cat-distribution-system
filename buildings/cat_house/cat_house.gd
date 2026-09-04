@@ -1,6 +1,5 @@
 extends Building
 
-const PRODUCTION_TIME := 5.0
 const BASIC_CAT_SCENE := preload("res://units/cats/cat_normal/cat_normal.tscn")
 
 var production_progress := 0.0

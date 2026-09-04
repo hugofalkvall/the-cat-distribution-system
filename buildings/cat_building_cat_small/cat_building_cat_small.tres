@@ -7,7 +7,7 @@
 [resource]
 script = ExtResource("3_c4yee")
 building_id = &"CB3"
-display_name = "Tiny Cardboard Box"
+display_name = "Tiny Box"
 icon = ExtResource("1_0xkkj")
 scene = ExtResource("2_l1cwy")
 building_type = 0
