@@ -8,6 +8,7 @@ extends Damageable
 @export var health_bar_height := 2.0
 @export var health_bar_offset_y := -10.0
 @export var health_bar_always_visible := true
+var base_max_health := 0.0
 
 var attacks: Array[AttackState] = []
 
@@ -34,11 +35,24 @@ var granted_extra_lives := 0
 var remaining_extra_lives := 0
 
 func _ready() -> void:
+	base_max_health = max_health
 	super._ready()
 
 	for attack_definition in starting_attacks:
 		add_attack(attack_definition)
 
+	queue_redraw()
+	
+func set_max_health_multiplier(multiplier: float) -> void:
+	var health_ratio := 1.0
+
+	if max_health > 0.0:
+		health_ratio = clampf(current_health / max_health, 0.0, 1.0)
+
+	max_health = maxf(base_max_health * maxf(multiplier, 0.0), 1.0)
+	current_health = max_health * health_ratio
+
+	health_changed.emit(self, current_health, max_health)
 	queue_redraw()
 
 func get_movement_direction() -> Vector2:

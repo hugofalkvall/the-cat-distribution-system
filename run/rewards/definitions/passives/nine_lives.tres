@@ -1,6 +1,6 @@
-[gd_resource type="Resource" script_class="PassiveRewardDefinition" load_steps=4 format=3 uid="uid://hhfp4beqwxgf"]
+[gd_resource type="Resource" script_class="PassiveRewardDefinition" load_steps=5 format=3 uid="uid://hhfp4beqwxgf"]
 
-[ext_resource type="Texture2D" uid="uid://cf7c1lhf7tatk" path="res://units/cats/cat_normal/Cat.png" id="1_bvnx3"]
+[ext_resource type="Texture2D" uid="uid://6r2s7k2htqfp" path="res://ui/assets/RRIOF29.png" id="1_6y8c2"]
 [ext_resource type="Script" uid="uid://realvevss4x2" path="res://run/rewards/passive_reward_definition.gd" id="1_e5v7j"]
 [ext_resource type="Script" uid="uid://tn8ty64qis0q" path="res://run/passives/passive_definition.gd" id="2_passive"]
 
@@ -8,18 +8,21 @@
 script = ExtResource("2_passive")
 passive_id = &"nine_lives"
 display_name = "Nine Lives"
-description = "Every cat revives at full health eight times, for nine lives total."
-icon = ExtResource("1_bvnx3")
-extra_cat_lives = 8
+description = "Every cat has nine lives, but loses 90% maximum health (minimum 1 HP)."
+icon = ExtResource("1_6y8c2")
+distribution_rate_multiplier = 1.0
+extra_cat_lives = 0
+claw_swipe_attack_speed_multiplier = 1.0
+cat_max_health_multiplier = 0.1
 metadata/_custom_type_script = "uid://tn8ty64qis0q"
 
 [resource]
 script = ExtResource("1_e5v7j")
+passive = SubResource("Passive_nine_lives")
 reward_id = &"nine_lives"
 display_name = "Nine Lives"
-description = "Every cat revives at full health eight times, for nine lives total."
-icon = ExtResource("1_bvnx3")
+description = "Every cat has nine lives, but loses 90% maximum health (minimum 1 HP)."
+icon = ExtResource("1_6y8c2")
 weight = 1.0
 unique = true
-passive = SubResource("Passive_nine_lives")
 metadata/_custom_type_script = "uid://realvevss4x2"

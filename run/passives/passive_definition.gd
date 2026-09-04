@@ -11,3 +11,4 @@ extends Resource
 @export_range(0.0, 10.0, 0.01, "or_greater") var distribution_rate_multiplier := 1.0
 @export_range(0, 100, 1, "or_greater") var extra_cat_lives := 0
 @export_range(0.01, 10.0, 0.01, "or_greater") var claw_swipe_attack_speed_multiplier := 1.0
+@export_range(0.0, 10.0, 0.01, "or_greater") var cat_max_health_multiplier := 1.0

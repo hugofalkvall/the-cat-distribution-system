@@ -32,6 +32,7 @@ var claimed_reward_ids: Dictionary = {}
 var passive_distribution_rate_multiplier := 1.0
 var passive_extra_cat_lives := 0
 var passive_claw_swipe_attack_speed_multiplier := 1.0
+var passive_cat_max_health_multiplier := 1.0
 
 var total_cats_produced := 0
 var current_cat_count := 0
@@ -291,11 +292,13 @@ func recalculate_passive_modifiers() -> void:
 	passive_distribution_rate_multiplier = 1.0
 	passive_extra_cat_lives = 0
 	passive_claw_swipe_attack_speed_multiplier = 1.0
+	passive_cat_max_health_multiplier = 1.0
 
 	for passive in active_passives:
 		if passive == null:
 			continue
-
+			
+		passive_cat_max_health_multiplier *= maxf(passive.cat_max_health_multiplier, 0.0)
 		passive_distribution_rate_multiplier *= maxf(passive.distribution_rate_multiplier, 0.0)
 		passive_extra_cat_lives += maxi(passive.extra_cat_lives, 0)
 		passive_claw_swipe_attack_speed_multiplier *= maxf(passive.claw_swipe_attack_speed_multiplier, 0.01)
@@ -313,6 +316,7 @@ func apply_passives_to_cat(cat: CombatUnit) -> void:
 	if not is_instance_valid(cat):
 		return
 
+	cat.set_max_health_multiplier(passive_cat_max_health_multiplier)
 	cat.set_extra_lives(passive_extra_cat_lives)
 
 	var passive_cooldown_multiplier := 1.0 / maxf(passive_claw_swipe_attack_speed_multiplier, 0.01)

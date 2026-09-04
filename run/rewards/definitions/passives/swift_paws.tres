@@ -1,7 +1,7 @@
-[gd_resource type="Resource" script_class="PassiveRewardDefinition" load_steps=4 format=3 uid="uid://b8k5imprp6bqr"]
+[gd_resource type="Resource" script_class="PassiveRewardDefinition" load_steps=5 format=3 uid="uid://b8k5imprp6bqr"]
 
-[ext_resource type="Texture2D" uid="uid://cf7c1lhf7tatk" path="res://units/cats/cat_normal/Cat.png" id="1_oi55s"]
 [ext_resource type="Script" uid="uid://realvevss4x2" path="res://run/rewards/passive_reward_definition.gd" id="1_qdv3v"]
+[ext_resource type="Texture2D" uid="uid://c1d0eyv2pr1cq" path="res://ui/assets/RRIOF48.png" id="1_rhduu"]
 [ext_resource type="Script" uid="uid://tn8ty64qis0q" path="res://run/passives/passive_definition.gd" id="2_passive"]
 
 [sub_resource type="Resource" id="Passive_swift_paws"]
@@ -9,17 +9,19 @@ script = ExtResource("2_passive")
 passive_id = &"swift_paws"
 display_name = "Swift Paws"
 description = "All Claw Swipe attacks are 25% faster. Stacks multiplicatively."
-icon = ExtResource("1_oi55s")
-claw_swipe_attack_speed_multiplier = 1.25
+icon = ExtResource("1_rhduu")
+distribution_rate_multiplier = 1.0
+extra_cat_lives = 0
+claw_swipe_attack_speed_multiplier = 1.0
 metadata/_custom_type_script = "uid://tn8ty64qis0q"
 
 [resource]
 script = ExtResource("1_qdv3v")
+passive = SubResource("Passive_swift_paws")
 reward_id = &"swift_paws"
 display_name = "Swift Paws"
 description = "All Claw Swipe attacks are 25% faster. Stacks multiplicatively."
-icon = ExtResource("1_oi55s")
+icon = ExtResource("1_rhduu")
 weight = 1.0
 unique = false
-passive = SubResource("Passive_swift_paws")
 metadata/_custom_type_script = "uid://realvevss4x2"
