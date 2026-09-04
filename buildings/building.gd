@@ -1,7 +1,8 @@
 class_name Building
 extends Node2D
 
-const SELECTED_INDICATOR_TEXTURE := preload("res://buildings/Selected_indicator.png")
+const SELECTED_INDICATOR_FRAMES := preload("res://buildings/selection_frames.tres")
+const SELECTED_ANIMATION := &"selected"
 
 const PLACEMENT_DROP_DISTANCE := 60.0
 const PLACEMENT_DROP_DURATION := 0.12
@@ -18,7 +19,7 @@ static var dust_texture: Texture2D
 var definition: BuildingDefinition
 var context: BuildingContext
 
-var selected_indicator: Sprite2D
+var selected_indicator: AnimatedSprite2D
 var placement_sprite: Sprite2D
 var placement_tween: Tween
 
@@ -40,9 +41,14 @@ func setup_selected_indicator() -> void:
 	if selected_indicator != null:
 		return
 
-	selected_indicator = Sprite2D.new()
+	if not SELECTED_INDICATOR_FRAMES.has_animation(SELECTED_ANIMATION):
+		push_error("Building: selection animation 'selected' does not exist.")
+		return
+
+	selected_indicator = AnimatedSprite2D.new()
 	selected_indicator.name = "SelectedIndicator"
-	selected_indicator.texture = SELECTED_INDICATOR_TEXTURE
+	selected_indicator.sprite_frames = SELECTED_INDICATOR_FRAMES
+	selected_indicator.animation = SELECTED_ANIMATION
 	selected_indicator.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	selected_indicator.centered = true
 	selected_indicator.z_index = 10
@@ -51,13 +57,15 @@ func setup_selected_indicator() -> void:
 	add_child(selected_indicator)
 
 	var footprint_size := Vector2(definition.size.x * context.grid.CELL_SIZE, definition.size.y * context.grid.CELL_SIZE)
+	var first_frame := SELECTED_INDICATOR_FRAMES.get_frame_texture(SELECTED_ANIMATION, 0)
 
 	selected_indicator.position = footprint_size / 2.0
 
-	var texture_size := SELECTED_INDICATOR_TEXTURE.get_size()
+	if first_frame != null:
+		var frame_size := first_frame.get_size()
 
-	if texture_size.x > 0.0 and texture_size.y > 0.0:
-		selected_indicator.scale = footprint_size / texture_size
+		if frame_size.x > 0.0 and frame_size.y > 0.0:
+			selected_indicator.scale = footprint_size / frame_size
 
 func get_current_distribution_per_second() -> float:
 	if definition == null:
@@ -176,5 +184,13 @@ func kill_placement_tween() -> void:
 
 
 func set_selected(selected: bool) -> void:
-	if selected_indicator != null:
-		selected_indicator.visible = selected
+	if selected_indicator == null:
+		return
+
+	selected_indicator.visible = selected
+
+	if selected:
+		selected_indicator.play(SELECTED_ANIMATION)
+	else:
+		selected_indicator.stop()
+		selected_indicator.frame = 0

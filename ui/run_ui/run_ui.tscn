@@ -114,10 +114,10 @@ label_settings = SubResource("LabelSettings_81d40")
 
 [node name="BuildingContainer" type="VBoxContainer" parent="HUD"]
 layout_mode = 0
-offset_left = 532.0
-offset_top = 5.0
-offset_right = 635.0
-offset_bottom = 176.0
+offset_left = 930.0
+offset_top = 332.0
+offset_right = 1033.0
+offset_bottom = 503.0
 
 [node name="StartWaveButton" type="Button" parent="HUD"]
 texture_filter = 1

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="WaveSetDefinition" load_steps=12 format=3 uid="uid://bggl6qyp65wgq"]
+[gd_resource type="Resource" script_class="WaveSetDefinition" load_steps=14 format=3 uid="uid://bggl6qyp65wgq"]
 
 [ext_resource type="Script" uid="uid://c8kcpnp8mf7uh" path="res://run/waves/wave_set_definition.gd" id="1_ixakv"]
 [ext_resource type="Script" uid="uid://cu8u2cap0qfbp" path="res://run/waves/wave_definition.gd" id="2_lcy7b"]
@@ -14,12 +14,30 @@ spawn_interval = 2.0
 spawn_sides = 1
 metadata/_custom_type_script = "uid://civlog6ib774t"
 
+[sub_resource type="Resource" id="Resource_ux6fx"]
+script = ExtResource("3_dh58w")
+enemy_scene = ExtResource("4_85nel")
+count = 5
+start_delay = 10.0
+spawn_interval = 1.0
+spawn_sides = 1
+metadata/_custom_type_script = "uid://civlog6ib774t"
+
+[sub_resource type="Resource" id="Resource_x25gk"]
+script = ExtResource("3_dh58w")
+enemy_scene = ExtResource("4_85nel")
+count = 3
+start_delay = 15.0
+spawn_interval = 2.0
+spawn_sides = 1
+metadata/_custom_type_script = "uid://civlog6ib774t"
+
 [sub_resource type="Resource" id="Resource_7yccb"]
 script = ExtResource("2_lcy7b")
 display_name = "First wave"
 intermission_duration = -1.0
-completion_reward = 5
-spawn_groups = Array[ExtResource("3_dh58w")]([SubResource("Resource_gmxwn")])
+completion_reward = 20
+spawn_groups = Array[ExtResource("3_dh58w")]([SubResource("Resource_gmxwn"), SubResource("Resource_ux6fx"), SubResource("Resource_x25gk")])
 metadata/_custom_type_script = "uid://cu8u2cap0qfbp"
 
 [sub_resource type="Resource" id="Resource_cdbrp"]

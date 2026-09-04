@@ -13,8 +13,8 @@ metadata/_custom_type_script = "uid://cqg2g7p68pwvl"
 [resource]
 script = ExtResource("2_h3sy6")
 attack_name = &"fireball"
-range = 60.0
-cooldown = 1.5
+range = 80.0
+cooldown = 2.0
 behavior_scene = ExtResource("1_d5toa")
 effects = Array[ExtResource("1_akapq")]([SubResource("Resource_3y5vo")])
 metadata/_custom_type_script = "uid://bu6mktrtul01f"

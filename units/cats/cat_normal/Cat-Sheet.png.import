@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bvuwfawu0l15e"
-path="res://.godot/imported/Selected_indicator.png-e100dc91b329949f629ac1ac754a241c.ctex"
+uid="uid://sgq3nt4jicfl"
+path="res://.godot/imported/Cat-Sheet.png-61a57d095134748e678249882364566f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://buildings/Selected_indicator.png"
-dest_files=["res://.godot/imported/Selected_indicator.png-e100dc91b329949f629ac1ac754a241c.ctex"]
+source_file="res://units/cats/cat_normal/Cat-Sheet.png"
+dest_files=["res://.godot/imported/Cat-Sheet.png-61a57d095134748e678249882364566f.ctex"]
 
 [params]
 

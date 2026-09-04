@@ -5,15 +5,12 @@ signal selected(reward: RewardDefinition)
 
 const ENTER_SCALE := Vector2(0.85, 0.85)
 const HOVER_SCALE := Vector2(1.06, 1.06)
-const SELECTED_SCALE := Vector2(1.10, 1.10)
+const SELECTED_SCALE := Vector2(1.20, 1.20)
 const DESELECTED_SCALE := Vector2(0.92, 0.92)
 
 const ENTER_DURATION := 0.30
 const HOVER_IN_DURATION := 0.12
 const HOVER_OUT_DURATION := 0.10
-
-const SELECTED_TINT := Color(1.0, 0.92, 0.65, 1.0)
-const DESELECTED_TINT := Color(1.0, 1.0, 1.0, 0.25)
 
 @onready var reward_title: Label = $RewardTitle
 @onready var description_label: Label = $Description
@@ -115,11 +112,9 @@ func play_selected_animation() -> void:
 		texture_normal = texture_pressed
 
 	_animation_tween = create_tween()
-	_animation_tween.tween_property(self, "scale", SELECTED_SCALE, 0.06).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	_animation_tween.parallel().tween_property(self, "modulate", SELECTED_TINT, 0.06)
-	_animation_tween.tween_property(self, "scale", Vector2(0.98, 0.98), 0.06).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
-	_animation_tween.parallel().tween_property(self, "modulate", Color.WHITE, 0.06)
-	_animation_tween.tween_property(self, "scale", Vector2.ONE, 0.12).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	_animation_tween.tween_property(self, "scale", SELECTED_SCALE, 0.1).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	_animation_tween.tween_property(self, "scale", Vector2(0.98, 0.98), 0.1).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	#_animation_tween.tween_property(self, "scale", Vector2.ONE, 0.1).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 	await _animation_tween.finished
 
@@ -137,7 +132,6 @@ func play_deselected_animation() -> void:
 	_animation_tween = create_tween()
 	_animation_tween.set_parallel(true)
 	_animation_tween.tween_property(self, "scale", DESELECTED_SCALE, 0.22).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	_animation_tween.tween_property(self, "modulate", DESELECTED_TINT, 0.22)
 
 
 func _kill_animation_tween() -> void:

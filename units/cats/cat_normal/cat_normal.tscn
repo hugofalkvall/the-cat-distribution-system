@@ -1,15 +1,45 @@
-[gd_scene load_steps=5 format=3 uid="uid://clx5mjjgkf3r6"]
+[gd_scene load_steps=9 format=3 uid="uid://clx5mjjgkf3r6"]
 
 [ext_resource type="Script" uid="uid://dntak67lhuwan" path="res://units/cats/cat_normal/cat_normal.gd" id="1_7rkw4"]
 [ext_resource type="Script" uid="uid://bu6mktrtul01f" path="res://combat/attack_definition.gd" id="2_np077"]
 [ext_resource type="Texture2D" uid="uid://cf7c1lhf7tatk" path="res://units/cats/cat_normal/Cat.png" id="2_un46o"]
 [ext_resource type="Resource" uid="uid://b262utk84j2b" path="res://combat/attacks/claw_swipe/claw_swipe.tres" id="3_np077"]
+[ext_resource type="Texture2D" uid="uid://sgq3nt4jicfl" path="res://units/cats/cat_normal/Cat-Sheet.png" id="5_1vvhn"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fwv8x"]
+atlas = ExtResource("5_1vvhn")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_588d6"]
+atlas = ExtResource("5_1vvhn")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wa1b0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fwv8x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_588d6")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.0
+}]
 
 [node name="CatNormal" type="Node2D"]
 script = ExtResource("1_7rkw4")
 starting_attacks = Array[ExtResource("2_np077")]([ExtResource("3_np077")])
 health_bar_always_visible = false
+max_health = 15.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_wa1b0")
+frame_progress = 0.721687
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
 texture_filter = 1
 texture = ExtResource("2_un46o")

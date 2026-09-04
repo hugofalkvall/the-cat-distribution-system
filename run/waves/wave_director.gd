@@ -41,6 +41,7 @@ func finish_intermission() -> void:
 	if state != State.INTERMISSION:
 		return
 
+	
 	start_current_wave()
 
 func process_wave(delta: float) -> void:
