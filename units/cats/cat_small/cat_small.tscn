@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dica2sd5ths2l"]
+[gd_scene load_steps=17 format=3 uid="uid://dica2sd5ths2l"]
 
 [ext_resource type="Script" uid="uid://4uieu4xnsiki" path="res://units/cats/cat_small/cat_small.gd" id="1_ql252"]
 [ext_resource type="Script" uid="uid://bu6mktrtul01f" path="res://combat/attack_definition.gd" id="2_7ihb0"]
@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://d3gvlyd5r8jy7" path="res://combat/attacks/claw_swipe/claw_swipe.tscn" id="3_24ut3"]
 [ext_resource type="Script" uid="uid://dftfkylqm4682" path="res://combat/effects/attack_effect_definition.gd" id="4_ku34s"]
 [ext_resource type="Script" uid="uid://cqg2g7p68pwvl" path="res://combat/effects/direct_damage_effect.gd" id="5_cakxy"]
+[ext_resource type="Texture2D" uid="uid://iuflfohfx3ts" path="res://units/cats/cat_small/Cat_small-Sheet-shader.png" id="6_ku34s"]
+[ext_resource type="Texture2D" uid="uid://ci45ysgnhn8cl" path="res://units/cats/cat_small/Cat_small-Sheet.png" id="7_cakxy"]
 
 [sub_resource type="Resource" id="Resource_2pb4y"]
 script = ExtResource("5_cakxy")
@@ -21,12 +23,63 @@ behavior_scene = ExtResource("3_24ut3")
 effects = Array[ExtResource("4_ku34s")]([SubResource("Resource_2pb4y")])
 metadata/_custom_type_script = "uid://bu6mktrtul01f"
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_2pb4y"]
+atlas = ExtResource("6_ku34s")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_itcbg"]
+atlas = ExtResource("6_ku34s")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nwl7d"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2pb4y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_itcbg")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d6mfo"]
+atlas = ExtResource("7_cakxy")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jfshr"]
+atlas = ExtResource("7_cakxy")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_72v3r"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d6mfo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jfshr")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.0
+}]
+
 [node name="CatSmall" type="Node2D"]
 script = ExtResource("1_ql252")
 starting_attacks = Array[ExtResource("2_7ihb0")]([SubResource("Resource_itcbg")])
 health_bar_always_visible = false
 max_health = 5.0
 
+[node name="ShaderSprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_nwl7d")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_72v3r")
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
 texture_filter = 1
 texture = ExtResource("2_b5g0r")

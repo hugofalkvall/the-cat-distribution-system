@@ -37,11 +37,23 @@ func setup(new_spatial_index: CombatSpatialIndex, new_combat_system: CombatSyste
 	avoidance_side = -1.0 if randf() < 0.5 else 1.0
 	target_update_timer = randf_range(0.0, TARGET_UPDATE_INTERVAL)
 	
-	animated_sprite.play()
-	animated_sprite_shader.play()
 	choose_new_wander_target()
 
+func _ready() -> void:
+	super._ready()
 
+	animated_sprite_shader.pause()
+	animated_sprite.frame_changed.connect(sync_shadow_frame)
+
+	animated_sprite.set_frame_and_progress(0, 0.0)
+	sync_shadow_frame()
+	animated_sprite.play(&"default")
+
+
+func sync_shadow_frame() -> void:
+	animated_sprite_shader.animation = animated_sprite.animation
+	animated_sprite_shader.frame = animated_sprite.frame
+	
 func _process(delta: float) -> void:
 	update_combat_target(delta)
 
