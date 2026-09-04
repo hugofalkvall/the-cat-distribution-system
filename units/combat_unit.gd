@@ -27,6 +27,9 @@ var navigation_path_index := 0
 var navigation_goal_cell := INVALID_NAVIGATION_CELL
 var navigation_repath_remaining := 0.0
 
+const MOVEMENT_DIRECTION_THRESHOLD := 0.1
+
+var velocity := Vector2.ZERO
 
 func _ready() -> void:
 	super._ready()
@@ -36,6 +39,19 @@ func _ready() -> void:
 
 	queue_redraw()
 
+func get_movement_direction() -> Vector2:
+	if velocity.length_squared() <= MOVEMENT_DIRECTION_THRESHOLD * MOVEMENT_DIRECTION_THRESHOLD:
+		return Vector2.ZERO
+
+	return velocity.normalized()
+
+
+func is_moving_left() -> bool:
+	return velocity.x < -MOVEMENT_DIRECTION_THRESHOLD
+
+
+func is_moving_right() -> bool:
+	return velocity.x > MOVEMENT_DIRECTION_THRESHOLD
 
 func add_attack(attack_definition: AttackDefinition) -> AttackState:
 	if attack_definition == null:

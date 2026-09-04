@@ -17,7 +17,6 @@ const ARENA_MAX := Vector2(512, 352)
 
 var home_position: Vector2
 var wander_target_position: Vector2
-var velocity := Vector2.ZERO
 
 var arena_grid: ArenaGrid
 var spatial_index: CombatSpatialIndex

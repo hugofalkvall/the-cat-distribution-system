@@ -17,7 +17,6 @@ const ARENA_MAX := Vector2(512, 352)
 
 var home_position: Vector2
 var wander_target_position: Vector2
-var velocity := Vector2.ZERO
 
 var arena_grid: ArenaGrid
 var spatial_index: CombatSpatialIndex
@@ -27,6 +26,8 @@ var combat_target: CombatUnit = null
 var target_update_timer := 0.0
 var avoidance_side := 1.0
 
+@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var animated_sprite_shader: AnimatedSprite2D = $ShaderSprite
 
 func setup(new_spatial_index: CombatSpatialIndex, new_combat_system: CombatSystem, new_arena_grid: ArenaGrid) -> void:
 	spatial_index = new_spatial_index
@@ -35,6 +36,9 @@ func setup(new_spatial_index: CombatSpatialIndex, new_combat_system: CombatSyste
 	home_position = global_position
 	avoidance_side = -1.0 if randf() < 0.5 else 1.0
 	target_update_timer = randf_range(0.0, TARGET_UPDATE_INTERVAL)
+	
+	animated_sprite.play()
+	animated_sprite_shader.play()
 	choose_new_wander_target()
 
 
@@ -49,7 +53,8 @@ func _process(delta: float) -> void:
 			try_attack(combat_target, combat_system)
 	else:
 		wander(delta)
-
+	
+	update_sprite_facing()
 
 func update_combat_target(delta: float) -> void:
 	if spatial_index == null:
@@ -63,6 +68,11 @@ func update_combat_target(delta: float) -> void:
 	target_update_timer = TARGET_UPDATE_INTERVAL
 	combat_target = spatial_index.get_closest_enemy(global_position, DETECTION_RANGE) as CombatUnit
 
+func update_sprite_facing() -> void:
+	if is_moving_left():
+		animated_sprite.flip_h = true
+	elif is_moving_right():
+		animated_sprite.flip_h = false
 
 func wander(delta: float) -> void:
 	var reached_target := move_toward_position(wander_target_position, TARGET_REACHED_DISTANCE, delta)

@@ -10,7 +10,6 @@ const TARGET_UPDATE_INTERVAL := 0.2
 
 var combat_target: Damageable = null
 
-var velocity := Vector2.ZERO
 var target_update_timer := 0.0
 var avoidance_side := 1.0
 

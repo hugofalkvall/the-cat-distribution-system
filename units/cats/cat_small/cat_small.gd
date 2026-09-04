@@ -17,7 +17,6 @@ const ARENA_MAX := Vector2(512, 352)
 
 var home_position: Vector2
 var wander_target_position: Vector2
-var velocity := Vector2.ZERO
 
 var arena_grid: ArenaGrid
 var spatial_index: CombatSpatialIndex
@@ -27,6 +26,7 @@ var combat_target: CombatUnit = null
 var target_update_timer := 0.0
 var avoidance_side := 1.0
 
+@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 func setup(new_spatial_index: CombatSpatialIndex, new_combat_system: CombatSystem, new_arena_grid: ArenaGrid) -> void:
 	spatial_index = new_spatial_index
@@ -49,8 +49,15 @@ func _process(delta: float) -> void:
 			try_attack(combat_target, combat_system)
 	else:
 		wander(delta)
+		
+	update_sprite_facing()
 
-
+func update_sprite_facing() -> void:
+	if is_moving_left():
+		animated_sprite.flip_h = true
+	elif is_moving_right():
+		animated_sprite.flip_h = false
+		
 func update_combat_target(delta: float) -> void:
 	if spatial_index == null:
 		return
