@@ -12,7 +12,8 @@ description = "All Claw Swipe attacks are 25% faster. Stacks multiplicatively."
 icon = ExtResource("1_rhduu")
 distribution_rate_multiplier = 1.0
 extra_cat_lives = 0
-claw_swipe_attack_speed_multiplier = 1.0
+claw_swipe_attack_speed_multiplier = 1.25
+cat_max_health_multiplier = 1.0
 metadata/_custom_type_script = "uid://tn8ty64qis0q"
 
 [resource]
