@@ -84,7 +84,7 @@ func update_combat_target(delta: float) -> void:
 		return
 
 	target_update_timer = TARGET_UPDATE_INTERVAL
-	combat_target = spatial_index.get_closest_enemy(global_position, DETECTION_RANGE) as CombatUnit
+	combat_target = spatial_index.get_closest_enemy(global_position, get_target_detection_range(DETECTION_RANGE)) as CombatUnit
 
 
 func wander(delta: float) -> void:
@@ -107,7 +107,7 @@ func move_toward_position(destination: Vector2, stop_distance: float, delta: flo
 			delta
 		)
 
-		desired_velocity = direction * MOVE_SPEED
+		desired_velocity = direction * MOVE_SPEED * passive_movement_speed_multiplier
 
 	velocity = velocity.move_toward(
 		desired_velocity,

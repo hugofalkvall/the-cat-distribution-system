@@ -1,13 +1,25 @@
-[gd_resource type="Resource" script_class="ChoiceEventDefinition" load_steps=3 format=3 uid="uid://xu3gbnedd43x"]
+[gd_resource type="Resource" script_class="ChoiceEventDefinition" load_steps=11 format=3 uid="uid://xu3gbnedd43x"]
 
-[ext_resource type="Resource" uid="uid://docry6g1nt5eg" path="res://run/rewards/pools/passive_pool.tres" id="1_f1isg"]
 [ext_resource type="Script" uid="uid://efsym1wx1dmv" path="res://run/rewards/choice_event_definition.gd" id="1_iivwr"]
+[ext_resource type="Script" uid="uid://bmb3joo1fri13" path="res://run/rewards/reward_definition.gd" id="1_kbg0r"]
+[ext_resource type="Resource" uid="uid://hhfp4beqwxgf" path="res://run/rewards/definitions/passives/nine_lives.tres" id="2_18frb"]
+[ext_resource type="Resource" uid="uid://b8k5imprp6bqr" path="res://run/rewards/definitions/passives/swift_paws.tres" id="3_2jtuf"]
+[ext_resource type="Resource" uid="uid://k000r1mpq77d" path="res://run/rewards/definitions/passives/efficient_distribution.tres" id="4_xojw3"]
+[ext_resource type="Resource" uid="uid://10tecd5ih67n" path="res://run/rewards/definitions/passives/razor_claws.tres" id="5_qyhai"]
+[ext_resource type="Resource" uid="uid://ckhm3lxa6ep0y" path="res://run/rewards/definitions/passives/thick_fur.tres" id="6_nfrs2"]
+[ext_resource type="Resource" uid="uid://bpgh3rt1c7qp4" path="res://run/rewards/definitions/passives/zoomies.tres" id="7_wejyp"]
+[ext_resource type="Script" uid="uid://qt4a37hy0nv8" path="res://run/rewards/reward_pool_definition.gd" id="8_yjdwh"]
+
+[sub_resource type="Resource" id="Resource_6ux2a"]
+script = ExtResource("8_yjdwh")
+rewards = Array[ExtResource("1_kbg0r")]([ExtResource("2_18frb"), ExtResource("3_2jtuf"), ExtResource("4_xojw3"), ExtResource("5_qyhai"), ExtResource("6_nfrs2"), ExtResource("7_wejyp")])
+metadata/_custom_type_script = "uid://qt4a37hy0nv8"
 
 [resource]
 script = ExtResource("1_iivwr")
 display_name = "Choose a passive"
 option_count = 3
-reward_pool = ExtResource("1_f1isg")
+reward_pool = SubResource("Resource_6ux2a")
 allow_reroll = true
 allow_skip = true
 metadata/_custom_type_script = "uid://efsym1wx1dmv"

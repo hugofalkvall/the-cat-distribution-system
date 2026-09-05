@@ -14,6 +14,10 @@ distribution_rate_multiplier = 1.0
 extra_cat_lives = 0
 claw_swipe_attack_speed_multiplier = 1.25
 cat_max_health_multiplier = 1.0
+cat_damage_multiplier = 1.0
+cat_attack_range_multiplier = 1.0
+cat_movement_speed_multiplier = 1.0
+enemy_currency_reward_multiplier = 1.0
 metadata/_custom_type_script = "uid://tn8ty64qis0q"
 
 [resource]
@@ -23,6 +27,6 @@ reward_id = &"swift_paws"
 display_name = "Swift Paws"
 description = "All Claw Swipe attacks are 25% faster. Stacks multiplicatively."
 icon = ExtResource("1_rhduu")
-weight = 1.0
+weight = 3.0
 unique = false
 metadata/_custom_type_script = "uid://realvevss4x2"

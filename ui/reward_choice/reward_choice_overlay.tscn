@@ -1,38 +1,44 @@
-[gd_scene load_steps=13 format=3 uid="uid://c8cx5ljg78vvj"]
+[gd_scene load_steps=15 format=3 uid="uid://c8cx5ljg78vvj"]
 
 [ext_resource type="Script" uid="uid://b1ritr24f07ug" path="res://ui/reward_choice/reward_choice_overlay.gd" id="1_4n2gv"]
+[ext_resource type="Texture2D" uid="uid://dce1yn8o3ot1y" path="res://ui/assets/Red_button.png" id="2_cq741"]
 [ext_resource type="Texture2D" uid="uid://d2jldm3lb6jep" path="res://ui/assets/Panel.png" id="2_odsmw"]
 [ext_resource type="Texture2D" uid="uid://dcxf34x07o3rj" path="res://ui/assets/Header_panel.png" id="3_mc3dh"]
 [ext_resource type="FontFile" uid="uid://url3acjadst6" path="res://ui/assets/GNF.ttf" id="3_tqrpi"]
-[ext_resource type="Texture2D" uid="uid://7mmnvguo62ay" path="res://ui/assets/Button.png" id="5_cq741"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ajfcq"]
-atlas = ExtResource("5_cq741")
-region = Rect2(0, 0, 32, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ixdkt"]
-atlas = ExtResource("5_cq741")
-region = Rect2(64, 0, 32, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_b7jsd"]
-atlas = ExtResource("5_cq741")
-region = Rect2(32, 0, 32, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_cq741"]
-atlas = ExtResource("5_cq741")
-region = Rect2(0, 0, 32, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4udqb"]
-atlas = ExtResource("5_cq741")
-region = Rect2(64, 0, 32, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_slpul"]
-atlas = ExtResource("5_cq741")
-region = Rect2(32, 0, 32, 16)
+[ext_resource type="Texture2D" uid="uid://n7r1y0jlquin" path="res://ui/assets/Green_button.png" id="5_ajfcq"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_mc3dh"]
 font = ExtResource("3_tqrpi")
 font_size = 18
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cq741"]
+atlas = ExtResource("5_ajfcq")
+region = Rect2(0, 0, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4udqb"]
+atlas = ExtResource("5_ajfcq")
+region = Rect2(128, 0, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_slpul"]
+atlas = ExtResource("5_ajfcq")
+region = Rect2(64, 0, 64, 32)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ixdkt"]
+font = ExtResource("3_tqrpi")
+font_size = 12
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ajfcq"]
+atlas = ExtResource("2_cq741")
+region = Rect2(0, 0, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ixdkt"]
+atlas = ExtResource("2_cq741")
+region = Rect2(128, 0, 64, 0)
+margin = Rect2(0, 0, 0, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b7jsd"]
+atlas = ExtResource("2_cq741")
+region = Rect2(64, 0, 64, 32)
 
 [node name="RewardChoiceOverlay" type="Control"]
 layout_mode = 3
@@ -51,35 +57,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.454902, 0.454902, 0.454902, 0.509804)
-
-[node name="SkipButton" type="TextureButton" parent="."]
-visible = false
-z_index = 1
-texture_filter = 1
-layout_mode = 2
-offset_left = 240.0
-offset_top = 280.0
-offset_right = 272.0
-offset_bottom = 296.0
-scale = Vector2(2, 2)
-texture_normal = SubResource("AtlasTexture_ajfcq")
-texture_pressed = SubResource("AtlasTexture_ixdkt")
-texture_hover = SubResource("AtlasTexture_b7jsd")
-stretch_mode = 0
-
-[node name="RerollButton" type="TextureButton" parent="."]
-visible = false
-z_index = 1
-texture_filter = 1
-layout_mode = 2
-offset_left = 336.0
-offset_top = 280.0
-offset_right = 368.0
-offset_bottom = 312.0
-scale = Vector2(2, 2)
-texture_normal = SubResource("AtlasTexture_cq741")
-texture_pressed = SubResource("AtlasTexture_4udqb")
-texture_hover = SubResource("AtlasTexture_slpul")
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 1
@@ -139,3 +116,67 @@ grow_vertical = 2
 layout_mode = 2
 theme_override_constants/separation = 20
 alignment = 1
+
+[node name="RerollButton" type="TextureButton" parent="."]
+z_index = 1
+texture_filter = 1
+layout_mode = 2
+offset_left = 336.0
+offset_top = 282.0
+offset_right = 400.0
+offset_bottom = 314.0
+texture_normal = SubResource("AtlasTexture_cq741")
+texture_pressed = SubResource("AtlasTexture_4udqb")
+texture_hover = SubResource("AtlasTexture_slpul")
+
+[node name="RerollLabel" type="Label" parent="RerollButton"]
+z_index = 2
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -15.0
+offset_top = -9.5
+offset_right = 15.0
+offset_bottom = 9.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Reroll"
+label_settings = SubResource("LabelSettings_ixdkt")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SkipButton" type="TextureButton" parent="."]
+z_as_relative = false
+texture_filter = 1
+layout_mode = 2
+offset_left = 240.0
+offset_top = 282.0
+offset_right = 304.0
+offset_bottom = 314.0
+texture_normal = SubResource("AtlasTexture_ajfcq")
+texture_pressed = SubResource("AtlasTexture_ixdkt")
+texture_hover = SubResource("AtlasTexture_b7jsd")
+
+[node name="SkipLabel" type="Label" parent="SkipButton"]
+z_index = 2
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -15.0
+offset_top = -9.5
+offset_right = 15.0
+offset_bottom = 9.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Skip"
+label_settings = SubResource("LabelSettings_ixdkt")
+horizontal_alignment = 1
+vertical_alignment = 1

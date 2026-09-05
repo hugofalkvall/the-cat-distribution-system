@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="PassiveRewardDefinition" load_steps=5 format=3 uid="uid://10tecd5ih67n"]
+
+[ext_resource type="Texture2D" uid="uid://c1d0eyv2pr1cq" path="res://ui/assets/RRIOF48.png" id="1_tdl6t"]
+[ext_resource type="Script" uid="uid://tn8ty64qis0q" path="res://run/passives/passive_definition.gd" id="2_6pplq"]
+[ext_resource type="Script" uid="uid://realvevss4x2" path="res://run/rewards/passive_reward_definition.gd" id="3_1lewm"]
+
+[sub_resource type="Resource" id="Resource_guii3"]
+script = ExtResource("2_6pplq")
+passive_id = &"razor_claws"
+display_name = "Razor Claws"
+description = "ll cats deal 20% more damage. Stacks multiplicatively."
+icon = ExtResource("1_tdl6t")
+distribution_rate_multiplier = 1.0
+extra_cat_lives = 0
+claw_swipe_attack_speed_multiplier = 1.0
+cat_max_health_multiplier = 1.0
+cat_damage_multiplier = 1.2
+cat_attack_range_multiplier = 1.0
+cat_movement_speed_multiplier = 1.0
+enemy_currency_reward_multiplier = 1.0
+metadata/_custom_type_script = "uid://tn8ty64qis0q"
+
+[resource]
+script = ExtResource("3_1lewm")
+passive = SubResource("Resource_guii3")
+reward_id = &"razor_claws"
+display_name = "Razor Claws"
+description = "All cats deal 20% more damage. Stacks multiplicatively."
+icon = ExtResource("1_tdl6t")
+weight = 2.0
+unique = false
+metadata/_custom_type_script = "uid://realvevss4x2"

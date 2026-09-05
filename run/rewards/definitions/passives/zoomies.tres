@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="PassiveRewardDefinition" load_steps=5 format=3 uid="uid://bpgh3rt1c7qp4"]
+
+[ext_resource type="Texture2D" uid="uid://caast3pw5ebro" path="res://ui/assets/RRIOF18.png" id="1_uph8y"]
+[ext_resource type="Script" uid="uid://realvevss4x2" path="res://run/rewards/passive_reward_definition.gd" id="1_uufvk"]
+[ext_resource type="Script" uid="uid://tn8ty64qis0q" path="res://run/passives/passive_definition.gd" id="2_oiv8i"]
+
+[sub_resource type="Resource" id="Resource_ch28d"]
+script = ExtResource("2_oiv8i")
+passive_id = &"zoomies"
+display_name = "Zoomies"
+description = "All cats move 30% faster. Stacks multiplicatively."
+icon = ExtResource("1_uph8y")
+distribution_rate_multiplier = 1.0
+extra_cat_lives = 0
+claw_swipe_attack_speed_multiplier = 1.0
+cat_max_health_multiplier = 1.0
+cat_damage_multiplier = 1.0
+cat_attack_range_multiplier = 1.0
+cat_movement_speed_multiplier = 1.3
+enemy_currency_reward_multiplier = 1.0
+metadata/_custom_type_script = "uid://tn8ty64qis0q"
+
+[resource]
+script = ExtResource("1_uufvk")
+passive = SubResource("Resource_ch28d")
+reward_id = &"zoomies"
+display_name = "Zoomies"
+description = "All cats move 30% faster. Stacks multiplicatively."
+icon = ExtResource("1_uph8y")
+weight = 3.0
+unique = false
+metadata/_custom_type_script = "uid://realvevss4x2"

@@ -33,6 +33,12 @@ var passive_distribution_rate_multiplier := 1.0
 var passive_extra_cat_lives := 0
 var passive_claw_swipe_attack_speed_multiplier := 1.0
 var passive_cat_max_health_multiplier := 1.0
+var passive_cat_damage_multiplier := 1.0
+var passive_cat_attack_range_multiplier := 1.0
+var passive_cat_movement_speed_multiplier := 1.0
+var passive_enemy_currency_reward_multiplier := 1.0
+
+var enemy_currency_reward_remainder := 0.0
 
 var total_cats_produced := 0
 var current_cat_count := 0
@@ -139,7 +145,22 @@ func _on_enemy_died(enemy: Damageable) -> void:
 	if not enemy is EnemyUnit:
 		return
 
-	add_currency(enemy.currency_reward)
+	grant_enemy_currency(enemy.currency_reward)
+
+
+func grant_enemy_currency(base_reward: int) -> void:
+	if base_reward <= 0:
+		return
+
+	var exact_reward := (
+		float(base_reward) * passive_enemy_currency_reward_multiplier
+		+ enemy_currency_reward_remainder
+	)
+
+	var whole_reward := floori(exact_reward)
+	enemy_currency_reward_remainder = exact_reward - float(whole_reward)
+
+	add_currency(whole_reward)
 
 
 func add_currency(amount: int) -> void:
@@ -293,15 +314,23 @@ func recalculate_passive_modifiers() -> void:
 	passive_extra_cat_lives = 0
 	passive_claw_swipe_attack_speed_multiplier = 1.0
 	passive_cat_max_health_multiplier = 1.0
+	passive_cat_damage_multiplier = 1.0
+	passive_cat_attack_range_multiplier = 1.0
+	passive_cat_movement_speed_multiplier = 1.0
+	passive_enemy_currency_reward_multiplier = 1.0
 
 	for passive in active_passives:
 		if passive == null:
 			continue
-			
+
 		passive_cat_max_health_multiplier *= maxf(passive.cat_max_health_multiplier, 0.0)
 		passive_distribution_rate_multiplier *= maxf(passive.distribution_rate_multiplier, 0.0)
 		passive_extra_cat_lives += maxi(passive.extra_cat_lives, 0)
 		passive_claw_swipe_attack_speed_multiplier *= maxf(passive.claw_swipe_attack_speed_multiplier, 0.01)
+		passive_cat_damage_multiplier *= maxf(passive.cat_damage_multiplier, 0.0)
+		passive_cat_attack_range_multiplier *= maxf(passive.cat_attack_range_multiplier, 0.01)
+		passive_cat_movement_speed_multiplier *= maxf(passive.cat_movement_speed_multiplier, 0.01)
+		passive_enemy_currency_reward_multiplier *= maxf(passive.enemy_currency_reward_multiplier, 0.0)
 
 	build_placement.set_distribution_rate_multiplier(passive_distribution_rate_multiplier)
 
@@ -311,23 +340,25 @@ func recalculate_passive_modifiers() -> void:
 		if cat != null and cat.is_node_ready():
 			apply_passives_to_cat(cat)
 
-
 func apply_passives_to_cat(cat: CombatUnit) -> void:
 	if not is_instance_valid(cat):
 		return
 
 	cat.set_max_health_multiplier(passive_cat_max_health_multiplier)
 	cat.set_extra_lives(passive_extra_cat_lives)
+	cat.passive_movement_speed_multiplier = passive_cat_movement_speed_multiplier
 
-	var passive_cooldown_multiplier := 1.0 / maxf(passive_claw_swipe_attack_speed_multiplier, 0.01)
+	var claw_cooldown_multiplier := 1.0 / maxf(passive_claw_swipe_attack_speed_multiplier, 0.01)
 
 	for attack_state in cat.attacks:
 		if attack_state == null or attack_state.definition == null:
 			continue
 
-		if attack_state.definition.behavior_scene == CLAW_SWIPE_BEHAVIOR:
-			attack_state.passive_cooldown_multiplier = passive_cooldown_multiplier
+		attack_state.passive_damage_multiplier = passive_cat_damage_multiplier
+		attack_state.passive_range_multiplier = passive_cat_attack_range_multiplier
 
+		if attack_state.definition.behavior_scene == CLAW_SWIPE_BEHAVIOR:
+			attack_state.passive_cooldown_multiplier = claw_cooldown_multiplier
 
 func claim_reward(reward_id: StringName) -> void:
 	if reward_id == &"":

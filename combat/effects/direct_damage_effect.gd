@@ -14,5 +14,5 @@ func apply(attacker, target, attack_state: AttackState, combat_system: CombatSys
 	if target.is_dead:
 		return
 
-	var final_damage := damage * attack_state.damage_multiplier
+	var final_damage := damage * attack_state.damage_multiplier * attack_state.passive_damage_multiplier
 	target.take_damage(final_damage)

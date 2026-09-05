@@ -33,6 +33,7 @@ const MOVEMENT_DIRECTION_THRESHOLD := 0.1
 var velocity := Vector2.ZERO
 var granted_extra_lives := 0
 var remaining_extra_lives := 0
+var passive_movement_speed_multiplier := 1.0
 
 func _ready() -> void:
 	base_max_health = max_health
@@ -309,3 +310,12 @@ func _draw() -> void:
 
 	var health_width := health_bar_width * health_percentage
 	draw_rect(Rect2(bar_position, Vector2(health_width, health_bar_height)), Color(0.2, 0.9, 0.2, 1.0))
+
+func get_target_detection_range(base_detection_range: float) -> float:
+	var largest_attack_range := 0.0
+
+	for attack_state in attacks:
+		if attack_state != null:
+			largest_attack_range = maxf(largest_attack_range, attack_state.get_range())
+
+	return maxf(base_detection_range, largest_attack_range)

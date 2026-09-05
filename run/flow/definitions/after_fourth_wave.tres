@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="RunEventEntryDefinition" load_steps=3 format=3 uid="uid://6i8e000nom3m"]
+
+[ext_resource type="Script" uid="uid://c0ow7q3ly05et" path="res://run/flow/run_event_entry_definition.gd" id="1_7aasf"]
+[ext_resource type="Resource" uid="uid://xu3gbnedd43x" path="res://run/rewards/events/choose_passive.tres" id="1_yi5px"]
+
+[resource]
+script = ExtResource("1_7aasf")
+trigger = 1
+wave_number = 4
+choice_event = ExtResource("1_yi5px")
+metadata/_custom_type_script = "uid://c0ow7q3ly05et"

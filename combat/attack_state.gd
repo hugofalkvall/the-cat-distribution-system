@@ -9,6 +9,8 @@ var damage_multiplier := 1.0
 var range_multiplier := 1.0
 var cooldown_multiplier := 1.0
 var passive_cooldown_multiplier := 1.0
+var passive_damage_multiplier := 1.0
+var passive_range_multiplier := 1.0
 
 
 func _init(new_definition: AttackDefinition) -> void:
@@ -24,7 +26,7 @@ func start_cooldown() -> void:
 
 
 func get_range() -> float:
-	return maxf(definition.range * range_multiplier, 0.0)
+	return maxf(definition.range * range_multiplier * passive_range_multiplier, 0.0)
 
 
 func get_cooldown() -> float:

@@ -1,12 +1,15 @@
-[gd_resource type="Resource" script_class="RewardPoolDefinition" load_steps=6 format=3 uid="uid://docry6g1nt5eg"]
+[gd_resource type="Resource" script_class="RewardPoolDefinition" load_steps=9 format=3 uid="uid://docry6g1nt5eg"]
 
 [ext_resource type="Script" uid="uid://bmb3joo1fri13" path="res://run/rewards/reward_definition.gd" id="1_eb3bx"]
 [ext_resource type="Script" uid="uid://qt4a37hy0nv8" path="res://run/rewards/reward_pool_definition.gd" id="2_cgmg3"]
 [ext_resource type="Resource" uid="uid://hhfp4beqwxgf" path="res://run/rewards/definitions/passives/nine_lives.tres" id="2_cpu6u"]
 [ext_resource type="Resource" uid="uid://k000r1mpq77d" path="res://run/rewards/definitions/passives/efficient_distribution.tres" id="3_fjwcp"]
 [ext_resource type="Resource" uid="uid://b8k5imprp6bqr" path="res://run/rewards/definitions/passives/swift_paws.tres" id="4_1jaj3"]
+[ext_resource type="Resource" uid="uid://bpgh3rt1c7qp4" path="res://run/rewards/definitions/passives/zoomies.tres" id="5_wkq17"]
+[ext_resource type="Resource" uid="uid://10tecd5ih67n" path="res://run/rewards/definitions/passives/razor_claws.tres" id="6_guii3"]
+[ext_resource type="Resource" uid="uid://ckhm3lxa6ep0y" path="res://run/rewards/definitions/passives/thick_fur.tres" id="7_pvdb6"]
 
 [resource]
 script = ExtResource("2_cgmg3")
-rewards = Array[ExtResource("1_eb3bx")]([ExtResource("2_cpu6u"), ExtResource("4_1jaj3"), ExtResource("3_fjwcp")])
+rewards = Array[ExtResource("1_eb3bx")]([ExtResource("2_cpu6u"), ExtResource("4_1jaj3"), ExtResource("3_fjwcp"), ExtResource("5_wkq17"), ExtResource("6_guii3"), ExtResource("7_pvdb6")])
 metadata/_custom_type_script = "uid://qt4a37hy0nv8"
