@@ -51,6 +51,7 @@ func setup(new_run: Run, idol: Damageable) -> void:
 	run_state.wave_progress_changed.connect(_on_wave_progress_changed)
 	run_state.available_buildings_changed.connect(populate_building_buttons)
 	run_state.placed_building_selection_changed.connect(_on_placed_building_selection_changed)
+	run_state.passives_changed.connect(_on_passives_changed)
 
 	reward_choice_overlay.reward_selected.connect(_on_reward_selected)
 	reward_choice_overlay.reroll_requested.connect(_on_reward_reroll_requested)
@@ -79,10 +80,8 @@ func setup(new_run: Run, idol: Damageable) -> void:
 func _on_reward_reroll_requested() -> void:
 	reward_reroll_requested.emit()
 
-
 func _on_reward_skip_requested() -> void:
 	reward_skip_requested.emit()
-	
 	
 func populate_building_buttons() -> void:
 	for child in building_container.get_children():
@@ -109,11 +108,18 @@ func populate_building_buttons() -> void:
 		
 		building_buttons.append(button)
 
+func _on_placed_building_selection_changed(_building: Building) -> void:
+	refresh_selected_building_stats()
 
-func _on_building_button_selected(definition: BuildingDefinition) -> void:
-	building_selected.emit(definition)
 
-func _on_placed_building_selection_changed(building: Building) -> void:
+func _on_passives_changed() -> void:
+	refresh_selected_building_stats()
+	update_building_button_affordability(run_state.currency)
+
+
+func refresh_selected_building_stats() -> void:
+	var building := run_state.selected_placed_building
+
 	if not is_instance_valid(building) or building.definition == null:
 		building_stats.visible = false
 		return
@@ -124,8 +130,11 @@ func _on_placed_building_selection_changed(building: Building) -> void:
 	building_name_label.text = definition.display_name
 	building_type_label.text = "Type: " + definition.get_building_type_name()
 	distribution_rate_label.text = "Distribution: " + str(distribution_rate) + " cats/s"
-	unit_information_label.text = "Distributes: " + definition.produced_unit_name 
+	unit_information_label.text = "Distributes: " + definition.produced_unit_name
 	building_stats.visible = true
+	
+func _on_building_button_selected(definition: BuildingDefinition) -> void:
+	building_selected.emit(definition)
 
 func _on_idol_health_changed(_idol: Damageable, current_health: float, max_health: float) -> void:
 	idol_health_bar.max_value = max_health
