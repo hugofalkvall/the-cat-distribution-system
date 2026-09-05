@@ -246,7 +246,6 @@ func hide_reward_choice() -> void:
 	intermission_phase_label.text = intermission_phase_text
 	intermission_phase_label.visible = true
 	HUD.show()
-	
 
 
 func _on_reward_selected(reward: RewardDefinition) -> void:
